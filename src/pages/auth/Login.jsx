@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Container from '../../components/Container'
 import loginSideImg from '../../assets/images/login-vector.png'
 import CommonBackBtn from '../../components/CommonBackBtn'
@@ -16,8 +16,8 @@ import { cn } from '../../utils/cn'
 
 export default function Login() {
 
-   const {login} = useAuthStore()
-   const [isLoading,setIsLoading] = useState(false)
+  const {login} = useAuthStore()
+  const [isLoading,setIsLoading] = useState(false)
   
 
   const navigate = useNavigate()

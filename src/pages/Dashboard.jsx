@@ -31,6 +31,9 @@ export default function Dashboard() {
            if(response.data?.statusCode == 200){
             const data = response.data?.data
             setAppointments(data)
+           }else
+           {
+             clearAppointments()
            }
           
         } catch (error) {

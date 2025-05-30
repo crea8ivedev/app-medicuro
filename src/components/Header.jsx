@@ -1,11 +1,32 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import dummyProfile from '../assets/images/dummy-profile.png'
 import { useAuthStore } from '../store/auth';
-
+import { useEffect, useState } from 'react';
+import axiosInstance from "../utils/axios"
+import { useAppointmentStore } from '../store/appointments';
 
 function Header({setOpenMenu}) {
 
   const {user} = useAuthStore()
+  const [nextAppointment,setNextAppointment] = useState(null)
+  const navigate = useNavigate()
+  const {upcomingAppointments} = useAppointmentStore()
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+              const response = await axiosInstance.post("/api/v1/appointments/upcoming")
+              if(response.data?.statusCode == 200){
+                const data = response.data?.data
+                  setNextAppointment(data)
+              }
+            } catch (error) {
+        
+            }
+      
+      }
+      fetchData()
+  },[upcomingAppointments])
 
   return (
     <div className='md:h-93 md:ps-90 bg-white md:pt-5 md:pb-10'>
@@ -23,12 +44,14 @@ function Header({setOpenMenu}) {
           <div className='font-semibold leading-4 '>{user?.fullName}</div>
         </div>
 
-        <div className='md:flex flex-col bg-navy py-4 px-10 rounded-xl hidden'>
-          <div className=' text-white'>Next appointment</div>
-          <div className='text-sky-cyan leading-4 '>
-            WED, MAR 11, 2025 - 10:45AM
+        {
+          nextAppointment &&  <div onClick={() => navigate(`/view-appointment/Upcoming/${nextAppointment?.id}`) } className='md:flex flex-col bg-navy py-4 px-10 rounded-xl hidden cursor-pointer'>
+            <div className=' text-white'>Next appointment</div>
+            <div className='text-sky-cyan leading-4 '>
+              { nextAppointment?.date }
+            </div>
           </div>
-        </div>
+        }
       </div>
     </div>
   )
