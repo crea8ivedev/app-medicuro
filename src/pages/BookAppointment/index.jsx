@@ -1,0 +1,122 @@
+import { useState ,useEffect } from 'react'
+import appointmentSideImage from '../../assets/images/book-appointment-vector.png';
+import spinner from '../../assets/images/spinner.gif';
+
+import CommonBackBtn from '../../components/CommonBackBtn'
+import BookAppointmentItem from './views/BookAppointmentItem';
+import axiosInstance from '../../utils/axios';
+import DynamicForm from './views/DynamicForm';
+
+
+
+
+function BookAppointmentIndexPage() {
+
+const [bookingItems,setBookingItems] = useState([])
+const [selectedItemId, setSelectedItemId] = useState(null)
+const [isSubmitted,setIsSubmitted] = useState(false)
+
+const [isLoading,setIsLoading] = useState()
+
+
+useEffect(() => {
+    const fetchServices = async () => {
+       try {
+        setIsLoading(true)
+        const response = await axiosInstance.get("/api/v1/services")
+        let services = response.data?.data
+
+        services = services?.map(e => {
+            return {...e,isSelected : false}
+        })
+        setBookingItems(services)
+       } finally {
+        setIsLoading(false)
+       }
+    }
+    fetchServices()
+},[])
+
+const handleSelectItem = (id) => {
+    const temp = bookingItems.map((item) => {
+        if (item.id === id) {
+            setSelectedItemId(id)
+            return { ...item, isSelected: !item.isSelected }
+        }else{
+            return {...item,isSelected: false}
+        }
+    })
+    setBookingItems(temp)
+}
+
+const handleSubmit = () => {
+    if(selectedItemId){
+        setIsSubmitted(true)
+    }else{
+        alert("please select any one item")
+    }
+}
+
+    return (
+      <div className="bg-ice min-h-screen w-full justify-between relative">
+        <div className='common-bg'></div>
+         <div className="md:py-10 py-5 md:px-10   lg:ps-7  relative">
+            {
+                isSubmitted ? <CommonBackBtn className="md:mb-32 mb-5 px-2" label='Back to Services'  onClick={() => setIsSubmitted(false)}/> : 
+                        <CommonBackBtn className="md:mb-32 mb-5 px-2" label='Back to Dashboard'  link='/dashboard'/>
+            }
+
+            <div className='flex items-center justify-around container m-auto'>
+                    <img className="left-image" src={appointmentSideImage} alt="" />
+                    <div className='bg-ocean md:px-10 md:py-16 p-5 md:rounded-xl w-[756px]'>
+                        {
+                            (selectedItemId && isSubmitted) ? 
+                                <div className='text-white'>
+                                    <div className='text-xl mb-3 max-w-250 whitespace-break-spaces'>{bookingItems.find((e) =>  e.id == selectedItemId )?.name}</div>
+                                    <div>{bookingItems.find((e) =>  e.id == selectedItemId )?.desc}</div>
+                                </div>
+                            : 
+                                <div className='text-white'>
+                                    <div className='text-xl mb-3 '>Select Service</div>
+                                    <div>Due to increased demand, it may not be possible for our <br/> scheduling team to respond to all requests within 24 hours.</div>
+                                </div>
+                        }
+
+                        {
+                            isLoading ? 
+                             <img  src={spinner} className='w-10 mt-10' alt='loading' />
+                            :
+                            (!selectedItemId || !isSubmitted) ? ( bookingItems?.length  ? <div className='flex flex-col gap-4 mt-10  mb-10 '>
+                                <div className='text-white flex font-bold gap-2 items-center'> <div className='text-xl'>&#43;</div> <div>fees apply</div></div>
+                                <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-2'>
+                                    {
+                                        bookingItems.map(({name,isFeesApply,isSelected,id},index) => {
+                                            return <BookAppointmentItem id={id} onClick={handleSelectItem} isSelected={isSelected} name={name} key={index} isFeesApply={isFeesApply} />
+                                        })
+                                    }
+                                </div>
+                            </div>  : <div className='text-white my-10 text-xl'>No service available at this moment</div> )
+                            :
+                            <div className='md:mt-10 mt-7'> 
+                                <DynamicForm id={bookingItems.find((e) =>  e.id == selectedItemId )?.id} serviceId={bookingItems.find((e) =>  e.id == selectedItemId )?.serviceTypeId}/>
+                            </div>
+                        }
+
+                        {
+                            (!selectedItemId || !isSubmitted) &&
+                            <div className='md:text-end text-center'>
+                                <button className='common-btn' onClick={() => handleSubmit() }>Next</button>
+                            </div>
+                        }
+                    </div>
+            </div>
+           </div>
+     </div>
+  )
+}
+
+export default BookAppointmentIndexPage
+
+
+
+

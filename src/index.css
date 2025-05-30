@@ -1,0 +1,176 @@
+@import 'tailwindcss';
+
+* {
+  box-sizing: border-box;
+}
+
+/* body {
+  font-family: 'League Spartan', sans-serif;
+} */
+
+.auth-layout-gradient {
+  @apply bg-gradient-to-b from-teal/80    to-bluewave relative;
+}
+
+@theme {
+  /* COLORS */
+  --color-aqua: #5ef1fa;
+  --color-ocean: #397a99;
+  --color-sky: #00adff;
+  --color-sky-cyan : #66F6FF;
+  --color-navy: #265b72;
+  --color-ice: #aee7ff;
+  --color-bluewave: #0c91d2;
+  --color-teal: #41bfb3;
+
+  --color-mint: #e5f3f3;
+  --color-foam: #a4e8e1;
+  --color-sky-foam : #F2F7F8;
+  --color-seafoam: #5bc7b8;
+
+
+  /* BORDER RADIUS */
+  --radius-circle: 50%;
+
+  /* SPACING (used in width, height, margin, padding, etc.) */
+
+  --spacing-05: 5px;
+  --spacing-15: 15px;
+  --spacing-20: 20px;
+  --spacing-30: 30px;
+  --spacing-40: 40px;
+  --spacing-45: 45px;
+  --spacing-66: 66px;
+  --spacing-70: 70px;
+  --spacing-75: 75px;
+  --spacing-90: 90px;
+  --spacing-93: 93px;
+  --spacing-50-per: 50%;
+  --spacing-100 : 100px;
+  --spacing-105 : 105px;
+  --spacing-200 : 200px;
+  --spacing-320 : 320px;
+  --spacing-430 : 430px;
+  --spacing-455 : 455px;
+  --spacing-500 : 500px;
+  --spacing-510 : 510px;
+  --spacing-550 : 550px;
+  --spacing-650 : 650px;
+  --spacing-825 : 825px;
+  --spacing-850 : 850px;
+
+   
+  /* FONT FAMILY */
+  --font-league: 'League Spartan', sans-serif;
+  --font-roboto-cond: 'Roboto Condensed', sans-serif;
+  --font-outfit: 'Outfit', sans-serif;
+}
+
+.auth-layout-start {
+  @apply absolute top-1/2 left-0 w-full h-full transform -translate-y-1/2 bg-repeat-x bg-auto bg-[url("../src/assets/images/star-ask-group-1.png")];
+}
+.plus-bg-banner {
+  @apply absolute top-1/2 z-[-1] left-0 w-full bottom-0 -translate-y-1/2 bg-repeat-x bg-auto bg-[url("../src/assets/images/plus-bg-banner.svg")];
+}
+
+.common-btn {
+  @apply bg-gradient-to-r from-bluewave to-seafoam text-white px-5 md:px-16 rounded-md py-3 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50;
+}
+
+.bg-secondary {
+  @apply bg-navy;
+} 
+
+.common-bg{
+  @apply bg-[url("../src/assets/images/common-bg.png")] bg-no-repeat absolute inset-0 bg-bottom
+}
+
+.common-right-design{
+  @apply bg-[url("../src/assets/images/common-right-design.png")] bg-no-repeat bg-center absolute  h-[63px] w-[84px]
+}
+
+.forn-field{
+  @apply bg-white border border-teal-600 w-full p-2 rounded-md outline-0
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none !important;
+}
+
+.spinner {
+  position: relative;
+  height: 100%;
+}
+
+.spinner::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  width: 20px;
+  height: 20px;
+  margin-top: -10px;
+  border: 6px solid rgba(0, 0, 0, 0.2);
+  border-top-color: rgba(0, 0, 0, 0.8);
+  border-radius: 50%;
+  animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+  0%   { transform:  rotate(0deg); }
+  100% { transform:  rotate(360deg); }
+}
+
+@media (max-width:1600px){
+  .custom-wrap{
+    flex-wrap: wrap !important;
+  }
+
+  .left-image{
+    display: none;
+  }
+  .right-container{
+    margin: auto !important;
+  }
+}
+
+@media (max-width: 1270px) {
+  .flex-container {
+    justify-content: center;
+    gap: 113px;
+  }
+}
+
+@media (max-width: 1260px) {
+
+  .left-img-container{
+    display: none;
+  }
+
+}
+
+@media (max-width: 1000px) {
+
+  .appointment-date-div{
+     flex-direction: row;
+     gap: 10px;
+  }
+
+  .common-right-design{
+    display: none;
+  }
+
+}
