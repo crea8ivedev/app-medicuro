@@ -2,7 +2,7 @@ import axios from 'axios'
 import { showToast } from './toast'
 
 // Create Axios instance
-const baseURL = import.meta.env.VITE_NODE_ENV == "development" ? import.meta.env.VITE_API_BASE_URL : "https://medicuro-backend-r4pa.vercel.app";
+const baseURL = import.meta.env.VITE_NODE_ENV == "development" ? import.meta.env.VITE_API_BASE_URL : "https://api-medicuro.vercel.app";
 const axiosInstance = axios.create({
   baseURL,
   // baseURL: import.meta.env.VITE_API_BASE_URL,
