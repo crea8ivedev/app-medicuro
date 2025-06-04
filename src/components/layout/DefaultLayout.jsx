@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from '../Header'
 import Sidebar from '../Sidebar'
 import { cn } from '../../utils/cn'
 
 export default function DefaultLayout() {
-  const [openMenu, setOpenMenu] = useState()
+  const [openMenu, setOpenMenu] = useState(false)
 
   return (
     <div className='h-screen'>
@@ -13,8 +13,8 @@ export default function DefaultLayout() {
 
       <div
         className={cn(
-          openMenu ? 'md:ps-[182pxpx]' : 'md:ps-[66px]',
-          'transition-all pt-5',
+          openMenu ? 'md:ps-[182px]' : 'md:ps-[66px]',
+          'transition-all pt-5'
         )}
       >
         <Outlet />

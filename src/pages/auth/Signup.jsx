@@ -3,18 +3,18 @@ import Container from '../../components/Container'
 import signupSideImg from '../../assets/images/signup-vector.png'
 import CommonBackBtn from '../../components/CommonBackBtn'
 import CustomInput from '../../components/CustomInput'
-import { FormikProvider,Field ,useFormik} from 'formik'
+import { FormikProvider, Field, useFormik } from 'formik'
 import * as Yup from 'yup'
 import axiosInstance from '../../utils/axios'
 import { useAuthStore } from '../../store/auth'
 import { useNavigate } from 'react-router-dom'
 import { cn } from '../../utils/cn'
-
+import { getFirebaseToken } from '../../utils/firebaseConfig'
 
 export default function Signup() {
 
   const [step, setStep] = useState(0)
-  const [signUpFormValues,setSignUpFormValues] = useState({
+  const [signUpFormValues, setSignUpFormValues] = useState({
     fullName: '',
     password: '',
     email: '',
@@ -33,28 +33,28 @@ export default function Signup() {
           <img className='left-img' src={signupSideImg} alt='img' />
         </div>
 
-          <div
-            className='bg-mint md:mt-24 md:pt-24   md:px-24 px-10 sm:px-10  md:py-7 py-10 w-500 rounded-xl  outline-40 outline-white'
-          >
-            {
-              step === 1  && <CommonBackBtn  onClick={() => setStep(0)} label='Sign Up' />
-            }
+        <div
+          className='bg-mint md:mt-24 md:pt-24   md:px-24 px-10 sm:px-10  md:py-7 py-10 w-500 rounded-xl  outline-40 outline-white'
+        >
+          {
+            step === 1 && <CommonBackBtn onClick={() => setStep(0)} label='Sign Up' />
+          }
 
-            <div className='mt-4 mb-7'>
-              {step === 0 && <ProfileForm signUpFormValues={signUpFormValues} setSignUpFormValues={setSignUpFormValues}  setStep={setStep} />}
-              {step === 1 && <Terms signUpFormValues={signUpFormValues} setStep={setStep} />}
-            </div>
+          <div className='mt-4 mb-7'>
+            {step === 0 && <ProfileForm signUpFormValues={signUpFormValues} setSignUpFormValues={setSignUpFormValues} setStep={setStep} />}
+            {step === 1 && <Terms signUpFormValues={signUpFormValues} setStep={setStep} />}
           </div>
-       
+        </div>
+
       </Container>
     </div>
   )
 }
 
-const Terms = ({ setStep,signUpFormValues}) => {
-  const [isLoading,setIsLoading] = useState(false)
+const Terms = ({ setStep, signUpFormValues }) => {
+  const [isLoading, setIsLoading] = useState(false)
 
-  const {login,user} = useAuthStore()
+  const { login, user } = useAuthStore()
 
   const navigate = useNavigate()
 
@@ -72,23 +72,32 @@ const Terms = ({ setStep,signUpFormValues}) => {
 
 
     try {
-      setIsLoading(true)
-      const response =  await axiosInstance.post('/api/v1/auth/register', signUpFormValues)
-      if(response?.data?.statusCode == 201){
+      setIsLoading(true);
+      let notificationToken;
+
+      const permission = await Notification.requestPermission();
+      if (permission === 'granted') {
+        notificationToken = await getFirebaseToken()
+      }
+
+      const response = await axiosInstance.post('/api/v1/auth/register', {
+        ...signUpFormValues,
+        ...(notificationToken && { notificationToken }),
+      })
+      if (response?.data?.statusCode == 201) {
         const user = response.data?.data
         const token = "dummyToken"
-        login({user,token})
+        login({ user, token })
         navigate("/dashboard")
       }
-    }  finally{
+    } finally {
       setIsLoading(false)
     }
   }
 
-  
   useEffect(() => {
     console.log(user)
-  },[user])
+  }, [user])
 
   return (
     <div>
@@ -129,7 +138,7 @@ const Terms = ({ setStep,signUpFormValues}) => {
       <div className='text-center'>
         <button
           disabled={isLoading}
-          className={cn("common-btn my-4 cursor-pointer",isLoading ? "spinner" : "")}
+          className={cn("common-btn my-4 cursor-pointer", isLoading ? "spinner" : "")}
           onClick={() => submitSignUpForm()}
         >
           Accept
@@ -139,7 +148,7 @@ const Terms = ({ setStep,signUpFormValues}) => {
   )
 }
 
-const ProfileForm = ({ setStep, signUpFormValues,setSignUpFormValues}) => {
+const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
 
 
   const signUpSchema = Yup.object().shape({
@@ -149,7 +158,7 @@ const ProfileForm = ({ setStep, signUpFormValues,setSignUpFormValues}) => {
 
     password: Yup.string()
       .required('Password is required'),
-      // .min(6, 'Password must be at least 6 characters'),
+    // .min(6, 'Password must be at least 6 characters'),
 
     email: Yup.string()
       .email('Invalid email format')
@@ -157,7 +166,7 @@ const ProfileForm = ({ setStep, signUpFormValues,setSignUpFormValues}) => {
 
     phone: Yup.string()
       .required('Mobile number is required'),
-      // .matches(/^[0-9]{10,15}$/, 'Enter a valid phone number'),
+    // .matches(/^[0-9]{10,15}$/, 'Enter a valid phone number'),
 
     dob: Yup.date()
       .required('Date of birth is required')
@@ -165,8 +174,8 @@ const ProfileForm = ({ setStep, signUpFormValues,setSignUpFormValues}) => {
 
     mcp: Yup.string()
       .required('MCP number is required')
-      // .matches(/^[0-9\s]{12}$/, 'MCP should be 12 digits'),
-,
+    // .matches(/^[0-9\s]{12}$/, 'MCP should be 12 digits'),
+    ,
     mcpValidationDate: Yup.date()
       .required('MCP validation date is required'),
 
@@ -185,95 +194,95 @@ const ProfileForm = ({ setStep, signUpFormValues,setSignUpFormValues}) => {
 
   const formik = useFormik({
     initialValues: signUpFormValues,
-    onSubmit : (values,helpers) => submitHandler(values,helpers),
-    validationSchema:signUpSchema
+    onSubmit: (values, helpers) => submitHandler(values, helpers),
+    validationSchema: signUpSchema
   })
 
-    return (
-      <FormikProvider value={formik}>
-        <form onSubmit={formik.handleSubmit} className='flex flex-col gap-4'>
-            <Field
-            type='text'
-            name='fullName'
-            label='Full Name'
-            placeholder='First and last name'
-            component={CustomInput}
-            className='forn-field'
-          />
+  return (
+    <FormikProvider value={formik}>
+      <form onSubmit={formik.handleSubmit} className='flex flex-col gap-4'>
+        <Field
+          type='text'
+          name='fullName'
+          label='Full Name'
+          placeholder='First and last name'
+          component={CustomInput}
+          className='forn-field'
+        />
 
-          <Field
-            type='password'
-            name='password'
-            password
-            label='Password'
-            placeholder='Password'
-            component={CustomInput}
-            className='forn-field'
-          />
+        <Field
+          type='password'
+          name='password'
+          password
+          label='Password'
+          placeholder='Password'
+          component={CustomInput}
+          className='forn-field'
+        />
 
-          <Field
-            type='email'
-            name='email'
-            label='Email'
-            placeholder='Email'
-            component={CustomInput}
-            className='forn-field'
-          />
+        <Field
+          type='email'
+          name='email'
+          label='Email'
+          placeholder='Email'
+          component={CustomInput}
+          className='forn-field'
+        />
 
-          <Field
-            type='text'
-            name='phone'
-            label='Mobile Number'
-            placeholder='Mobile Number'
-            component={CustomInput}
-            className='forn-field'
-          />
+        <Field
+          type='text'
+          name='phone'
+          label='Mobile Number'
+          placeholder='Mobile Number'
+          component={CustomInput}
+          className='forn-field'
+        />
 
-          <Field
-            type='date'
-            name='dob'
-            label='Date of Birth'
-            placeholder='dd / mm / yyyy'
-            component={CustomInput}
-            className='forn-field'
-          />
+        <Field
+          type='date'
+          name='dob'
+          label='Date of Birth'
+          placeholder='dd / mm / yyyy'
+          component={CustomInput}
+          className='forn-field'
+        />
 
-          <Field
-            type='date'
-            name='mcp'
-            label='MCP'
-            placeholder='000 000 000 000'
-            component={CustomInput}
-            className='forn-field'
-          />
+        <Field
+          type='date'
+          name='mcp'
+          label='MCP'
+          placeholder='000 000 000 000'
+          component={CustomInput}
+          className='forn-field'
+        />
 
-          <Field
-            type='date'
-            name='mcpValidationDate'
-            label='MCP Validation Date'
-            placeholder='dd / mm / yyyy'
-            component={CustomInput}
-            className='forn-field'
-          />
+        <Field
+          type='date'
+          name='mcpValidationDate'
+          label='MCP Validation Date'
+          placeholder='dd / mm / yyyy'
+          component={CustomInput}
+          className='forn-field'
+        />
 
-          <Field
-            type='date'
-            name='mcpExpiryDate'
-            label='MCP Expiry Date'
-            placeholder='dd / mm / yyyy'
-            component={CustomInput}
-            className='forn-field'
-          />
+        <Field
+          type='date'
+          name='mcpExpiryDate'
+          label='MCP Expiry Date'
+          placeholder='dd / mm / yyyy'
+          component={CustomInput}
+          className='forn-field'
+        />
 
-          <div className='text-center'>
-            <button
-              type='submit'
-              className='common-btn my-4 cursor-pointer'
-            >
-              Next
-            </button>
-          </div>
-        </form>
-      </FormikProvider>
-    )
+        <div className='text-center'>
+          <button
+            type='submit'
+            className='common-btn my-4 cursor-pointer'
+          >
+            Next
+          </button>
+        </div>
+      </form>
+    </FormikProvider>
+  )
 }
