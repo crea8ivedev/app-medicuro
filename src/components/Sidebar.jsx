@@ -8,16 +8,40 @@ import dummyProfile from '../assets/images/dummy-profile.png'
 import closeMenu from '../assets/images/close-menu.png'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { useNotificationStore } from '../store/notifications'
+import axiosInstance from '../utils/axios'
+
 
 function Sidebar({ openMenu, setOpenMenu }) {
 
   const navigate = useNavigate()
-  const [newNotifications,setNewNotifications] = useState(true)
+  const { notifications:allNotifications,setNotifications,setLoading } = useNotificationStore()
+  const newNotifications = useState(() => allNotifications?.some(notification => !notification?.isRead ))
+
+
+  const getNotifications = async () => {
+    try {
+      setLoading(true)
+      const reponse = await axiosInstance.get("/api/v1/notifications");
+      if(reponse?.data?.statusCode == 200){
+        const data = reponse?.data?.data;
+        setNotifications(data)
+      }
+    } catch (error) {
+      
+    } finally {
+      setLoading(false)
+    }
+    
+  }
+  useEffect(() => {
+      getNotifications()
+  },[])
 
   const menuItems = [
     { label: 'home', image: home ,link:"/dashboard" },
     { label: 'book now', image: book , link : "/book-appointment" },
-    { label: 'notifications', image: notifications ,link : "/notifications",newNotifications },
+    { label: 'notifications', image: notifications ,link : "/notifications",newNotifications:allNotifications?.some(notification => !notification?.isRead ) },
     { label: 'settings', image: settings,link : "/settings" },
     { label: 'help', image: information,link:"/help" },
   ]

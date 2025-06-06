@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useParams,useNavigate, Navigate, NavLink } from 'react-router-dom';
 import AppointmentItem from '../components/AppointmentItem';
-// book-appointment-vector.png
 import sideImage from "../assets/images/book-appointment-vector.png"
 import axiosInstance from '../utils/axios';
 import { useAppointmentStore } from '../store/appointments';
 import spinner from '../assets/images/spinner.gif';
-
 
 function ViewlAppointment() {
    const { id,type } = useParams();
@@ -32,7 +30,6 @@ function ViewlAppointment() {
             
           }
         }
-
         fetchFormData()
      },[id])
 
@@ -64,13 +61,21 @@ function ViewlAppointment() {
                     <img className='w-10' src={spinner} />
                   </div>          
               }
-
               <div className='appointment-bg my-4 flex bg-foam  flex-col gap-5  p-5 rounded-xl min-h-320'>
                 {
                  fields ?   (Object.entries(fields)).map(([label,value],index) => {
                     return <div key={index} > 
                         <div className='font-bold'>{label}</div>
-                        <div>{value}</div>
+                        {
+                          label == "photos" ? <div className='flex my-3 flex-wrap gap-2'> 
+                            {
+                              value.map((item,index) => {
+                                return <a href={item} target='_blank' key={index} ><img className='w-[50px] cursor-pointer' src={item}  /> </a> 
+                              } )
+                            }
+                          </div> :  <div>{value}</div>
+                        }
+                        
                     </div>
                   }) : 
 

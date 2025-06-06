@@ -6,18 +6,15 @@ import { cn } from "../../../utils/cn"
 import { useFormik , Field , FormikProvider } from "formik"
 import * as Yup from "yup"
 import { useRef ,useState} from "react"
-import { useSubmitAppointmentRequest } from "./CommonApiRequest"
 import axiosInstance from "../../../utils/axios"
 import { useAuthStore } from "../../../store/auth"
+import { showToast } from "../../../utils/toast"
 const MedicationRefillForm = ({serviceId}) => {
 
     const photosRef = useRef(null)
-    const { submitAppointmentRequest} = useSubmitAppointmentRequest()
     const [isLoading,setIsLoading] = useState(false)
 
-      const { user } = useAuthStore(); // Hook is called correctly inside this custom hook
-    
-
+    const { user } = useAuthStore(); // Hook is called correctly inside this custom hook
 
     const validationSchema = Yup.object().shape({
         pharmacy : Yup.string().required(),
@@ -30,15 +27,27 @@ const MedicationRefillForm = ({serviceId}) => {
 
         const formData = new FormData();
 
-        Object.entries(values).forEach(([key, value]) => {
-            formData.append(key, value);
+      
+
+        formData.append("formData", JSON.stringify(values) );
+        values["photos"]?.forEach(file => {
+             formData.append("photos", file); // use the same key "photos" for each
         });
+
+        const data = {
+            "serviceId": serviceId,
+            "userId":  user?.id,
+            "formData" : formData
+        }
          formData.append("serviceId", serviceId);
          formData.append("userId", user?.id);
          
         try {
             setIsLoading(true)
-            await axiosInstance.post("/api/v1/appointments/request", formData);
+           const response =  await axiosInstance.post("/api/v1/appointments/request", formData);
+           if(response.data?.statusCode == 200){
+            showToast.success("Appointment request added successfully")
+           }
             // await submitAppointmentRequest(formData)
         } finally {
             setIsLoading(false)

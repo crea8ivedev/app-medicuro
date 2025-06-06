@@ -1,20 +1,21 @@
 import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware'
 
 export const useNotificationStore = create(
-  persist(
     (set, get) => ({
       notifications: [],
-
+      isLoading : false,
+      setLoading : (status) => {
+        set({isLoading:status})
+      },
       setNotifications: (notifications) => {
         set({ notifications })
       },
 
-      markAsRead: (id) => {
+      markAsRead: (ids) => {
         const { notifications } = get()
         set({
           notifications: notifications.map((notif) =>
-            notif.id === id ? { ...notif, isRead: true } : notif
+            ids.includes(notif.id) ? { ...notif, isRead: true } : notif
           ),
         })
       },
@@ -22,15 +23,6 @@ export const useNotificationStore = create(
       clearNotifications: () => {
         set({ notifications: [] })
       },
-
-      getNotificationById: (id) => {
-        const { notifications } = get()
-        return notifications.find((notif) => notif.id === id) || null
-      },
     }),
-    {
-      name: 'medicuro-notifications',
-      storage: createJSONStorage(() => localStorage),
-    }
   )
-)
+
