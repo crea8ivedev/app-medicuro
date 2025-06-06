@@ -7,11 +7,16 @@ import { useFormik , Field , FormikProvider } from "formik"
 import * as Yup from "yup"
 import { useRef ,useState} from "react"
 import { useSubmitAppointmentRequest } from "./CommonApiRequest"
+import axiosInstance from "../../../utils/axios"
+import { useAuthStore } from "../../../store/auth"
 const MedicationRefillForm = ({serviceId}) => {
 
     const photosRef = useRef(null)
     const { submitAppointmentRequest} = useSubmitAppointmentRequest()
     const [isLoading,setIsLoading] = useState(false)
+
+      const { user } = useAuthStore(); // Hook is called correctly inside this custom hook
+    
 
 
     const validationSchema = Yup.object().shape({
@@ -21,10 +26,20 @@ const MedicationRefillForm = ({serviceId}) => {
     })
 
     const submitHandler = async (values,helpers) => {
+        values["photos"] = values["photos"]?.map((e) => (e?.file))
+
+        const formData = new FormData();
+
+        Object.entries(values).forEach(([key, value]) => {
+            formData.append(key, value);
+        });
+         formData.append("serviceId", serviceId);
+         formData.append("userId", user?.id);
+         
         try {
             setIsLoading(true)
-            values["photos"] = []
-            await submitAppointmentRequest({serviceId,formData : values})
+            await axiosInstance.post("/api/v1/appointments/request", formData);
+            // await submitAppointmentRequest(formData)
         } finally {
             setIsLoading(false)
             helpers.resetForm()
@@ -49,8 +64,6 @@ const MedicationRefillForm = ({serviceId}) => {
 
         fileReader.onload = () => {
             formik.setFieldValue("photos", [...formik.values.photos,{file,preview:fileReader.result}])
-           console.log("formikkkkkkkkk",formik.values)
-
         }
 
         fileReader.readAsDataURL(file)
