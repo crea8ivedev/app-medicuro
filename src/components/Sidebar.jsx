@@ -7,43 +7,39 @@ import book from '../assets/images/book.png'
 import dummyProfile from '../assets/images/dummy-profile.png'
 import closeMenu from '../assets/images/close-menu.png'
 import { useNavigate } from 'react-router-dom'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useNotificationStore } from '../store/notifications'
 import axiosInstance from '../utils/axios'
-
+import { useSocket } from '../context/socketContext';
+import { useAuthStore } from '../store/auth'
 
 function Sidebar({ openMenu, setOpenMenu }) {
 
   const navigate = useNavigate()
-  const { notifications:allNotifications,setNotifications,setLoading } = useNotificationStore()
-  const newNotifications = useState(() => allNotifications?.some(notification => !notification?.isRead ))
+  const { notifications: allNotifications,getNotifications } = useNotificationStore()
+  const {user} = useAuthStore()
 
-
-  const getNotifications = async () => {
-    try {
-      setLoading(true)
-      const reponse = await axiosInstance.get("/api/v1/notifications");
-      if(reponse?.data?.statusCode == 200){
-        const data = reponse?.data?.data;
-        setNotifications(data)
-      }
-    } catch (error) {
-      
-    } finally {
-      setLoading(false)
-    }
-    
-  }
+  const socket = useSocket();
   useEffect(() => {
-      getNotifications()
-  },[])
+    if(!socket) return;
+    if(user){
+      socket.emit("register",user?.id)
+    }
+    socket.on("recieved_notification",(notification) => {
+        getNotifications()
+    })
+  }, [socket])
+  
+  useEffect(() => {
+    getNotifications()
+  }, [])
 
   const menuItems = [
-    { label: 'home', image: home ,link:"/dashboard" },
-    { label: 'book now', image: book , link : "/book-appointment" },
-    { label: 'notifications', image: notifications ,link : "/notifications",newNotifications:allNotifications?.some(notification => !notification?.isRead ) },
-    { label: 'settings', image: settings,link : "/settings" },
-    { label: 'help', image: information,link:"/help" },
+    { label: 'home', image: home, link: "/dashboard" },
+    { label: 'book now', image: book, link: "/book-appointment" },
+    { label: 'notifications', image: notifications, link: "/notifications", newNotifications: allNotifications?.some(notification => !notification?.isRead) },
+    { label: 'settings', image: settings, link: "/settings" },
+    { label: 'help', image: information, link: "/help" },
   ]
 
   const navigateToPage = (link) => {
@@ -55,11 +51,11 @@ function Sidebar({ openMenu, setOpenMenu }) {
     const closeMenu = () => {
       setOpenMenu(false)
     }
-    document.addEventListener("click",closeMenu)
+    document.addEventListener("click", closeMenu)
     return () => {
-      document.removeEventListener("click",closeMenu)
+      document.removeEventListener("click", closeMenu)
     }
-  },[])
+  }, [])
 
   return (
     <div className='fixed h-screen top-0 left-0 transition-all z-1'>
@@ -67,7 +63,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
         onClick={(e) => {
           e.stopPropagation()
           setOpenMenu((prev) => !prev)
-        } }
+        }}
         className='flex justify-between pe-2 whitespace-nowrap cursor-pointer'
       >
         <div className='md:inline-block w-66 text-center pt-3 pb-10 bg-navy hidden' onClick={() => navigateToPage("/profile")}>
@@ -120,8 +116,8 @@ function Sidebar({ openMenu, setOpenMenu }) {
                   onClick={() => navigateToPage(item.link)}
                 >
                   <div className='relative sm:hidden'>
-                    <img  src={item.image} alt="" />
-                     {
+                    <img src={item.image} alt="" />
+                    {
                       item?.newNotifications && <div className='absolute top-1 right-0 h-05 w-05 bg-red-500 rounded-circle'> </div>
                     }
 

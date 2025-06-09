@@ -15,7 +15,7 @@ import axiosInstance from '../utils/axios';
 
 export default function Notifications() {
 
-  const { notifications,setNotifications,isLoading,markAsRead } = useNotificationStore()
+  const { notifications,isLoading,markAsRead,getNotifications } = useNotificationStore()
   const [perPage,setPerPage] = useState(4)
 
   const notificationCount = notifications.length
@@ -37,14 +37,8 @@ export default function Notifications() {
     showToast.success("Notification deleted successfully")
     getNotifications()  
   }
-
-  useEffect(() => {
-    console.log("notificationsssssssssssssssssssssss",notifications)
-  },[notifications])
-
-
+  
   // mark as read
-
   const markAsreadNotifications = async (ids) => {
           const response = await axiosInstance.post('/api/v1/notifications/mark-as-read', {ids})
           if(response.data?.statusCode == 200){
@@ -54,14 +48,14 @@ export default function Notifications() {
   }
 
   useEffect(() => {
-    if(notifications && initIsRead){
+    setInitIsRead(true)
+    if(notifications && initIsRead && currentNotificationsPage == 0){
       const firstPageNotifications = notifications.slice(0,perPage)
       const ids = firstPageNotifications?.map(e => e.id)
       if(ids.length){
         markAsreadNotifications(ids)
       }
     }
-    
   },[notifications])
 
   const handleSlideChange =  (index) => {
@@ -69,7 +63,10 @@ export default function Notifications() {
   }
 
   useEffect(() => {
-    const notificationInPage = notifications.slice((currentNotificationsPage * perPage ),currentNotificationsPage + perPage)
+    const start = currentNotificationsPage * perPage;
+    const end = start + perPage;
+
+    const notificationInPage = notifications.slice(start,end)
     const ids = notificationInPage?.map(notify => notify.id)
     if(ids.length)  markAsreadNotifications(ids)
     

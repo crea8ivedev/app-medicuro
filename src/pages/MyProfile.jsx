@@ -16,7 +16,6 @@ import CustomInput from '../components/CustomInput'
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom'
 
-
 function MyProfile() {
 
 const navigate = useNavigate()
@@ -72,18 +71,14 @@ const menuItems = [
   }
 ];
 
-
-
 const changeProfilePic = (e) => {
     const file = e.target.files[0];
     const fileReader = new FileReader()
-
     fileReader.onload = () => {
         const fileData = fileReader.result;
         setProfilePic(fileData)
         console.log(fileData)
     }
-
     fileReader.readAsDataURL(file)
 }
 
@@ -103,7 +98,6 @@ return (
                                     <input onChange={(e) => changeProfilePic(e)} ref={profilePicRef} type="file" hidden />
                                 </div>
                         </div>  
-                        
                         <div className='my-10'>
                             {
                                 menuItems?.map((item,index) => {
@@ -123,142 +117,9 @@ return (
                                 })
                             }
                         </div> 
-                           
-                        
-                        
             </div>
         </div>
     </div>
   )
 }
-
-const MyProfileInfo = () => {
-
-    const formFields = [
-        {
-            label: "Full Name",
-            name: "fullName",
-            type: "text",
-            placeholder: "John Doe"
-        },
-        {
-            label: "Phone Number",
-            name: "phoneNumber",
-            type: "tel",
-            placeholder: "1 709 XXX XXXX"
-        },
-        {
-            label: "Email",
-            name: "email",
-            type: "email",
-            placeholder: "Yourname@Example.Com"
-        },
-        {
-            label: "Date of Birth",
-            name: "dob",
-            type: "date",
-            placeholder: "dd / mm / yyyy"
-        },
-        {
-            label: "MCP",
-            name: "mcp",
-            type: "text",
-            placeholder: "000 000 000 000",
-            isMcp:true
-        },
-        {
-            label: "MCP Validation Date",
-            name: "mcpValidationDate",
-            type: "date",
-            placeholder: "dd / mm / yyyy"
-        },
-        {
-            label: "MCP Expiry Date",
-            name: "mcpExpiryDate",
-            type: "date",
-            placeholder: "dd / mm / yyyy"
-        }
-    ];
-
-    const  validationSchema = Yup.object({
-    fullName: Yup.string()
-        .required('Full Name is required'),
-
-    phoneNumber: Yup.string()
-        .matches(/^1\s\d{3}\s\d{3}\s\d{4}$/, 'Phone Number must be in format: 1 709 XXX XXXX')
-        .required('Phone Number is required'),
-
-    email: Yup.string()
-        .email('Invalid email address')
-        .required('Email is required'),
-
-    dob: Yup.date()
-        .required('Date of Birth is required'),
-
-    mcp: Yup.string()
-        .matches(/^\d{3}\s\d{3}\s\d{3}\s\d{3}$/, 'MCP must be in format: 000 000 000 000')
-        .required('MCP is required'),
-
-    mcpValidationDate: Yup.date()
-        .required('Validation Date is required'),
-
-    mcpExpiryDate: Yup.date()
-        .min(
-        Yup.ref('mcpValidationDate'),
-        'Expiry Date must be after Validation Date'
-        )
-        .required('Expiry Date is required'),
-    });
-
-    const formik = useFormik({
-    initialValues: {
-        fullName: '',
-        phoneNumber: '',
-        email: '',
-        dob: '',
-        mcp: '',
-        mcpValidationDate: '',
-        mcpExpiryDate: '',
-    },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-        console.log('Form submitted:', values);
-    },
-    });
-
-
-    return <div>
-        <div className='m-auto sm:w-sm w-full'>
-                <FormikProvider value={formik}> 
-                    {
-                        formFields.map((item,index) => {
-                            return <div key={index}  className='my-4'>
-                                <Field
-                                name={item.name}
-                                label={item.label}
-                                placeholder={item.placeholder}
-                                component={CustomInput}
-                                className='forn-field'
-                                type={item.type}
-                                isMcp={item?.isMcp}
-                                
-                            />
-                            
-                            </div>
-                            
-                            
-                            
-                        })
-                    }
-                </FormikProvider>
-        </div>
-
-        <div className='text-center mt-10'>
-            <button className='common-btn' onClick={() => formik.handleSubmit()}>Update Profile</button>        
-        </div>
-    </div>
-    
-   
-}
-
 export default MyProfile
