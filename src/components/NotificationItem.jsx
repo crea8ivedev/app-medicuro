@@ -23,13 +23,13 @@ export default function NotificationItem({
   }
 
   return (
-    <div className='group  bg-foam rounded-xl p-4 flex flex-wrap relative overflow-hidden cursor-pointer hover:bg-teal-500'>
+    <div className='group min-h-[131px]  bg-foam rounded-xl p-4 flex flex-wrap relative overflow-hidden cursor-pointer hover:bg-teal-500'>
       <div className='pe-4 md:block flex gap-2  text-center  h-full  border-r-eal-800 text-xl'>
         <div className='font-bold'>{dateOnly}</div>
         <div className='font-bold'>{year}</div>
       </div>
 
-      <div className='flex ps-4 justify-between items-center flex-1 border-l-2'>
+      <div className='flex ps-4 justify-between  flex-1 border-l-2'>
         <div className='flex flex-col gap-3'>
           <div>
             <div className='text-ocean font-bold'>{title}</div>

@@ -139,7 +139,7 @@ export default function Notifications() {
               </div>
               
               <div className='w-full'>
-                  <div className="flex w-full md:flex-nowrap flex-wrap-reverse  items-center justify-center md:min-w-500  md:max-w-500 bg-white gap-5 rounded-xl px-7 py-4">
+                  <div className="flex w-full md:flex-nowrap flex-wrap-reverse  items-center justify-center xl:min-w-500  md:max-w-500 bg-white gap-5 rounded-xl px-7 py-4">
                       <div className="flex flex-col items-center md:items-start justify-center ">
                         <div className="text-bluewave font-semibold">Book Appointment</div>
                         <div>Book your appointment with a licensed Medicuro doctor at your convenience</div>
