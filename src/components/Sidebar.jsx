@@ -1,9 +1,11 @@
 import { cn } from '../utils/cn'
-import settings from '../assets/images/settings.png'
-import home from '../assets/images/home.png'
-import notifications from '../assets/images/notification.png'
-import information from '../assets/images/information.png'
-import book from '../assets/images/book.png'
+
+import settings from '../assets/images/settings.svg'
+import home from '../assets/images/home.svg'
+import notifications from '../assets/images/notifications.svg'
+import information from '../assets/images/information.svg'
+import book from '../assets/images/book.svg'
+
 import dummyProfile from '../assets/images/dummy-profile.png'
 import closeMenu from '../assets/images/close-menu.png'
 import { useNavigate } from 'react-router-dom'
@@ -66,7 +68,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
         }}
         className='flex justify-between pe-2 whitespace-nowrap cursor-pointer'
       >
-        <div className='md:inline-block w-66 text-center pt-3 pb-10 bg-navy hidden' onClick={() => navigateToPage("/profile")}>
+        <div className='md:flex   md:w-66 text-center h-[93px] bg-navy hidden' onClick={() => navigateToPage("/profile")}>
           <img className='m-auto w-5 w-[35px] h-[35px] object-cover rounded-circle ' src={user?.profilePic ??  dummyProfile} alt='profile-pic' />
         </div>
       </div>
@@ -107,7 +109,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
               alt=''
             />
           </div>
-          <div className='pt-[60px] pe-20'>
+          <div className='pt-[60px] pe-40'>
             {menuItems.map((item, index) => {
               return (
                 <div

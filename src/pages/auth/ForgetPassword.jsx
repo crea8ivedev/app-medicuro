@@ -8,10 +8,12 @@ import { Field, FormikProvider, useFormik } from 'formik'
 import * as Yup from "yup"
 import axiosInstance from '../../utils/axios'
 import { showToast } from '../../utils/toast'
+import { useState } from 'react'
 
 export default function ForgetPassword() {
 
   const navigate = useNavigate()
+  const [loading,setLoading] = useState(false)
 
   const loginSchema = Yup.object().shape({
     email : Yup.string().email().required("Please enter your Email"),
@@ -20,13 +22,17 @@ export default function ForgetPassword() {
   const handleSubmit = async  (values, formikHelpers) => {
     const { resetForm } = formikHelpers
 
-     const response =  await axiosInstance.post('/api/v1/auth/forgot-password', values)
-    if(response?.data?.statusCode == 200){
-      resetForm()
-      showToast.success("Password reset link has been sent to your email")
-      navigate("/login")
+    try {
+      setLoading(true)
+      const response =  await axiosInstance.post('/api/v1/auth/forgot-password', values)
+      if(response?.data?.statusCode == 200){
+        resetForm()
+        showToast.success("Password reset link has been sent to your email")
+        navigate("/login")
+      }
+    } finally {
+      setLoading(false)
     }
-    
   }
 
   const formik  = useFormik({
@@ -46,8 +52,8 @@ export default function ForgetPassword() {
         </div>
 
         <FormikProvider value={formik} >
-          <form onSubmit={formik.handleSubmit} className='bg-mint py-24 md:px-24 px-5 sm:px-10 outline-40 outline-white rounded-xl max-w-md'>
-          <CommonBackBtn  label='Forget password' />
+          <form onSubmit={formik.handleSubmit} className='bg-mint py-24 mx-4  md:px-24 px-5 sm:px-10 outline-40 outline-white rounded-xl max-w-md'>
+          <CommonBackBtn  label='Forget Password' />
               <div className='mt-4 flex flex-col gap-1'>
                 <div className='text-navy font-semibold text-2xl font-league capitalize'>
                   Welcome to medicuro
@@ -69,7 +75,7 @@ export default function ForgetPassword() {
                   />
               </div>
               <div className='text-center my-10'>
-                    <button onClick={formik.handleSubmit}  type='submit' className='common-btn'>Send Link</button>
+                    <button disabled={loading} onClick={formik.handleSubmit}  type='submit' className='common-btn'>Send Link</button>
               </div>
           </form>
 

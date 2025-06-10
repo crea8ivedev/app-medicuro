@@ -5,7 +5,7 @@ import { cn } from '../utils/cn';
 import CustomInput from '../components/CustomInput';
 import cameraLogo from "../assets/images/camera.png"
 import photoPlusLogo from "../assets/images/plus-photos.png"
-import axiosInstance from "../utils/axios"
+
 
 function BookAppointment() {
 

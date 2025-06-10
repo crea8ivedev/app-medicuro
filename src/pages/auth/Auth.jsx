@@ -5,31 +5,31 @@ export default function Auth() {
   return (
     <div className='relative z-10 min-h-full flex flex-col justify-center items-center text-white space-y-6 text-center'>
       <div>
-        <img src={MedicuroLogo} className='w-100 mx-auto  mb-2' />
+        <img src={MedicuroLogo} alt='medicuro-logo' className='w-100 mx-auto  mb-2' />
         <h1 className='text-4xl font-bold uppercase font-roboto-cond'>
           {' '}
           MEDICURO
         </h1>
-        <h6 className='capitalize text-xl'>NL’s Trusted Virtual Clinic</h6>
+        <h6 className='capitalize text-sm'>NL’s Trusted Virtual Clinic</h6>
       </div>
 
       <div>
-        <p>
+        <p className='font-extralight'>
           Your secure gateway to professional <br /> virtual healthcare. Please
           register to <br />
           begin or log in to access your account.
         </p>
       </div>
-      <div className='flex flex-col gap-4'>
+      <div className='flex flex-col gap-4 mt-7'>
         <Link
           to='/login'
-          className='py-2.5 px-10 text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit'
+          className='py-3 px-15 text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit hover:opacity-90'
         >
           Log In
         </Link>
         <Link
           to='signup'
-          className='py-2.5 px-10  text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit'
+          className='py-3 px-10 md:w-[162px]  text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit hover:opacity-90'
         >
           Sign Up
         </Link>

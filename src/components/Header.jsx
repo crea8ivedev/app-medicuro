@@ -29,8 +29,8 @@ function Header({setOpenMenu}) {
   },[upcomingAppointments])
 
   return (
-    <div className='md:h-93 md:ps-90 bg-white md:pt-5 md:pb-10'>
-      <div className='md:hidden  flex justify-between items-center px-3 py-2'>
+    <div className='md:h-93 md:ps-90 bg-white md:py-5  flex items-center'>
+      <div className='md:hidden w-full  flex justify-between items-center px-3 py-2'>
         <div className='text-5xl cursor-pointer' onClick={(e) => {
           e.stopPropagation();
           setOpenMenu(true)

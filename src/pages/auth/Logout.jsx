@@ -43,8 +43,8 @@ export default function Logout() {
         </div>
       </div>
 
-      <div className='flex gap-4 mt-20'>
-        <div><input type="checkbox" className='scale-150 outline-0' /></div>
+      <div className='flex items-center gap-4 mt-20'>
+        <input type="checkbox" className='scale-150 outline-0' />
         <div className='text-sm text-start'>Send me a copy of my data and usage history</div>
       </div>
     </div>

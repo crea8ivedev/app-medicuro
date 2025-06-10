@@ -14,7 +14,7 @@ export default function DefaultLayout() {
       <div
         className={cn(
           openMenu ? 'md:ps-[182px]' : 'md:ps-[66px]',
-          'transition-all pt-5'
+          'transition-all'
         )}
       >
         <Outlet />

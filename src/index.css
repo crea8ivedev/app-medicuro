@@ -67,14 +67,14 @@
 }
 
 .auth-layout-start {
-  @apply absolute top-1/2 left-0 w-full h-full transform -translate-y-1/2 bg-repeat-x bg-auto bg-[url("../src/assets/images/star-ask-group-1.png")];
+  @apply absolute top-1/2 bg-center left-0 right-0 w-full bottom-0 transform -translate-y-1/2 bg-repeat-x bg-auto bg-[url("../src/assets/images/star-ask-group-1.png")];
 }
 .plus-bg-banner {
   @apply absolute top-1/2 z-[-1] left-0 w-full bottom-0 -translate-y-1/2 bg-repeat-x bg-auto bg-[url("../src/assets/images/plus-bg-banner.svg")];
 }
 
 .common-btn {
-  @apply bg-gradient-to-r from-bluewave to-seafoam text-white px-5 md:px-16 rounded-md py-3 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50;
+  @apply bg-gradient-to-r font-outfit font-extralight from-bluewave to-seafoam text-white px-5 md:px-16 rounded-md py-3 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50 hover:opacity-90;
 }
 
 .bg-secondary {
@@ -90,7 +90,7 @@
 }
 
 .forn-field{
-  @apply bg-white border border-teal-600 w-full p-2 rounded-md outline-0
+  @apply bg-white border border-teal-600 w-full min-h-[45px] p-2  md:max-w-[299px] rounded-sm outline-0
 }
 
 input[type=number]::-webkit-outer-spin-button,

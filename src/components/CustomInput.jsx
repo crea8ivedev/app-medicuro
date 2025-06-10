@@ -85,14 +85,14 @@ function CustomInput({
 
   return (
     <div className='flex flex-col gap-2'>
-      <div className={cn("font-bold text-xl",labelclasses)}>{label}</div>
+      <div className={cn("font-bold text-[20px]",labelclasses)}>{label}</div>
       <div className='relative'>
         {
           type == "textarea" ? 
             <textarea cols={cols} {...props} {...field}  rows={rows} className={cn("bg-white",inputclasses)}></textarea>
           :
           <input
-            className={cn("bg-white border border-teal-600 w-full p-2 rounded-md outline-0",inputclasses)}
+            className={cn("bg-white border border-teal-600 w-full p-4 rounded-md outline-0",inputclasses)}
             type={inputType}
             placeholder={placeholder}
             disabled={isDisabled}
@@ -108,7 +108,7 @@ function CustomInput({
         {password && (
           <div
             onClick={() => setShowPassword((prev) => !prev)}
-            className='absolute right-3 top-1/2 -translate-y-50-per cursor-pointer'
+            className='absolute right-5 top-1/2 -translate-y-50-per cursor-pointer'
           >
             <img
               className='max-w-20 max-h-20'
@@ -121,7 +121,7 @@ function CustomInput({
         {isMcp && (
           <div
             onClick={() => setShowPassword((prev) => !prev)}
-            className='absolute right-3 top-1/2 -translate-y-50-per cursor-pointer'
+            className='absolute right-5 top-1/2 -translate-y-50-per cursor-pointer'
           >
             <img
               className='max-w-20 max-h-20'
@@ -130,20 +130,11 @@ function CustomInput({
             />
           </div>
         )}
-
-
-
-
-
-
-
-
-
        {
         <ErrorMessage
           name={field.name}
           component='div'
-          className='text-xs font-normal text-red-600 mt-1 ml-1 absolute -bottom-15'
+          className='text-xs  text-navy font-semibold mt-1 ml-1 absolute -bottom-15'
         />
       }
       </div>

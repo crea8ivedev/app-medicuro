@@ -7,13 +7,13 @@ import { FormikProvider, Field, useFormik } from 'formik'
 import * as Yup from 'yup'
 import axiosInstance from '../../utils/axios'
 import { useAuthStore } from '../../store/auth'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { cn } from '../../utils/cn'
 import { getFirebaseToken } from '../../utils/firebaseConfig'
 
 export default function Signup() {
 
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState(1)
   const [signUpFormValues, setSignUpFormValues] = useState({
     fullName: '',
     password: '',
@@ -34,13 +34,13 @@ export default function Signup() {
         </div>
 
         <div
-          className='bg-mint md:mt-24 md:pt-24   md:px-24 px-10 sm:px-10  md:py-7 py-10 w-500 rounded-xl  outline-40 outline-white'
+          className='bg-mint md:mt-24 md:pt-24 mx-4   md:px-24 px-10 sm:px-10  md:py-7 py-10 w-500 rounded-xl  outline-40 outline-white'
         >
           {
             step === 1 && <CommonBackBtn onClick={() => setStep(0)} label='Sign Up' />
           }
 
-          <div className='mt-4 mb-7'>
+          <div className='mt-4 mb-7 px-3'>
             {step === 0 && <ProfileForm signUpFormValues={signUpFormValues} setSignUpFormValues={setSignUpFormValues} setStep={setStep} />}
             {step === 1 && <Terms signUpFormValues={signUpFormValues} setStep={setStep} />}
           </div>
@@ -106,7 +106,7 @@ const Terms = ({ setStep, signUpFormValues }) => {
         {user?.fullName}
         <div>
           <span className='text-bluewave font-bold'>Terms of Use </span> and{' '}
-          <span className='text-bluewave font-bold'>Privacy Policy.</span>
+          <span className='text-bluewave font-bold cursor-pointer'> <Link to={"/privacy"}> Privacy Policy. </Link> </span>
         </div>
       </div>
 
@@ -122,7 +122,7 @@ const Terms = ({ setStep, signUpFormValues }) => {
         nulla posuere neque tincidunt porta.
       </div>
       <div className='text-navy font-bold my-3 text-xl'>
-        terms & conditions
+        Terms & Conditions
       </div>
       <ul>
         <li className='list-decimal'>
@@ -138,7 +138,7 @@ const Terms = ({ setStep, signUpFormValues }) => {
       <div className='text-center'>
         <button
           disabled={isLoading}
-          className={cn("common-btn my-4 cursor-pointer", isLoading ? "spinner" : "")}
+          className="common-btn my-4 cursor-pointer font-outfit w-full md:w-auto"
           onClick={() => submitSignUpForm()}
         >
           Accept
@@ -205,7 +205,7 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
           type='text'
           name='fullName'
           label='Full Name'
-          placeholder='First and last name'
+          placeholder='first and last name'
           component={CustomInput}
           className='forn-field'
         />
@@ -215,7 +215,7 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
           name='password'
           password
           label='Password'
-          placeholder='Password'
+          placeholder='*************'
           component={CustomInput}
           className='forn-field'
         />
@@ -224,16 +224,16 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
           type='email'
           name='email'
           label='Email'
-          placeholder='Email'
+          placeholder='example@example.com'
           component={CustomInput}
           className='forn-field'
         />
 
         <Field
-          type='text'
+          type='number'
           name='phone'
           label='Mobile Number'
-          placeholder='Mobile Number'
+          placeholder='1709 xxx xxxx'
           component={CustomInput}
           className='forn-field'
         />
@@ -247,14 +247,17 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
           className='forn-field'
         />
 
-        <Field
-          type='date'
-          name='mcp'
-          label='MCP'
-          placeholder='000 000 000 000'
-          component={CustomInput}
-          className='forn-field'
-        />
+      <div className='mt-3'>
+          <Field
+                type='number'
+                name='mcp'
+                label='MCP'
+                placeholder='000 000 000 000'
+                component={CustomInput}
+                className='forn-field'
+              />
+      </div>
+        
 
         <Field
           type='date'
@@ -277,7 +280,7 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
         <div className='text-center'>
           <button
             type='submit'
-            className='common-btn my-4 cursor-pointer'
+            className='common-btn my-4 cursor-pointer w-full md:w-auto'
           >
             Next
           </button>

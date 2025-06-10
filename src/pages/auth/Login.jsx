@@ -4,15 +4,14 @@ import loginSideImg from '../../assets/images/login-vector.png'
 import CommonBackBtn from '../../components/CommonBackBtn'
 import CustomInput from '../../components/CustomInput'
 
-import facebookLoginIcon from '../../assets/images/facebook-login.png'
-import googleLoginIcon from '../../assets/images/google-login.png'
-import fingerprintLoginIcon from '../../assets/images/fingerprint-login.png'
+import facebookLoginIcon from '../../assets/images/facebook.svg'
+import googleLoginIcon from '../../assets/images/google.svg'
+import fingerprintLoginIcon from '../../assets/images/fingerprint.svg'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Field, FormikProvider, useFormik } from 'formik'
 import * as Yup from "yup"
 import axiosInstance from '../../utils/axios'
 import { useAuthStore } from '../../store/auth'
-import { cn } from '../../utils/cn'
 
 export default function Login() {
 
@@ -23,13 +22,13 @@ export default function Login() {
   const navigate = useNavigate()
  
   const socialItems = [
-    { icon: facebookLoginIcon, link: '' },
-    { icon: googleLoginIcon, link : `${import.meta.env.VITE_API_BASE_URL}/auth/login/google`},
-    { icon: fingerprintLoginIcon, link: '' },
+    { icon: googleLoginIcon, link : `${import.meta.env.VITE_API_BASE_URL}/auth/login/google`,alt:"google-icon"},
+    { icon: facebookLoginIcon, link: '',alt:"facebook icon" },
+    // { icon: fingerprintLoginIcon, link: '',alt:"fingerprint icon" },
   ]
 
   const loginSchema = Yup.object().shape({
-    emailOrPhone : Yup.string().email().required("Please enter your Email"),
+    emailOrPhone : Yup.string().email().required("Please enter your Email").email("Value should be email or phone number"),
     password : Yup.string().required("Please enter your password")
   })
 
@@ -91,10 +90,10 @@ export default function Login() {
 
               <div className='mt-10 flex flex-col gap-3'>
                   <Field
-                    type='email'
+                    type='type'
                     name='emailOrPhone'
                     label="Email or Mobile Number"
-                    placeholder='Email or Mobile Number'
+                    placeholder='example@example.com'
                     component={CustomInput}
                     // focusHandler={errorRemovehandler}
                     className='forn-field'
@@ -125,27 +124,27 @@ export default function Login() {
                 /> */}
               </div>
 
-              <div className='text-end text-navy font-bold text-xs cursor-pointer' onClick={handleForgetPassword}>
+              <div className='text-end text-navy font-bold text-xs mt-2 cursor-pointer' onClick={handleForgetPassword}>
                 Forget Password
               </div>
 
               <div className='flex flex-col items-center gap-4 mt-7'>
-                <button  type='submit' className={cn('common-btn',isLoading ? "spinner" : "")} disabled={isLoading}>Log In</button>
-                <div>or log in with</div>
+                <button  type='submit' className="common-btn font-extralight font-outfit w-full md:w-auto" disabled={isLoading}>Log In</button>
+                <div className='text-sm'>or log in with</div>
 
                 <div className='flex gap-2'>
                   {socialItems.map((item, index) => (
                     <a
-                      className='bg-teal h-40 w-40 rounded-circle flex items-center justify-center'
+                      className='bg-teal h-40 w-40 rounded-circle flex items-center justify-center hover:opacity-90'
                       key={index}
                       href={item.link}
                     >
-                      <img src={item.icon} alt='' />
+                      <img src={item.icon} alt={item.alt} />
                     </a>
                   ))}
                 </div>
 
-                <div className='text-md'>
+                <div className='text-sm'>
                   Don’t have an account?{' '}
                   <NavLink to='/signup'>
                     <span className='text-navy font-bold cursor-pointer'>
