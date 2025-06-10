@@ -37,7 +37,7 @@ export default function NotificationItem({
           </div>
         </div>
 
-        <div onClick={() => deleteNotification()} className='absolute   bg-black/80 h-full   text-white right-0 w-0 group-hover:w-100 transition-all flex flex-col gap-3 overflow-hidden items-center justify-center '> 
+        <div onClick={() => deleteNotification()} className='absolute top-0   bg-black/80 h-full   text-white right-0 w-0 group-hover:w-100 transition-all flex flex-col gap-3 overflow-hidden items-center justify-center '> 
           <img src={deleteIcon} alt="" />
           <div>delete</div>
         </div>
