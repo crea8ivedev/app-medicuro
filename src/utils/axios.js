@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { showToast } from './toast'
-
+import { useAuthStore } from '../store/auth';
 // Create Axios instance
 const baseURL = import.meta.env.VITE_NODE_ENV == "development" ? import.meta.env.VITE_API_BASE_URL : "https://api-medicuro.vercel.app";
 const axiosInstance = axios.create({
@@ -23,7 +23,7 @@ axiosInstance.interceptors.response.use(
       const status = response.status;
 
       if (status === 401 && showErrorToast) {
-        showToast.error("Not authorized");
+        useAuthStore.getState().logout();
         return Promise.reject(error);
       }
 
