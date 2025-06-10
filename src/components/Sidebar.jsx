@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useNotificationStore } from '../store/notifications'
 
-import { useSocket } from '../context/socketContext';
+// import { useSocket } from '../context/socketContext';
 import { useAuthStore } from '../store/auth'
 
 function Sidebar({ openMenu, setOpenMenu }) {
@@ -19,16 +19,16 @@ function Sidebar({ openMenu, setOpenMenu }) {
   const { notifications: allNotifications,getNotifications } = useNotificationStore()
   const {user} = useAuthStore()
 
-  const socket = useSocket();
-  useEffect(() => {
-    if(!socket) return;
-    if(user){
-      socket.emit("register",user?.id)
-    }
-    socket.on("recieved_notification",(notification) => {
-        getNotifications()
-    })
-  }, [socket])
+  // const socket = useSocket();
+  // useEffect(() => {
+  //   if(!socket) return;
+  //   if(user){
+  //     socket.emit("register",user?.id)
+  //   }
+  //   socket.on("recieved_notification",(notification) => {
+  //       getNotifications()
+  //   })
+  // }, [socket])
   
   useEffect(() => {
     getNotifications()
