@@ -15,11 +15,13 @@ import { useFormik,Field,FormikProvider } from 'formik'
 import CustomInput from '../components/CustomInput'
 import * as Yup from 'yup';
 import { useNavigate } from 'react-router-dom'
+import { useAuthStore } from '../store/auth'
 
 function MyProfile() {
 
 const navigate = useNavigate()
 const profilePicRef = useRef()
+const {user} = useAuthStore()
 
 const [profilePic,setProfilePic] = useState(false)
 
@@ -71,16 +73,16 @@ const menuItems = [
   }
 ];
 
-const changeProfilePic = (e) => {
-    const file = e.target.files[0];
-    const fileReader = new FileReader()
-    fileReader.onload = () => {
-        const fileData = fileReader.result;
-        setProfilePic(fileData)
-        console.log(fileData)
-    }
-    fileReader.readAsDataURL(file)
-}
+// const changeProfilePic = (e) => {
+//     const file = e.target.files[0];
+//     const fileReader = new FileReader()
+//     fileReader.onload = () => {
+//         const fileData = fileReader.result;
+//         setProfilePic(fileData)
+//         console.log(fileData)
+//     }
+//     fileReader.readAsDataURL(file)
+// }
 
 return (
     <div className=' bg-sky-foam h-screen pb-16 relative'>
@@ -92,11 +94,11 @@ return (
             <div className='bg-mint relative w-825 p-10 flex flex-col gap-7 py-24 rounded-xl'>
             <div className='common-right-design  z-10 bottom-5 right-5'></div>
                         <div className='relative max-w-max m-auto text-center'>
-                                <img className='m-auto w-105 h-105 rounded-circle object-cover' src={ profilePic ? profilePic :  dummyProfile} alt="" />
-                                <div onClick={() => profilePicRef?.current?.click()}  className='p-3 bg-bluewave rounded-circle flex justify-center items-center w-30 h-30 absolute right-0 bottom-0 cursor-pointer'>
+                                <img className='m-auto w-105 h-105 rounded-circle object-cover' src={ user?.profilePic ??  dummyProfile} alt="" />
+                                {/* <div onClick={() => profilePicRef?.current?.click()}  className='p-3 bg-bluewave rounded-circle flex justify-center items-center w-30 h-30 absolute right-0 bottom-0 cursor-pointer'>
                                     <img src={whitePen} alt="" />
                                     <input onChange={(e) => changeProfilePic(e)} ref={profilePicRef} type="file" hidden />
-                                </div>
+                                </div> */}
                         </div>  
                         <div className='my-10'>
                             {

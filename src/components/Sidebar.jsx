@@ -9,7 +9,7 @@ import closeMenu from '../assets/images/close-menu.png'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useNotificationStore } from '../store/notifications'
-import axiosInstance from '../utils/axios'
+
 import { useSocket } from '../context/socketContext';
 import { useAuthStore } from '../store/auth'
 
@@ -62,17 +62,17 @@ function Sidebar({ openMenu, setOpenMenu }) {
       <div
         onClick={(e) => {
           e.stopPropagation()
-          setOpenMenu((prev) => !prev)
+          setOpenMenu(false)
         }}
         className='flex justify-between pe-2 whitespace-nowrap cursor-pointer'
       >
         <div className='md:inline-block w-66 text-center pt-3 pb-10 bg-navy hidden' onClick={() => navigateToPage("/profile")}>
-          <img className='m-auto' src={dummyProfile} alt='profile-pic' />
+          <img className='m-auto w-5' src={user?.profilePic ??  dummyProfile} alt='profile-pic' />
         </div>
       </div>
 
       <div className='flex overflow-hidden w-full'>
-        <div className='h-screen bg-navy hidden md:block' onClick={(e) => e.stopPropagation()}>
+        <div onMouseEnter={() => setOpenMenu(true)} className='h-screen bg-navy hidden md:block' onClick={(e) => e.stopPropagation()}>
           {menuItems.map((item, index) => {
             return (
               <div
@@ -107,7 +107,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
               alt=''
             />
           </div>
-          <div className='pt-70 pe-20'>
+          <div className='pt-[50px] pe-20'>
             {menuItems.map((item, index) => {
               return (
                 <div
