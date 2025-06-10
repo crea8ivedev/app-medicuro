@@ -67,7 +67,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
         className='flex justify-between pe-2 whitespace-nowrap cursor-pointer'
       >
         <div className='md:inline-block w-66 text-center pt-3 pb-10 bg-navy hidden' onClick={() => navigateToPage("/profile")}>
-          <img className='m-auto w-5 w-[35px]' src={user?.profilePic ??  dummyProfile} alt='profile-pic' />
+          <img className='m-auto w-5 w-[35px] h-[35px] object-cover rounded-circle ' src={user?.profilePic ??  dummyProfile} alt='profile-pic' />
         </div>
       </div>
 
@@ -107,7 +107,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
               alt=''
             />
           </div>
-          <div className='pt-[70px] pe-20'>
+          <div className='pt-[60px] pe-20'>
             {menuItems.map((item, index) => {
               return (
                 <div
