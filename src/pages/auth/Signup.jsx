@@ -34,13 +34,13 @@ export default function Signup() {
         </div>
 
         <div
-          className='bg-mint md:mt-24 md:pt-24 mx-4   md:px-24 px-10 sm:px-10  md:py-7 py-10 w-500 rounded-xl  outline-40 outline-white'
+          className='bg-mint md:mt-24 md:pt-24 mx-4  px-5    sm:px-10  md:py-7 py-10 w-500 rounded-xl  outline-40 outline-white'
         >
           {
             step === 1 && <CommonBackBtn onClick={() => setStep(0)} label='Sign Up' />
           }
 
-          <div className='mt-4 mb-7 px-3'>
+          <div className='mt-4 mb-7 px-3 md:px-[50px]'>
             {step === 0 && <ProfileForm signUpFormValues={signUpFormValues} setSignUpFormValues={setSignUpFormValues} setStep={setStep} />}
             {step === 1 && <Terms signUpFormValues={signUpFormValues} setStep={setStep} />}
           </div>
@@ -110,22 +110,29 @@ const Terms = ({ setStep, signUpFormValues }) => {
         </div>
       </div>
 
-      <div>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-        pellentesque congue lorem, vel tincidunt tortor placerat a. Proin ac
-        diam quam. Aenean in sagittis magna, ut feugiat diam. Fusce a
-        scelerisque neque, sed accumsan metus. Nunc auctor tortor in dolor
-        luctus, quis euismod urna tincidunt. Aenean arcu metus, bibendum at
-        rhoncus at, volutpat ut lacus. Morbi pellentesque malesuada eros semper
-        ultrices. Vestibulum lobortis enim vel neque auctor, a ultrices ex
-        placerat. Mauris ut lacinia justo, sed suscipit tortor. Nam egestas
-        nulla posuere neque tincidunt porta.
+      <div className='text-sm mt-14'>
+          Lorem ipsum dolor sit amet, consectetur 
+          adipiscing elit. Praesent pellentesque congue 
+          lorem, vel tincidunt tortor placerat a. Proin ac diam 
+          quam. Aenean in sagittis magna, ut feugiat diam. 
+          Fusce a scelerisque neque, sed accumsan metus.
       </div>
-      <div className='text-navy font-bold my-3 text-xl'>
+
+      <div className='mt-4 mb-3 text-sm'>
+        Nunc auctor tortor in dolor luctus, quis euismod 
+        urna tincidunt. Aenean arcu metus, bibendum at 
+        rhoncus at, volutpat ut lacus. Morbi pellentesque 
+        malesuada eros semper ultrices. Vestibulum 
+        lobortis enim vel neque auctor, a ultrices ex 
+        placerat. Mauris ut lacinia justo, sed suscipit tortor. 
+        Nam egestas nulla posuere neque tincidunt porta.
+      </div>
+
+      <div className='text-navy font-bold my-3 text-xl mx-3'>
         Terms & Conditions
       </div>
-      <ul>
-        <li className='list-decimal'>
+      <ul className='mx-3'>
+        <li className='list-decimal text-sm'>
           Ut lacinia justo sit amet lorem sodales accumsan. Proin malesuada
           eleifend fermentum. Donec condimentum, nunc at rhoncus faucibus, ex
           nisi laoreet ipsum, eu pharetra eros est vitae orci. Morbi quis
@@ -135,7 +142,7 @@ const Terms = ({ setStep, signUpFormValues }) => {
         </li>
       </ul>
 
-      <div className='text-center'>
+      <div className='text-center mt-4'>
         <button
           disabled={isLoading}
           className="common-btn my-4 cursor-pointer font-outfit w-full md:w-auto"
@@ -215,7 +222,7 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
           name='password'
           password
           label='Password'
-          placeholder='*************'
+          placeholder='••••••••••••'
           component={CustomInput}
           className='forn-field'
         />

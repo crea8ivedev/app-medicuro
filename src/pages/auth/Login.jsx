@@ -28,7 +28,15 @@ export default function Login() {
   ]
 
   const loginSchema = Yup.object().shape({
-    emailOrPhone : Yup.string().email().required("Please enter your Email").email("Value should be email or phone number"),
+    emailOrPhone : Yup.string()
+    .required('Please enter email or mobile number')
+    .test('is-email-or-mobile', 'Please enter a valid email or mobile number', function (value) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const mobileRegex = /^[6-9]\d{9}$/;
+      
+      if (!value) return false;
+      return emailRegex.test(value) || mobileRegex.test(value);
+    }), 
     password : Yup.string().required("Please enter your password")
   })
 
@@ -69,7 +77,7 @@ export default function Login() {
   }
 
   return (
-    <div className='relative z-10 min-h-screen flex py-5  justify-between items-center'>
+    <div className='relative z-10 min-h-screen flex py-5  justify-around items-center'>
       <div className='plus-bg-banner'></div>
       <Container className='flex flex-wrap flex-container justify-between'>
         <div className='flex left-img-container justify-between items-center'>

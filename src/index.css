@@ -70,7 +70,7 @@
   @apply absolute top-1/2 bg-center left-0 right-0 w-full bottom-0 transform -translate-y-1/2 bg-repeat-x bg-auto bg-[url("../src/assets/images/star-ask-group-1.png")];
 }
 .plus-bg-banner {
-  @apply absolute top-1/2 z-[-1] left-0 w-full bottom-0 -translate-y-1/2 bg-repeat-x bg-auto bg-[url("../src/assets/images/plus-bg-banner.svg")];
+  @apply absolute bg-[100%] top-1/2 z-[-1] left-0 w-full bottom-0 -translate-y-1/2 bg-no-repeat   bg-[url("../src/assets/images/common-bg-2.png")];
 }
 
 .common-btn {
@@ -90,7 +90,7 @@
 }
 
 .forn-field{
-  @apply bg-white border border-teal-600 w-full min-h-[45px] p-2  md:max-w-[299px] rounded-sm outline-0
+  @apply bg-white border border-teal-600 w-full min-h-[45px] p-2  md:max-w-[299px] rounded-sm outline-0 lg:min-w-[299px]
 }
 
 input[type=number]::-webkit-outer-spin-button,
