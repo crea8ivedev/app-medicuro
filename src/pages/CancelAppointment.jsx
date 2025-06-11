@@ -46,13 +46,13 @@ const cancelAppoinment = async  (appointmentId) => {
               <div className='max-w-500'>
                   <div className='text-white my-4 font-semibold text-md'>Cancel Appointments</div>
                     <div className='flex flex-col gap-4 mb-10'>
-                        <div className='font-semibold'> This is to confirm your request to <span className='font-bold'> cancel </span>  your appointment with Dr. { appointment?.doctor}. Please click the <span className='font-bold'>Confirm button</span>  below to proceed.</div>
+                        <div className='font-normal'> This is to confirm your request to <span className='font-bold'> cancel </span>  your appointment with { appointment?.doctor}. Please click the <span className='font-bold'>Confirm button</span>  below to proceed.</div>
                         <div>Please note that this action is final and cannot be reversed.</div>
                     </div>
                   
                   <div className='md:max-w-430'>
                     { appointment &&  <AppointmentItem
-                                buttons={[{name : "Cancel",action : (index) => cancelAppoinment(index)}]}
+                                buttons={[{name : "Confirm",action : (index) => cancelAppoinment(index)}]}
                                 doctor={appointment?.doctor}
                                 service={appointment?.service}
                                 date={appointment?.date}

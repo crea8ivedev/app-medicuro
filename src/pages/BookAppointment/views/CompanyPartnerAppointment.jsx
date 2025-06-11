@@ -15,8 +15,8 @@ const CompanyPartnerAppointmentForm = ({serviceId}) => {
 
 
     const validationSchema = Yup.object().shape({
-        companyName : Yup.string().required(),
-        reason : Yup.string().required()
+        companyName : Yup.string().required("Company name is required"),
+        reason : Yup.string().required("Reason is required")
     })
 
     const SubmitHandler = async  (values,helpers) => {
@@ -47,6 +47,7 @@ const CompanyPartnerAppointmentForm = ({serviceId}) => {
                         name='companyName'
                         component={CustomInput}
                         className='forn-field'
+                        errorStyle="text-white"
                     />
                     {/* <CustomInput /> */}
                 </div>
@@ -60,6 +61,7 @@ const CompanyPartnerAppointmentForm = ({serviceId}) => {
                         type='textarea' 
                         inputclasses="w-full outline-0" 
                         rows={10}
+                        errorStyle="text-white"
                     />
                     {/* <CustomInput type='textarea' inputclasses="w-full outline-0" rows={10} /> */}
                 </div>

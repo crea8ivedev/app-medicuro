@@ -36,12 +36,12 @@ function RebookAppointment() {
               <div className='max-w-500'>
                   <div className='text-white my-4 font-semibold text-md'>Rebook Appointments</div>
                     <div className='flex flex-col gap-4 mb-10'>
-                        <div className='font-semibold'> This is to confirm your request to <span className='font-bold'> rebook </span>  your appointment with Dr. {appointment?.doctor}. Please click the <span className='font-bold'>Confirm button</span>  below to proceed.</div>
+                        <div> This is to confirm your request to <span className='font-bold'> rebook </span>  your appointment with  {appointment?.doctor}. Please click the <span className='font-bold'>Confirm button</span>  below to proceed.</div>
                         <div>Please note that this action is final and cannot be reversed.</div>
                     </div>
                   <div className='md:max-w-430'>
                     { appointment &&  <AppointmentItem
-                                buttons={[{name : "Rebook",action : (index) => cancelAppoinment(index)}]}
+                                buttons={[{name : "Confirm",action : (index) => cancelAppoinment(index)}]}
                                 doctor={appointment?.doctor}
                                 clinic={appointment?.clinic}
                                 date={appointment?.date}

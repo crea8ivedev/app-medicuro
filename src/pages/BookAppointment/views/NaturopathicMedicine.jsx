@@ -5,50 +5,66 @@ import * as Yup from "yup"
 import { useSubmitAppointmentRequest } from "./CommonApiRequest"
 import { useState } from "react"
 import { cn } from "../../../utils/cn"
+import down from "../../../assets/images/down.svg"
 
-const NaturopathicMedicineForm = () => {
+
+
+const NaturopathicMedicineForm = ({serviceId}) => {
 
     const { submitAppointmentRequest} = useSubmitAppointmentRequest()
     const [isLoading,setIsLoading] = useState(false)
 
-      const validationSchema = Yup.object().shape({
-            type : Yup.string().required(),
-            paid : Yup.string().required(),
-            reason : Yup.string().required()
-        })
+    const validationSchema = Yup.object().shape({
+        type : Yup.string().required(),
+        paid : Yup.string().required(),
+        reason : Yup.string().required("Reason is required")
+    })
     
        
     const SubmitHandler = async  (values,helpers) => {
         try{
             setIsLoading(true)
-            await submitAppointmentRequest ({serviceId, formData:values })
+            await submitAppointmentRequest({serviceId, formData:values })
         }finally{
             setIsLoading(false)
             helpers.resetForm()
         }
     }
 
-        const formik = useFormik({
-            initialValues : {
-                type : "",
-                reason : "",
-                paid : ""
-            },
-            validationSchema,
-            onSubmit : (values,helpers) => SubmitHandler(values,helpers)
-        })
+    const formik = useFormik({
+        initialValues : {
+            type : "",
+            reason : "",
+            paid : ""
+        },
+        validationSchema,
+        onSubmit : (values,helpers) => SubmitHandler(values,helpers)
+    })
 
     return <div>
         <FormikProvider value={formik}>
             <div className='flex flex-col gap-5'>
             <div className='flex flex-col gap-2'>
                 <div className='text-white'>Please select a Naturopathic appointment type</div>
-                <CommonSelectBox className={"without-arrrow"} />
+                {/* <CommonSelectBox /> */}
+                <Field 
+                    name="type"
+                    component = {CommonSelectBox}
+                    options = {[{name : "test",value :"test"},{name : "test2",value :"test2"}]}
+                />
             </div>
 
-              <div className='flex flex-col gap-2'>
+              <div className='flex flex-col gap-2 relative'>
                 <div className='text-white'>This service is not covered by MCP. How will this service be paid for?</div>
-                <CommonSelectBox className={"without-arrrow"} />
+                <div className="relative"> 
+                      <Field 
+                      name="paid"
+                        component = {CommonSelectBox}
+                        options = {[{name : "test",value :"test"},{name : "test2",value :"test2"}]}
+                        // options = {[]}
+                    />
+                </div>
+                
             </div>
 
             <div className='flex flex-col gap-2'>
@@ -59,6 +75,7 @@ const NaturopathicMedicineForm = () => {
                         type='textarea' 
                         inputclasses="w-full" 
                         rows="7" 
+                        errorStyle="text-white"
                     />
             </div>
 

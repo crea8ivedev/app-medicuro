@@ -121,7 +121,7 @@ export default function Dashboard() {
                     </Swiper>
 
                     <div className='flex justify-center gap-2 my-4'>
-                      {arrayChunk(pastAppointments, 2).map((_, index) => (
+                      { upcomingAppointments?.length > 2 ? arrayChunk(pastAppointments, 2).map((_, index) => (
                         <div
                           onClick={() => upcomingContainerRef.current?.slideTo(index)}
                           key={`past-dot-${index}`}
@@ -130,7 +130,7 @@ export default function Dashboard() {
                             currentUpcomingAppointmentPage === index ? "bg-teal-800" : "bg-white"
                           )}
                         />
-                      ))}
+                      )): ""}
                     </div>
                   </Fragment>
 
@@ -175,7 +175,9 @@ export default function Dashboard() {
                     </Swiper>
 
                     <div className='flex justify-center gap-2 my-4'>
-                      {arrayChunk(pastAppointments, 3).map((_, index) => (
+                      {
+                        pastAppointments?.length > 3 ?   
+                        arrayChunk(pastAppointments, 3).map((_, index) => (
                         <div
                           onClick={() => pastContainerRef.current?.slideTo(index)}
                           key={`past-dot-${index}`}
@@ -184,7 +186,10 @@ export default function Dashboard() {
                             currentPastAppointmentPage === index ? "bg-sky-cyan" : "bg-white"
                           )}
                         />
-                      ))}
+                      ))
+                        : ""
+                      }
+                      
                     </div>
                   </Fragment>
                   :

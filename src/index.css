@@ -90,7 +90,7 @@
 }
 
 .forn-field{
-  @apply bg-white border border-teal-600 w-full min-h-[45px] p-2  md:max-w-[299px] rounded-sm outline-0 lg:min-w-[299px]
+  @apply bg-white border border-teal-600 w-full min-h-[45px] p-2  md:min-w-[299px] rounded-sm outline-0 lg:min-w-[299px]
 }
 
 input[type=number]::-webkit-outer-spin-button,
@@ -127,6 +127,18 @@ input[type=number] {
   border-top-color: rgba(0, 0, 0, 0.8);
   border-radius: 50%;
   animation: spin 1.5s linear infinite;
+}
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding-right: 1rem; /* leave space if custom icon */
+  border: 1px solid #ccc; /* optional */
+}
+
+/* Remove IE arrow (optional: only for legacy support) */
+select::-ms-expand {
+  display: none;
 }
 
 @keyframes spin {

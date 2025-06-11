@@ -25,6 +25,7 @@ function CustomInput({
   name,
   isDisabled,
   isMcp,
+  errorStyle,
   ...props
 }) {
   const [showPassword, setShowPassword] = useState(false)
@@ -100,7 +101,7 @@ function CustomInput({
               {...props}
               {...field}
               rows={rows}
-              className={cn("bg-white", inputclasses)}
+              className={cn("bg-white outline-0 p-2 border-2 rounded-sm border-teal-600 ", inputclasses)}
             ></textarea>
           ) : type === "date" ? (
             <div className='relative'>
@@ -171,7 +172,7 @@ function CustomInput({
         <ErrorMessage
           name={field.name}
           component='div'
-          className='text-xs text-navy font-semibold mt-1 ml-1 absolute -bottom-15'
+          className={cn("text-xs text-navy font-semibold mt-1 ml-1 absolute -bottom-15",errorStyle)}
           aria-live="polite" aria-atomic="true"
         />
       </div>

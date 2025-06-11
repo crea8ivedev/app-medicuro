@@ -7,9 +7,6 @@ import BookAppointmentItem from './views/BookAppointmentItem';
 import axiosInstance from '../../utils/axios';
 import DynamicForm from './views/DynamicForm';
 
-
-
-
 function BookAppointmentIndexPage() {
 
 const [bookingItems,setBookingItems] = useState([])
@@ -17,7 +14,6 @@ const [selectedItemId, setSelectedItemId] = useState(null)
 const [isSubmitted,setIsSubmitted] = useState(false)
 
 const [isLoading,setIsLoading] = useState()
-
 
 useEffect(() => {
     const fetchServices = async () => {
@@ -72,13 +68,13 @@ const handleSubmit = () => {
                         {
                             (selectedItemId && isSubmitted) ? 
                                 <div className='text-white'>
-                                    <div className='text-xl mb-3 max-w-250 whitespace-break-spaces'>{bookingItems.find((e) =>  e.id == selectedItemId )?.name}</div>
-                                    <div>{bookingItems.find((e) =>  e.id == selectedItemId )?.desc}</div>
+                                    <div className='text-xl mb-3 font-normal max-w-[310px] whitespace-break-spaces'>{bookingItems.find((e) =>  e.id == selectedItemId )?.name}</div>
+                                    <div className='text-sm'>{bookingItems.find((e) =>  e.id == selectedItemId )?.desc}</div>
                                 </div>
                             : 
                                 <div className='text-white'>
                                     <div className='text-xl mb-3 '>Select Service</div>
-                                    <div>Due to increased demand, it may not be possible for our <br/> scheduling team to respond to all requests within 24 hours.</div>
+                                    <div className='text-sm'>Due to increased demand, it may not be possible for our <br/> scheduling team to respond to all requests within 24 hours.</div>
                                 </div>
                         }
 

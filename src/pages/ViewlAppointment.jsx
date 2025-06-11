@@ -47,7 +47,7 @@ function ViewlAppointment() {
             <div className='bg-teal max-w-550 md:min-w-550   max-h-max mt-4 py-10 md:px-10 px-2  rounded-xl'>
               <div className='text-white mt-4 mb-5 text-xl'>{type} Appointment</div>
               { appointment ?  <AppointmentItem
-                            buttons={buttons}
+                            buttons={type != "Past" ?  buttons : []}
                             doctor={appointment?.doctor}
                             service={appointment?.service}
                             date={appointment?.date}
@@ -87,7 +87,7 @@ function ViewlAppointment() {
               
               <div className='md:text-end text-center'>
                 <NavLink  to={"/dashboard"}>
-                  <button className='bg-bluewave text-white px-10 py-4 rounded-md cursor-pointer my-5 '>Back to Dashboard</button>
+                  <button className='bg-bluewave text-white px-10 py-4 rounded-md cursor-pointer my-5 hover:opacity-90 '>Back to Dashboard</button>
                 </NavLink>
               </div>
              

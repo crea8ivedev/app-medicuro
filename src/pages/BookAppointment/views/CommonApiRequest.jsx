@@ -20,7 +20,9 @@ export const useSubmitAppointmentRequest = () => {
 
       if(response?.data.statusCode == 200){
         showToast.success("Appointment request created successfully")
-        navigate("/book-appointment")
+        // navigate("/book-appointment")
+        window.location.reload()
+        
       }
 
       return true

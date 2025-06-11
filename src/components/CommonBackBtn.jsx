@@ -1,4 +1,3 @@
-import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import backBtnIcon from '../assets/images/back-btn.png';
 import { cn } from '../utils/cn';
@@ -23,7 +22,7 @@ function CommonBackBtn({ label = "", link = "" ,className="",onClick}) {
         
 
 
-        <div className='text-navy font-semibold text-2xl font-league'>
+        <div className='text-navy text-2xl font-league'>
           {label}
         </div>
       </div>

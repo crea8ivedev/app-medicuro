@@ -13,7 +13,7 @@ const PhysicalAppointmentForm = ({serviceId}) => {
     const [isLoading,setIsLoading] = useState(false)
     
     const validationSchema = Yup.object().shape({
-        reason : Yup.string().required()
+        reason : Yup.string().required("Please enter reason")
     })
 
     const SubmitHandler = async  (values,helpers) => {
@@ -34,7 +34,6 @@ const PhysicalAppointmentForm = ({serviceId}) => {
         onSubmit : (values,helpers) => SubmitHandler(values,helpers)
     })
 
-
     return <div>
         <FormikProvider value={formik}>
             <div className='pb-10'>
@@ -45,9 +44,10 @@ const PhysicalAppointmentForm = ({serviceId}) => {
                         type='textarea' 
                         inputclasses="w-full" 
                         rows="10" 
+                        errorStyle="text-white"
                     />
                 <div className='md:text-end text-center mt-5'>
-                    <button disabled={isLoading} onClick={formik.handleSubmit} className={cn("common-btn",isLoading ? "spinner" : "")}>Send Request</button>
+                    <button disabled={isLoading} onClick={formik.handleSubmit} className={cn("common-btn")}>Send Request</button>
                 </div>
             </div>
         </FormikProvider>
