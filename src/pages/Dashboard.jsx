@@ -67,14 +67,12 @@ export default function Dashboard() {
   }
 
   return (
-    <div className='bg-ice min-h-screen w-full justify-between relative'>
+    <div className='bg-ice px-3 py-5 md:py-0 min-h-screen w-full justify-between relative'>
       <div className='common-bg absolute left-0  bottom-100 bg-bottom'></div>
-
       <div className='container mx-auto md:py-24  flex items-center justify-between relative md:px-5'>
         <img className='left-image' src={loginSideImg} alt='left-image' />
-
         <div>
-          <div className="flex bg-white gap-10 rounded-xl py-4 ps-10 pe-5 lg:w-lg ms-auto">
+          <div className="flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4 ps-10 pe-5 lg:w-lg ms-auto">
             <div className="flex flex-col gap-1">
               <div className="text-bluewave text-xl font-semibold">Book Appointment</div>
               <div>Book your appointment with a licensed Medicuro doctor at your convenience</div>
@@ -87,8 +85,8 @@ export default function Dashboard() {
             </NavLink>
           </div>
 
-          <div className='flex gap-4'>
-            <div className=' mt-4 pb-5 p-5 lg:w-lg rounded-xl bg-teal'>
+          <div className='flex flex-col xl:flex-row gap-4'>
+            <div className=' mt-4 pb-5 p-5 max-w-full lg:w-lg rounded-xl bg-teal'>
               <div className="text-white my-4 mb-7 text-xl">Upcoming Appointments</div>
               {
                 upcomingAppointments.length ?
@@ -146,7 +144,7 @@ export default function Dashboard() {
 
             </div>
 
-            <div className='bg-ocean lg:w-lg mt-4 pb-5 p-5 rounded-xl min-h-[360px]'>
+            <div className='bg-ocean w-full lg:w-lg mt-4 pb-5 p-5 rounded-xl min-h-[360px]'>
               <div className="text-white my-4 mb-7 text-xl">Past Appointments</div>
               {
                 pastAppointments.length ?

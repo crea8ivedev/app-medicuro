@@ -13,7 +13,7 @@ import { getFirebaseToken } from '../../utils/firebaseConfig'
 
 export default function Signup() {
 
-  const [step, setStep] = useState(1)
+  const [step, setStep] = useState(0)
   const [signUpFormValues, setSignUpFormValues] = useState({
     fullName: '',
     password: '',
