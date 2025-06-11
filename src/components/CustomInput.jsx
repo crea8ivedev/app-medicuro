@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import hidePassword from '../assets/images/hide-password.png'
 import viewPassword from '../assets/images/show-password.png'
 import mcpCameraICon from '../assets/images/camera-black.png'
+import calenderIcon  from '../assets/images/calendar.svg'
+
+
 import { cn } from '../utils/cn'
 import { ErrorMessage } from 'formik'
 import DatePicker from 'react-datepicker'
@@ -100,16 +103,30 @@ function CustomInput({
               className={cn("bg-white", inputclasses)}
             ></textarea>
           ) : type === "date" ? (
-            <DatePicker
-              selected={field.value ? new Date(field.value) : null}
-              onChange={(date) => setFieldValue(field.name, date)}
-              onBlur={() => setFieldTouched(field.name, true)}
-              placeholderText={placeholder}
-              dateFormat="yyyy-MM-dd"
-              className={cn("bg-white border border-teal-600 w-full p-4 rounded-md outline-0", inputclasses)}
-              disabled={isDisabled}
-              {...props}
-            />
+            <div className='relative'>
+              <DatePicker
+                selected={field.value ? new Date(field.value) : null}
+                onChange={(date) => setFieldValue(field.name, date)}
+                onBlur={() => setFieldTouched(field.name, true)}
+                placeholderText={placeholder}
+                dateFormat="yyyy-MM-dd"
+                className={cn("bg-white border border-teal-600 w-full p-4 rounded-md outline-0", inputclasses)}
+                disabled={isDisabled}
+                {...props}
+              />
+
+              <div
+                className='absolute right-7 top-1/2 -translate-y-50-per cursor-pointer'
+              >
+                <img
+                  className='max-w-20 max-h-20'
+                  src={calenderIcon}
+                  alt=''
+                />
+              </div>
+
+            </div>
+
           ) : (
             <input
               className={cn("bg-white border border-teal-600 w-full p-4 rounded-md outline-0", inputclasses)}
@@ -141,8 +158,7 @@ function CustomInput({
 
         {isMcp && (
           <div
-            onClick={() => setShowPassword((prev) => !prev)}
-            className='absolute right-5 top-1/2 -translate-y-50-per cursor-pointer'
+            className='absolute right-10 top-1/2 -translate-y-50-per cursor-pointer'
           >
             <img
               className='max-w-20 max-h-20'

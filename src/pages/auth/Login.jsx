@@ -49,6 +49,7 @@ export default function Login() {
       resetForm();
       const user = response.data?.data;
       const token = "dummyToken";
+      await new Promise((res) => setTimeout(res, 100));
       login({ user, token });
       navigate("/dashboard");
     } else {
