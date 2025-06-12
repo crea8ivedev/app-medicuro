@@ -98,7 +98,7 @@ export default function Login() {
                 </div>
               </div>
 
-              <div className='mt-10 flex flex-col gap-3'>
+              <div className='mt-10 flex flex-col gap-5'>
                   <Field
                     type='type'
                     name='emailOrPhone'
@@ -113,7 +113,7 @@ export default function Login() {
                       type='password'
                       password
                       name='password'
-                      placeholder='*******'
+                      placeholder='•••••••••••••'
                       label="Password"
                       component={CustomInput}
                       // focusHandler={errorRemovehandler}

@@ -109,7 +109,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
               alt=''
             />
           </div>
-          <div className='pt-[60px] pe-40'>
+          <div className='pt-[67px] pe-40'>
             {menuItems.map((item, index) => {
               return (
                 <div
@@ -122,7 +122,6 @@ function Sidebar({ openMenu, setOpenMenu }) {
                     {
                       item?.newNotifications && <div className='absolute top-1 right-0 h-05 w-05 bg-red-500 rounded-circle'> </div>
                     }
-
                   </div>
                   <div className='inline-block text-white'>{item.label}</div>
                 </div>

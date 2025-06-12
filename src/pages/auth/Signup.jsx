@@ -222,7 +222,7 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
           name='password'
           password
           label='Password'
-          placeholder='••••••••••••'
+          placeholder='••••••••••••••••'
           component={CustomInput}
           className='forn-field'
         />

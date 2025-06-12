@@ -119,15 +119,13 @@ export default function Dashboard() {
                       ))}
 
                     </Swiper>
-
                     <div className='flex justify-center gap-2 my-4'>
-                      {arrayChunk(pastAppointments, 2).map((chunk, index) => (
+                      {arrayChunk(upcomingAppointments, 2).map((chunk, index) => (
                         <div
                           onClick={() => upcomingContainerRef.current?.slideTo(index)}
                           key={`upcoming-dot-${index}`}
                           className={cn(
                             "h-15 w-15 cursor-pointer rounded-circle bg-black",
-
                             currentUpcomingAppointmentPage === index ? "bg-teal-800" : "bg-white"
                           )}
                         />
@@ -137,14 +135,12 @@ export default function Dashboard() {
 
                   : isLoading ?
                     <div className='flex-1 flex items-center justify-center'>
-                      <img className='w-10' src={spinner} />
+                      <img className='w-10' alt='loading' src={spinner} />
                     </div> :
-
                     <h1> No upcoming appointments </h1>
               }
 
             </div>
-
             <div className='bg-ocean w-full lg:w-lg mt-4 pb-5 p-5 rounded-xl min-h-[360px]'>
               <div className="text-white my-4 mb-7 text-xl">Past Appointments</div>
               {
