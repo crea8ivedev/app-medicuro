@@ -9,7 +9,8 @@ export default function AppointmentItem({
   time,
   showDayTime,
   id,
-  buttonClasses
+  buttonClasses,
+  isLoading=false
 }) {
   const dateArray = date?.split(' ')
 
@@ -41,7 +42,8 @@ export default function AppointmentItem({
           {buttons.map((item, index) => {
             return (
               <button
-                className={cn('bg-white py-1 px-2 md:min-w-[62px] rounded-md text-xs  cursor-pointer',buttonClasses)}
+                disabled={isLoading}
+                className={cn('bg-white py-1 px-2 md:min-w-[62px] rounded-md text-xs  cursor-pointer',buttonClasses,isLoading ? "opacity-90 cursor-not-allowed" : "")}
                 onClick={() => item.action(id)}
                 key={index}
               >

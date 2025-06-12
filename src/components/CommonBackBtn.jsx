@@ -9,7 +9,7 @@ function CommonBackBtn({ label = "", link = "" ,className="",onClick}) {
     if (onClick) {
       onClick();
     } else {
-      navigate(-1); // Go one step back in history
+      navigate(-1); 
     }
   };
 
@@ -19,8 +19,6 @@ function CommonBackBtn({ label = "", link = "" ,className="",onClick}) {
                   link ? <NavLink to={link}><img src={backBtnIcon} alt='' /></NavLink> : <div onClick={() => handleClick()}><img src={backBtnIcon} alt='' /></div>
                 }
         </div>
-        
-
 
         <div className='text-navy text-2xl font-league'>
           {label}

@@ -1,31 +1,43 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import {useParams } from 'react-router-dom';
 import AppointmentItem from '../components/AppointmentItem';
 // book-appointment-vector.png
 import sideImage from "../assets/images/book-appointment-vector.png"
 import { useAppointmentStore } from '../store/appointments';
-
+import axiosInstance from '../utils/axios';
+import { showToast } from '../utils/toast';
 
 function RebookAppointment() {
    const { id } = useParams();
-   const navigate = useNavigate();
 
    const {getAppointmentById } = useAppointmentStore()
    
      const [appointment,setAppointment] = useState()
+     const [loading, setLoading] = useState(false)
    
      useEffect(() => {
         const data = getAppointmentById(id)
         setAppointment(data)
      },[id])
 
-      const cancelAppoinment = (id) => {
-          navigate()
+      const rebookAppoinment =  async (appointmentId) => {
+          try {
+            setLoading(true)
+            const response = await axiosInstance.post("/api/v1/appointments/rebook",{appointmentId})
+            console.log("Ressssssssssssssssssssssssssssssss",response)
+            if(response.status == 201){
+              showToast.success("Appointment rebooked successfully")
+            }
+          } catch (error) {
+            showToast.error("Something went wrong")
+          } finally {
+            setLoading(false)
+          }
       }
 
   return (
   <div className='bg-ice h-screen w-full justify-between relative'>
-        <div className='common-bg'></div>
+      <div className='common-bg'></div>
 
       <div className='container mx-auto h-screen  flex items-center justify-around relative'>
         <img className='left-image' src={sideImage} alt='' />
@@ -41,7 +53,7 @@ function RebookAppointment() {
                     </div>
                   <div className='md:max-w-430'>
                     { appointment &&  <AppointmentItem
-                                buttons={[{name : "Confirm",action : (index) => cancelAppoinment(index)}]}
+                                buttons={[{name : "Confirm",action : (index) => rebookAppoinment(index)}]}
                                 doctor={appointment?.doctor}
                                 clinic={appointment?.clinic}
                                 date={appointment?.date}
@@ -50,15 +62,13 @@ function RebookAppointment() {
                                 showDayTime={true}
                                 id={appointment?.id}
                                 buttonClasses={"text-black font-bold py-3"}
+                                isLoading={loading}
+                                
                               />}
                   </div>
-                  
-                
                 </div>
-
               </div>
           </div>
-            
       </div>
     </div>
   )
