@@ -44,6 +44,9 @@ export default function Login() {
   const { resetForm } = formikHelpers;
   try {
     setIsLoading(true);
+
+   await Notification.requestPermission();
+
     const response = await axiosInstance.post('/api/v1/auth/login', values);
     if (response?.data?.statusCode === 200) {
       resetForm();
