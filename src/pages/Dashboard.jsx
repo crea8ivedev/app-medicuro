@@ -71,7 +71,7 @@ export default function Dashboard() {
       <div className='common-bg absolute left-0  bottom-100 bg-bottom'></div>
       <div className='container mx-auto md:py-24  flex items-center justify-between relative md:px-5'>
         <img className='left-image' src={loginSideImg} alt='left-image' />
-        <div>
+        <div className='max-w-full m-auto'>
           <div className="flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4 ps-10 pe-5 lg:w-lg ms-auto">
             <div className="flex flex-col gap-1">
               <div className="text-bluewave text-xl font-semibold">Book Appointment</div>
@@ -121,16 +121,17 @@ export default function Dashboard() {
                     </Swiper>
 
                     <div className='flex justify-center gap-2 my-4'>
-                      { upcomingAppointments?.length > 2 ? arrayChunk(pastAppointments, 2).map((_, index) => (
+                      {arrayChunk(pastAppointments, 2).map((chunk, index) => (
                         <div
                           onClick={() => upcomingContainerRef.current?.slideTo(index)}
-                          key={`past-dot-${index}`}
+                          key={`upcoming-dot-${index}`}
                           className={cn(
-                            "h-15 w-15 cursor-pointer rounded-circle",
+                            "h-15 w-15 cursor-pointer rounded-circle bg-black",
+
                             currentUpcomingAppointmentPage === index ? "bg-teal-800" : "bg-white"
                           )}
                         />
-                      )): ""}
+                      ))}
                     </div>
                   </Fragment>
 
@@ -176,7 +177,7 @@ export default function Dashboard() {
 
                     <div className='flex justify-center gap-2 my-4'>
                       {
-                        pastAppointments?.length > 3 ?   
+                        pastAppointments?.length > 2 ?   
                         arrayChunk(pastAppointments, 3).map((_, index) => (
                         <div
                           onClick={() => pastContainerRef.current?.slideTo(index)}
