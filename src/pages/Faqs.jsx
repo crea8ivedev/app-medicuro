@@ -34,7 +34,7 @@ return (
                                 <div className='font-semibold'>{faq.question}</div>
                                 <img src={arrow} alt="" className={cn("rotate-90 transition-all",selectedIndex == index ? "-rotate-90" : "")} />
                             </div>
-                            <div className={cn("h-0 overflow-hidden transition-all font-semibold",selectedIndex == index ? "pt-7 pb-5 h-auto" : "")}>{faq.answer}</div>
+                            <div className={cn("h-0 px-4 overflow-hidden transition-all font-semibold",selectedIndex == index ? "pt-7 pb-5 h-auto" : "")}>{faq.answer}</div>
                         </div>
                     })
                 }

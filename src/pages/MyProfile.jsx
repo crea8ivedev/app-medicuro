@@ -85,14 +85,14 @@ const menuItems = [
 // }
 
 return (
-    <div className=' bg-sky-foam h-screen pb-16 relative'>
-        <div className='common-bg absolute  '></div>
-        <div className='flex flex-col p-5  '>
-            <CommonBackBtn  label='My Profile'  />
+    <div className=' bg-sky-foam min-h-screen pb-16 relative'>
+        <div className='common-bg absolute'></div>
+        <div className='flex flex-col p-5'>
+            <CommonBackBtn label='My Profile'  />
         </div>
-        <div className='flex  w-full justify-center items-center lg:mt-24'>
+        <div className='flex w-full justify-center items-center lg:pt-24'>
             <div className='bg-mint relative w-825 p-10 flex flex-col gap-7 py-24 rounded-xl'>
-            <div className='common-right-design  z-10 bottom-5 right-5'></div>
+            <div className='common-right-design z-10 bottom-5 right-5'></div>
                         <div className='relative max-w-max m-auto text-center'>
                                 <img className='m-auto w-105 h-105 rounded-circle object-cover' src={ user?.profilePic ??  dummyProfile} alt="" />
                                 {/* <div onClick={() => profilePicRef?.current?.click()}  className='p-3 bg-bluewave rounded-circle flex justify-center items-center w-30 h-30 absolute right-0 bottom-0 cursor-pointer'>

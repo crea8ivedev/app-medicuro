@@ -43,7 +43,7 @@ return (
             <div className='bg-mint relative w-825 p-10 flex flex-col gap-7 py-24'>
             <div className='common-right-design  z-10 bottom-5 right-5'></div>
                         <div className='relative max-w-max m-auto text-center'>
-                                <img className='m-auto w-105 h-105 object-cover rounded-circle' src={profilePic ?? user?.profilePic} alt="" />
+                                <img className='m-auto w-105 h-105 object-cover rounded-circle' src={profilePic ?? user?.profilePic ?? dummyProfile} alt="" />
                                 <div onClick={() => profilePicRef?.current?.click()}  className='p-3 bg-bluewave rounded-circle flex justify-center items-center w-30 h-30 absolute right-0 bottom-0 cursor-pointer'>
                                     <img src={whitePen} alt="" />
                                     <input onChange={(e) => changeProfilePic(e)} ref={profilePicRef} type="file" hidden />

@@ -159,7 +159,7 @@ function CustomInput({
 
         {isMcp && (
           <div
-            className='absolute right-10 top-1/2 -translate-y-50-per cursor-pointer'
+            className='absolute right-2 top-1/2 -translate-y-50-per cursor-pointer'
           >
             <img
               className='max-w-20 max-h-20'
@@ -172,7 +172,7 @@ function CustomInput({
         <ErrorMessage
           name={field.name}
           component='div'
-          className={cn("text-xs text-navy font-semibold mt-1 ml-1 absolute -bottom-15",errorStyle)}
+          className={cn("text-xs text-navy font-semibold mt-1 ml-1 absolute -bottom-[20px]",errorStyle)}
           aria-live="polite" aria-atomic="true"
         />
       </div>

@@ -14,7 +14,7 @@ function CommonBackBtn({ label = "", link = "" ,className="",onClick}) {
   };
 
   return <div className={cn("flex gap-4 items-center cursor-pointer",className)}>
-        <div className='cursor-pointer relative'>
+        <div className='cursor-pointer relative mb-0.5'>
                 {
                   link ? <NavLink to={link}><img src={backBtnIcon} alt='' /></NavLink> : <div onClick={() => handleClick()}><img src={backBtnIcon} alt='' /></div>
                 }

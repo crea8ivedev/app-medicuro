@@ -11,19 +11,19 @@ function Settings() {
 const menuItems = [
   
   {
-    label: "notification setting",
+    label: "Notification Setting",
     icon: bulbIcon,
     action: "navigate",
     route: "/notifications/settings"
   },
   {
-    label: "password manager",
+    label: "Password Manager",
     icon: keyIcon,
     action: "navigate",
     route: "/password/reset"
   },
   {
-    label: "delete account",
+    label: "Delete Account",
     icon: profileIcon,
     action: "navigate",
     route: "/profile/account/delete"
@@ -31,7 +31,6 @@ const menuItems = [
 ];
 
 return (
-
     <div className=' bg-sky-foam h-screen pb-16 relative '>
         <div className='common-bg absolute left-0 right-0 '></div>
 
