@@ -104,7 +104,7 @@ function CustomInput({
               className={cn("bg-white outline-0 p-2 border-2 rounded-sm border-teal-600 ", inputclasses)}
             ></textarea>
           ) : type === "date" ? (
-            <div className='relative'>
+            <div className='relative w-full'>
               <DatePicker
                 selected={field.value ? new Date(field.value) : null}
                 onChange={(date) => setFieldValue(field.name, date)}
@@ -117,7 +117,7 @@ function CustomInput({
               />
 
               <div
-                className='absolute right-7 top-1/2 -translate-y-50-per cursor-pointer'
+                className='absolute right-2 top-1/2 -translate-y-50-per cursor-pointer'
               >
                 <img
                   className='max-w-20 max-h-20'
@@ -147,7 +147,7 @@ function CustomInput({
         {password && (
           <div
             onClick={() => setShowPassword((prev) => !prev)}
-            className='absolute right-7 top-1/2 -translate-y-50-per cursor-pointer'
+            className='absolute right-2 top-1/2 -translate-y-50-per cursor-pointer'
           >
             <img
               className='max-w-20 max-h-20'
