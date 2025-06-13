@@ -75,9 +75,13 @@ const Terms = ({ setStep, signUpFormValues }) => {
       setIsLoading(true);
       let notificationToken;
 
-      const permission = await Notification.requestPermission();
-      if (permission === 'granted') {
-        notificationToken = await getFirebaseToken()
+      if (Notification.permission !== 'granted') {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+          notificationToken = await getFirebaseToken();
+        }
+      } else {
+        notificationToken = await getFirebaseToken();
       }
 
       const response = await axiosInstance.post('/api/v1/auth/register', {
@@ -111,20 +115,20 @@ const Terms = ({ setStep, signUpFormValues }) => {
       </div>
 
       <div className='text-sm mt-14'>
-          Lorem ipsum dolor sit amet, consectetur 
-          adipiscing elit. Praesent pellentesque congue 
-          lorem, vel tincidunt tortor placerat a. Proin ac diam 
-          quam. Aenean in sagittis magna, ut feugiat diam. 
-          Fusce a scelerisque neque, sed accumsan metus.
+        Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit. Praesent pellentesque congue
+        lorem, vel tincidunt tortor placerat a. Proin ac diam
+        quam. Aenean in sagittis magna, ut feugiat diam.
+        Fusce a scelerisque neque, sed accumsan metus.
       </div>
 
       <div className='mt-4 mb-3 text-sm'>
-        Nunc auctor tortor in dolor luctus, quis euismod 
-        urna tincidunt. Aenean arcu metus, bibendum at 
-        rhoncus at, volutpat ut lacus. Morbi pellentesque 
-        malesuada eros semper ultrices. Vestibulum 
-        lobortis enim vel neque auctor, a ultrices ex 
-        placerat. Mauris ut lacinia justo, sed suscipit tortor. 
+        Nunc auctor tortor in dolor luctus, quis euismod
+        urna tincidunt. Aenean arcu metus, bibendum at
+        rhoncus at, volutpat ut lacus. Morbi pellentesque
+        malesuada eros semper ultrices. Vestibulum
+        lobortis enim vel neque auctor, a ultrices ex
+        placerat. Mauris ut lacinia justo, sed suscipit tortor.
         Nam egestas nulla posuere neque tincidunt porta.
       </div>
 
@@ -254,17 +258,17 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
           className='forn-field'
         />
 
-      <div className='mt-3'>
+        <div className='mt-3'>
           <Field
-                type='number'
-                name='mcp'
-                label='MCP'
-                placeholder='000 000 000 000'
-                component={CustomInput}
-                className='forn-field'
-              />
-      </div>
-        
+            type='number'
+            name='mcp'
+            label='MCP'
+            placeholder='000 000 000 000'
+            component={CustomInput}
+            className='forn-field'
+          />
+        </div>
+
 
         <Field
           type='date'
