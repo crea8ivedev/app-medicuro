@@ -68,7 +68,14 @@ const handleSubmit = () => {
                         {
                             (selectedItemId && isSubmitted) ? 
                                 <div className='text-white'>
-                                    <div className='text-xl mb-3 font-normal max-w-[310px] whitespace-break-spaces'>{bookingItems.find((e) =>  e.id == selectedItemId )?.name}</div>
+                                    <div className='text-xl gap-3 relative mb-3 font-normal w-max max-w-[310px] whitespace-break-spaces'>
+                                        <div>{bookingItems.find((e) =>  e.id == selectedItemId )?.name} </div>
+                                        {
+                                            bookingItems.find((e) =>  e.id == selectedItemId )?.isFeesApply ?  <div className='text-white absolute -right-[100px] top-0 gap-1 flex font-bold  items-center text-sm'> <div className='text-xl'>&#43;</div><div>fees apply</div></div> : ""
+                                        }
+                                         
+                                    </div>
+                                    
                                     <div className='text-sm'>{bookingItems.find((e) =>  e.id == selectedItemId )?.desc}</div>
                                 </div>
                             : 

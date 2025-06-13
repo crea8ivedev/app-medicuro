@@ -13,7 +13,7 @@ const PhysicalAppointmentForm = ({serviceId}) => {
     const [isLoading,setIsLoading] = useState(false)
     
     const validationSchema = Yup.object().shape({
-        reason : Yup.string().required("Please enter reason")
+        reason : Yup.string().required("Reason for Appointment is required")
     })
 
     const SubmitHandler = async  (values,helpers) => {
