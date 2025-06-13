@@ -90,7 +90,11 @@
 }
 
 .forn-field{
-  @apply bg-white border border-teal-600 w-full min-h-[45px] p-2  md:min-w-[299px] rounded-sm outline-0 lg:min-w-[299px]
+  @apply bg-white  border-teal-600 w-full min-h-[45px] p-2  md:min-w-[299px] rounded-[3px] border-[1.5px] outline-0 lg:min-w-[299px]
+}
+
+.select-with-border{
+  border: 1px solid #41bfb3;
 }
 
 input[type=number]::-webkit-outer-spin-button,

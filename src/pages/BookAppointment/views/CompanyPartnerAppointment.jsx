@@ -16,7 +16,7 @@ const CompanyPartnerAppointmentForm = ({serviceId}) => {
 
     const validationSchema = Yup.object().shape({
         companyName : Yup.string().required("Company name is required"),
-        reason : Yup.string().required("Reason is required")
+        reason : Yup.string().required("Reason for Appointment is required")
     })
 
     const SubmitHandler = async  (values,helpers) => {
@@ -67,7 +67,7 @@ const CompanyPartnerAppointmentForm = ({serviceId}) => {
                 </div>
 
                 <div className='md:text-end text-center mt-5'>
-                    <button type="submit" disabled={isLoading} onClick={formik.handleSubmit} className={cn("common-btn",isLoading ? "spinner" : "")}>Send Request</button>
+                    <button type="submit" disabled={isLoading} onClick={formik.handleSubmit} className={"common-btn"}>Send Request</button>
                 </div>
             </div>
         </FormikProvider>

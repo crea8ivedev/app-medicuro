@@ -18,8 +18,8 @@ const MedicationRefillForm = ({serviceId}) => {
 
     const validationSchema = Yup.object().shape({
         pharmacy : Yup.string().required("Pharmacy is required"),
-        type : Yup.string().required("Type is requried"),
-        reason:Yup.string().required("Reason is required")
+        type : Yup.string().required("Types of Medications & Dosage is required"),
+        reason:Yup.string().required("Reason for Appointment is required")
     })
 
     const submitHandler = async (values,helpers) => {
@@ -115,12 +115,12 @@ const MedicationRefillForm = ({serviceId}) => {
                             placeholder='e.g Metformin – 500mg twice daily for type 2 diabetes'
                             component={CustomInput}
                             className='forn-field'
-                            errorStyle="text-white"
+                            errorStyle="text-white rounded-xs"
 
                         />
                         <div className='mt-4'>
                             <div className='flex gap-3'>
-                            <img src={cameraLogo} alt="" />
+                            <img src={cameraLogo}  alt="" />
                             <div className='text-white'>Photos</div>
                             </div>
                             <div className='flex gap-2 mt-3 cursor-pointer' >
@@ -136,7 +136,7 @@ const MedicationRefillForm = ({serviceId}) => {
                                 })
                                 }
                             </div>
-                            <input type="file" hidden onChange={handlePhotoClick} ref={photosRef}  />
+                            <input type="file" accept="image/*"  hidden onChange={handlePhotoClick} ref={photosRef}  />
                         </div>
                     </div>
 
@@ -148,13 +148,13 @@ const MedicationRefillForm = ({serviceId}) => {
                             rows="10" 
                             name="reason"
                             component={CustomInput}
-                            inputclasses='w-full'
+                            inputclasses='w-full rounded-sm'
                         errorStyle="text-white"
 
                         />
                     </div>
                     <div className='md:text-end text-center mt-5'>
-                    <button disabled={isLoading} onClick={formik.handleSubmit} className={cn("common-btn",isLoading ? "spinner" : "")}>Send Request</button>
+                    <button disabled={isLoading} onClick={formik.handleSubmit} className={"common-btn"}>Send Request</button>
                 </div>
                 </div>
             </div>

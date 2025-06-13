@@ -130,7 +130,7 @@ function CustomInput({
 
           ) : (
             <input
-              className={cn("bg-white border border-teal-600 w-full p-4 rounded-md outline-0", inputclasses)}
+              className={cn("bg-white border border-teal-600 w-full p-4  outline-0", inputclasses)}
               type={inputType}
               id={field.name}
               placeholder={placeholder}

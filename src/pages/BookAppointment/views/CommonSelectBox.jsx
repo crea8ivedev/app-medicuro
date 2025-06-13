@@ -18,7 +18,7 @@ const CommonSelectBox = ({
         {...field}
         {...props}
         className={cn(
-          "bg-white w-full h-[45px] outline-0 appearance-none pr-10",
+          "bg-white w-full h-[45px] outline-0 appearance-none pr-10 ps-2 rounded-[3px] select-with-border border-teal-600",
           className,
         //   meta.touched && meta.error ? "border border-red-500" : ""
         )}
