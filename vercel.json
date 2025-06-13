@@ -1,6 +1,9 @@
 {
   "rewrites": [
-
+    {
+      "source": "/((?!api).*)",
+      "destination": "/"
+    },
     {
       "source": "/api/(.*)",
       "destination": "https://api-medicuro.vercel.app/api/$1"
