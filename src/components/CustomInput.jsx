@@ -172,7 +172,7 @@ function CustomInput({
         <ErrorMessage
           name={field.name}
           component='div'
-          className={cn("text-xs text-navy  font-semibold mt-1 ml- absolute -bottom-[20px]",errorStyle)}
+          className={cn("text-xs text-navy  font-semibold ",errorStyle)}
           aria-live="polite" aria-atomic="true"
         />
       </div>

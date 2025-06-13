@@ -145,6 +145,11 @@ select::-ms-expand {
   width: 100%;
 }
 
+input::placeholder{
+  color: black;
+  font-weight: 400;
+}
+
 @keyframes spin {
   0%   { transform:  rotate(0deg); }
   100% { transform:  rotate(360deg); }
