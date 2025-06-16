@@ -27,7 +27,7 @@ export default function Signup() {
 
   return (
     <div className='min-h-screen py-20 flex flex-col relative items-center z-100'>
-      <div className='plus-bg-banner'></div>
+      <div className='plus-bg-banner -z-10'></div>
       <Container className='flex flex-container justify-between flex-wrap'>
         <div className='flex left-img-container justify-between items-center'>
           <img className='left-img' src={signupSideImg} alt='img' />
