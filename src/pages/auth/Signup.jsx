@@ -73,20 +73,20 @@ const Terms = ({ setStep, signUpFormValues }) => {
 
     try {
       setIsLoading(true);
-      let notificationToken;
+      let notificationTokens;
 
       if (Notification.permission !== 'granted') {
         const permission = await Notification.requestPermission();
         if (permission === 'granted') {
-          notificationToken = await getFirebaseToken();
+          notificationTokens = await getFirebaseToken();
         }
       } else {
-        notificationToken = await getFirebaseToken();
+        notificationTokens = await getFirebaseToken();
       }
 
       const response = await axiosInstance.post('/api/v1/auth/register', {
         ...signUpFormValues,
-        ...(notificationToken && { notificationToken }),
+        ...(notificationTokens && { notificationTokens : [notificationTokens] }),
       })
       if (response?.data?.statusCode == 201) {
         const user = response.data?.data
