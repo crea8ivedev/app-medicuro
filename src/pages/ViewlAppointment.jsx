@@ -24,7 +24,7 @@ function ViewlAppointment() {
              
              const data = response.data?.data;
              if(data?.statusCode == 200){
-               setFields(data?.data)
+               setFields(data?.appointment?.appointmentRequest?.formData)
              } 
           } catch (error) {
             

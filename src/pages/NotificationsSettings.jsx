@@ -6,7 +6,7 @@ import { useAuthStore } from '../store/auth'
 import { showToast } from '../utils/toast'
 
 function NotificationsSettings() {
-  const { user, login } = useAuthStore()
+  const { user, changeNotificationSettings } = useAuthStore()
 
   const [generalNotification, setGeneralNotification] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
@@ -22,13 +22,13 @@ function NotificationsSettings() {
     setGeneralNotification(isChecked)
 
     try {
-      const response = await axiosInstance.post("/api/v1/auth/profile/update-notification", {
+      const response = await axiosInstance.post("/api/v1/auth/profile/notification/setting/update", {
         generalNotification: isChecked,
       })
 
       if (response.data?.statusCode === 200 && response.data?.data) {
-        login({ user: response.data.data })
         showToast.success(response.data.message)
+        changeNotificationSettings(isChecked)
       }
     } catch (err) {
       showToast.error("Something went wrong")

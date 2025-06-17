@@ -28,7 +28,7 @@ export const useNotificationStore = create(
     getNotifications: async () => {
       try {
         set({ isLoading: true });
-        const response = await axiosInstance.get('/api/v1/notifications');
+        const response = await axiosInstance.get('/api/v1/notifications?paginate=false');
         if (response?.data?.statusCode === 200) {
           const data = response.data.data;
           set({ notifications: data });

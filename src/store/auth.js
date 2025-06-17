@@ -29,6 +29,11 @@ export const useAuthStore = create(
           token,
         })
       },
+
+      changeNotificationSettings : (isChecked) => {
+        const { user } = get()
+        set({...user,generalNotification : isChecked })
+      }
     }),
     {
       name: 'medicuro-webapp',

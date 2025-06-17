@@ -15,7 +15,7 @@ function DynamicForm({serviceId,id}) {
         const fetchFields = async  () => {
          try {
               setIsLoading(true)
-              const response = await  axiosInstance.get(`/api/v1/services/type`)
+              const response = await  axiosInstance.get(`/api/v1/services/type?paginate=false`)
               setServiceTypes(response.data?.data)
           
          } catch (error) {

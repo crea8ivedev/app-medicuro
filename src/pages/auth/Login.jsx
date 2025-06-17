@@ -95,7 +95,7 @@ export default function Login() {
 
   return (
     <div className='relative z-10 min-h-screen flex py-5  justify-around items-center'>
-      <div className='plus-bg-banner -z-10'></div>
+      <div className='plus-bg-banner'></div>
       <Container className='flex flex-wrap flex-container justify-between'>
         <div className='flex left-img-container justify-between items-center'>
           <img src={loginSideImg} alt='img' />

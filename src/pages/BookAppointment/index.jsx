@@ -19,7 +19,7 @@ useEffect(() => {
     const fetchServices = async () => {
        try {
         setIsLoading(true)
-        const response = await axiosInstance.get("/api/v1/services")
+        const response = await axiosInstance.get("/api/v1/services?paginate=false")
         let services = response.data?.data
 
         services = services?.map(e => {
