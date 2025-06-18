@@ -45,16 +45,20 @@ export default function Login() {
     const { resetForm } = formikHelpers;
     try {
       setIsLoading(true);
-
       let notificationToken;
 
-      if (Notification.permission !== 'granted') {
-        const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
+      try {
+        if (Notification.permission !== 'granted') {
+          const permission = await Notification.requestPermission();
+          if (permission === 'granted') {
+            notificationToken = await getFirebaseToken();
+          }
+        } else {
           notificationToken = await getFirebaseToken();
         }
-      } else {
-        notificationToken = await getFirebaseToken();
+        
+      } catch (error) {
+        console.log("Errrrrr",error)
       }
 
       const response = await axiosInstance.post('/api/v1/auth/login', {
