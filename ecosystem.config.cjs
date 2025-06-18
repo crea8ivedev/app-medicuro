@@ -2,7 +2,8 @@ module.exports = {
   apps: [
     {
       name: "medicuro-app",
-      script: "./dist/index.js",
+      script: "npm",
+      args: "run preview -- --port 5173 --host 45.132.241.38",
       watch: false,
     },
   ],
