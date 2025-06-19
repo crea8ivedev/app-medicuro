@@ -17,7 +17,7 @@ function Header({setOpenMenu}) {
         try {
               const response = await axiosInstance.post("/api/v1/appointments/upcoming")
               if(response.data?.statusCode == 200){
-                const data = response.data?.data
+                const data = response.data?.firstUpcomingAppointment
                   setNextAppointment(data)
               }
             } catch (error) {

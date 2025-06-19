@@ -82,7 +82,7 @@ const Terms = ({ setStep, signUpFormValues }) => {
         ...(notificationTokens && { notificationTokens : [notificationTokens] }),
       })
       if (response?.data?.statusCode == 201) {
-        const user = response.data?.data
+        const user = response.data?.user
         const token = "dummyToken"
         login({ user, token })
         navigate("/dashboard")

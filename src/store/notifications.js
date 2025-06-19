@@ -30,7 +30,7 @@ export const useNotificationStore = create(
         set({ isLoading: true });
         const response = await axiosInstance.get('/api/v1/notifications?paginate=false');
         if (response?.data?.statusCode === 200) {
-          const data = response.data.data;
+          const data = response.data?.notifications;
           set({ notifications: data });
         }
       } catch (error) {

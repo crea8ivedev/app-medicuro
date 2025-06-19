@@ -166,8 +166,8 @@ const MyProfileInfo = ({profilePic}) => {
         const response = await axiosInstance.post("/api/v1/auth/profile/update",formData)
         setIsLoading(false)
         if(response.data?.statusCode == 200){
-            if(response.data?.data){
-                login({user:response.data?.data})
+            if(response.data?.updatedUser){
+                login({user:response.data?.updatedUser})
             }
             showToast.success(response.data?.message)
         }

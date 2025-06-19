@@ -16,7 +16,7 @@ function DynamicForm({serviceId,id}) {
          try {
               setIsLoading(true)
               const response = await  axiosInstance.get(`/api/v1/services/type?paginate=false`)
-              setServiceTypes(response.data?.data)
+              setServiceTypes(response.data?.serviceTypes)
           
          } catch (error) {
             showToast.error("Somethig went wrong")

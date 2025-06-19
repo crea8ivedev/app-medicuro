@@ -22,7 +22,7 @@ function ViewlAppointment() {
           try {
              const response = await  axiosInstance.post(`/api/v1/appointments/view` ,{appointmentId : id})
              
-             const data = response.data?.data;
+             const data = response.data;
              if(data?.statusCode == 200){
                setFields(data?.appointment?.appointmentRequest?.formData)
              } 

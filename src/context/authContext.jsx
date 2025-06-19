@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       });
 
       if (res.status === 200 && res.data) {
-        login({ user: res.data?.data });
+        login({ user: res.data?.myProfile });
       } else {
         logout();
       }

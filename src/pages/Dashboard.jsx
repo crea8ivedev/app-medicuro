@@ -29,7 +29,7 @@ export default function Dashboard() {
         setIsloading(true)
         const response = await axiosInstance.get("/api/v1/appointments")
         if (response.data?.statusCode == 200) {
-          const data = response.data?.data
+          const data = response.data
           setAppointments(data)
         } else {
           clearAppointments()

@@ -20,7 +20,7 @@ useEffect(() => {
        try {
         setIsLoading(true)
         const response = await axiosInstance.get("/api/v1/services?paginate=false")
-        let services = response.data?.data
+        let services = response.data?.services
 
         services = services?.map(e => {
             return {...e,isSelected : false}
