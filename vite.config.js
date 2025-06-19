@@ -18,6 +18,9 @@ export default defineConfig(({command,mode}) => {
         ws:true
       },
     },
+  },
+  preview : {
+    allowedHosts : ["medicuro-frontend.encircledev.com"]
   }
 }
 })
