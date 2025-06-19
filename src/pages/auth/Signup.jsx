@@ -59,23 +59,13 @@ const Terms = ({ setStep, signUpFormValues }) => {
   const navigate = useNavigate()
 
   const submitSignUpForm = async () => {
-    // const userData = {
-    //   fullName: "Jane Doe",
-    //   email: "newemails4ss2@gmail.com",
-    //   password: "123456",
-    //   dob: "1995-06-15T00:00:00.000Z",
-    //   mcp: "1995-06-15T00:00:00.000Z",
-    //   mcpValidationDate: "1995-06-15T00:00:00.000Z",
-    //   mcpExpiryDate: "1995-06-16T00:00:00.000Z",
-    //   phone: "9904982210532"
-    // };
-
 
     try {
       setIsLoading(true);
       let notificationTokens;
 
-      if (Notification.permission !== 'granted') {
+     try {
+       if (Notification.permission !== 'granted') {
         const permission = await Notification.requestPermission();
         if (permission === 'granted') {
           notificationTokens = await getFirebaseToken();
@@ -83,6 +73,9 @@ const Terms = ({ setStep, signUpFormValues }) => {
       } else {
         notificationTokens = await getFirebaseToken();
       }
+     } catch (error) {
+      console.log("Errrrrr",error)
+     }
 
       const response = await axiosInstance.post('/api/v1/auth/register', {
         ...signUpFormValues,
