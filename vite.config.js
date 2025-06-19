@@ -20,7 +20,7 @@ export default defineConfig(({command,mode}) => {
     },
   },
   preview : {
-    allowedHosts : ["medicuro-frontend.encircledev.com"]
+    allowedHosts : ["medicuro-app.encircledev.com"]
   }
 }
 })
