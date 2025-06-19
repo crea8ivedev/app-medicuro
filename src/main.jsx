@@ -12,11 +12,11 @@ import { SocketProvider } from './context/socketContext.jsx'
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      {/* <SocketProvider> */}
+      <SocketProvider>
         <AuthProvider>
           <App />
         </AuthProvider>
-      {/* </SocketProvider> */}
+      </SocketProvider>
       <ToastContainer />
     </BrowserRouter>
   </StrictMode>,
