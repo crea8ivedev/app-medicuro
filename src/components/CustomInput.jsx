@@ -90,7 +90,7 @@ function CustomInput({
 
   return (
     <div className='flex flex-col gap-2'>
-      <label htmlFor={field.name} className={cn("font-bold text-[20px]", labelclasses)}>
+      <label htmlFor={field.name} className={cn("font-bold text-[18px]", labelclasses)}>
         {label}
       </label>
       <div className='relative'>
