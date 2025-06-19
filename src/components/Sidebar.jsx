@@ -27,9 +27,11 @@ function Sidebar({ openMenu, setOpenMenu }) {
     if(user){
       socket.emit("register",user?.id)
     }
-    socket.on("recieved_notification",(notification) => {
-        getNotifications()
-    })
+    socket.on("recieved_notification",getNotifications)
+
+    return () => {
+       socket && socket.off("recieved_notification",getNotifications)
+    }
   }, [socket])
   
   useEffect(() => {
@@ -120,7 +122,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
                   <div className='relative sm:hidden'>
                     <img src={item.image} alt="" />
                     {
-                      item?.newNotifications && <div className='absolute top-1 right-0 h-05 w-05 bg-red-500 rounded-circle'> </div>
+                      item?.newNotifications  && <div className='absolute top-1 right-0 h-05 w-05 bg-red-500 rounded-circle'> </div>
                     }
                   </div>
                   <div className='inline-block text-white'>{item.label}</div>
