@@ -25,8 +25,12 @@ import Faqs from './pages/Faqs'
 import DeleteAccount from './pages/auth/DeleteAccount'
 import UpdateProfile from './pages/UpdateProfile'
 import ForgetPassword from './pages/auth/ForgetPassword.jsx'
+import { useAuthStore } from './store/auth.js'
+import ConditionalRoute from './config/conditionalRoute.jsx'
+import Terms from './pages/Terms.jsx'
 
 function App() {
+  const {user} = useAuthStore()
   return (
     <Routes>
       <Route path='/*' element={<PageNotFound />} />
@@ -55,8 +59,15 @@ function App() {
           <Route path='/password/reset' element={<PasswordReset />} />
 
           <Route path='/help' element={<Help />} />
-          <Route path='/privacy' element={<Privacy />} />
-          <Route path='/faqs' element={<Faqs />} />
+          {
+            user?.fullName && (
+              <>
+                <Route path='/privacy' element={<Privacy />} />
+                <Route path='/faqs' element={<Faqs />} />
+              </>
+            )
+          }
+          
 
           <Route path='/book-appointment' element={<BookAppointmentIndexPage />} />
           <Route path='/cancel-appointment/:id' element={<CancelAppointment />} />
@@ -68,7 +79,16 @@ function App() {
           <Route path='/log-out' element={<Logout />} />
           <Route path='/profile/account/delete' element={<DeleteAccount />} />
         </Route>
+
       </Route>
+      
+          
+            <Route element={<ConditionalRoute/>}>
+              <Route path='/privacy' element={<Privacy />} />
+              <Route path='/faqs' element={<Faqs />} />
+
+            </Route>
+         
 
     </Routes>
     

@@ -13,6 +13,8 @@ export const SocketProvider = ({ children }) => {
       transports: ['websocket'],
     });
 
+    console.log("socketttttttttttttttttttttt",import.meta.env.VITE_API_BASE_URL)
+
     setSocket(socketInstance);
 
     return () => {

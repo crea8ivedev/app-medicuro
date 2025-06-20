@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import hidePassword from '../assets/images/hide-password.png'
 import viewPassword from '../assets/images/show-password.png'
 import mcpCameraICon from '../assets/images/camera-black.png'
@@ -29,11 +29,8 @@ function CustomInput({
   ...props
 }) {
   const [showPassword, setShowPassword] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-
-  const isInvalid =
-    (touched[field.name] && errors[field.name]) ||
-    (submitted && errors[field.name])
+  const inputRef = useRef()
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -62,22 +59,6 @@ function CustomInput({
 
       processedValue = formattedPhoneNumber
     }
-
-    if (name === 'odometer') {
-      processedValue = processedValue.replace(/\D/g, '')
-      processedValue = processedValue?.slice(0, 12)
-      setFieldValue(name, processedValue)
-    }
-
-    if (
-      name === 'institution_number' ||
-      name === 'account_number' ||
-      name === 'seller_account_number'
-    ) {
-      processedValue = processedValue.replace(/\D/g, '')
-      setFieldValue(name, processedValue)
-    }
-
     setFieldValue(name, processedValue)
   }
 
@@ -97,6 +78,7 @@ function CustomInput({
         {
           type === "textarea" ? (
             <textarea
+              onDrop={e => e.preventDefault()}
               cols={cols}
               {...props}
               {...field}
@@ -114,10 +96,16 @@ function CustomInput({
                 className={cn("bg-white border border-teal-600 w-full p-4 rounded-md outline-0", inputclasses)}
                 disabled={isDisabled}
                 {...props}
+                ref={inputRef}
+                showYearDropdown
+                scrollableYearDropdown
+                dropdownMode='select'
+                
               />
 
               <div
                 className='absolute right-2 top-1/2 -translate-y-50-per cursor-pointer'
+                 onClick={() => inputRef.current?.setOpen(true)}
               >
                 <img
                   className='max-w-20 max-h-20'
@@ -140,6 +128,8 @@ function CustomInput({
               {...field}
               onFocus={handleFocus}
               value={field.value ?? ""}
+              ref={inputRef}
+              onDrop={e => e.preventDefault()}
             />
           )
         }
@@ -159,7 +149,7 @@ function CustomInput({
 
         {isMcp && (
           <div
-            className='absolute right-2 top-1/2 -translate-y-50-per cursor-pointer'
+            className='absolute right-2 top-1/2 -translate-y-50-per cursor-pointer' 
           >
             <img
               className='max-w-20 max-h-20'
