@@ -7,7 +7,7 @@ export default function Logout() {
   const navigate = useNavigate()
   const { logout:logoutUser } = useAuthStore();
   const logout = async () => {
-    const response = await  axiosInstance.delete('/api/v1/auth/logout')
+    const response = await  axiosInstance.post('/api/v1/auth/logout')
     if(response.data.statusCode == 200){
       logoutUser()
       navigate("/")
