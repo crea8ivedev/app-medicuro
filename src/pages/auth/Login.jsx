@@ -158,7 +158,7 @@ export default function Login() {
             </div>
 
             <div className='flex flex-col items-center gap-4 mt-7'>
-              <button type='submit' className="common-btn font-extralight font-outfit w-full md:w-auto" disabled={isLoading}>Log In</button>
+              <button type='submit' className="common-btn font-extralight font-outfit w-full md:w-auto relative z-10" disabled={isLoading}>Log In</button>
               <div className='text-sm'>or log in with</div>
 
               <div className='flex gap-2'>
@@ -184,7 +184,6 @@ export default function Login() {
               </div>
             </div>
           </form>
-
         </FormikProvider>
       </Container>
     </div>

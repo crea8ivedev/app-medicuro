@@ -130,7 +130,7 @@ const MedicationRefillForm = ({serviceId}) => {
                                         formik.values.photos[index] ? formik.values.photos[index].preview : photoPlusLogo
                                     } alt="" />
                                     {
-                                        formik.values.photos[index] && <div onClick={(e) => discardPhotos(index,e)} className="absolute top-0 right-[-5px] cursor-pointer h-20 w-20 bg-teal-400 flex items-center justify-center rounded-circle">&times; </div>
+                                        formik.values.photos[index] && <div onClick={(e) => discardPhotos(index,e)} className="absolute -top-[10px] right-[-5px] cursor-pointer h-20 w-20 bg-teal-400 flex items-center justify-center rounded-circle">&times; </div>
                                     }
                                     </div>
                                 })

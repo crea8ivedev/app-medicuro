@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import dummyProfile from '../assets/images/dummy-profile.png'
+import dummyProfile from '../assets/images/dummy-profile.svg'
 import { useAuthStore } from '../store/auth';
 import { useEffect, useState } from 'react';
 import axiosInstance from "../utils/axios"
@@ -35,7 +35,7 @@ function Header({setOpenMenu}) {
           e.stopPropagation();
           setOpenMenu(true)
         }}>&#8801;</div>
-        <NavLink to={"/profile"}><img src={dummyProfile} alt="" />  </NavLink>
+        <NavLink to={"/profile"}><img src={user?.profilePic ??  dummyProfile} alt="profile-image" className='w-10 rounded-circle' />  </NavLink>
       </div>
 
       <div className='md:flex gap-14 hidden'>

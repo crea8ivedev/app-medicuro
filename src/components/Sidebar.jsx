@@ -6,10 +6,17 @@ import notifications from '../assets/images/notifications.svg'
 import information from '../assets/images/information.svg'
 import book from '../assets/images/book.svg'
 
-import dummyProfile from '../assets/images/dummy-profile.png'
+//active icons
+import activesettings from '../assets/images/active-settings.svg'
+import activeHome from '../assets/images/active-home.svg'
+import activeNotifications from '../assets/images/active-notification.svg'
+import activeInformation from '../assets/images/active-info.svg'
+import activeBook from '../assets/images/active-book.svg'
+
+import dummyProfile from '../assets/images/dummy-profile.svg'
 import closeMenu from '../assets/images/close-menu.png'
-import { useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { useNotificationStore } from '../store/notifications'
 
 import { useSocket } from '../context/socketContext';
@@ -20,8 +27,19 @@ function Sidebar({ openMenu, setOpenMenu }) {
   const navigate = useNavigate()
   const { notifications: allNotifications,getNotifications } = useNotificationStore()
   const {user} = useAuthStore()
-
   const socket = useSocket();
+
+  const {pathname } = useLocation();
+  const [activeMenu,setActiveMenu] = useState("dashboard")
+
+  useEffect(() => {
+      setActiveMenu(pathname )
+  },[pathname ])
+
+   const checkIfActive = (url) => {
+    return activeMenu?.includes(url);
+  };
+
   useEffect(() => {
     if(!socket) return;
     if(user){
@@ -38,13 +56,39 @@ function Sidebar({ openMenu, setOpenMenu }) {
     getNotifications()
   }, [])
 
-  const menuItems = [
-    { label: 'home', image: home, link: "/dashboard" },
-    { label: 'book now', image: book, link: "/book-appointment" },
-    { label: 'notifications', image: notifications, link: "/notifications", newNotifications: allNotifications?.some(notification => !notification?.isRead) },
-    { label: 'settings', image: settings, link: "/settings" },
-    { label: 'help', image: information, link: "/help" },
-  ]
+ const menuItems = [
+  {
+    label: 'Home',
+    isActive: checkIfActive("dashboard"),
+    image: checkIfActive("dashboard") ? activeHome : home,
+    link: "/dashboard"
+  },
+  {
+    label: 'Book Now',
+    isActive: checkIfActive("book-appointment"),
+    image: checkIfActive("book-appointment") ? activeBook : book,
+    link: "/book-appointment"
+  },
+  {
+    label: 'Notifications',
+    isActive: checkIfActive("notifications"),
+    image: checkIfActive("notifications") ? activeNotifications : notifications,
+    link: "/notifications",
+    newNotifications: allNotifications?.some(notification => !notification?.isRead)
+  },
+  {
+    label: 'Settings',
+    isActive: checkIfActive("settings"),
+    image: checkIfActive("settings") ? activesettings : settings,
+    link: "/settings"
+  },
+  {
+    label: 'Help',
+    isActive: checkIfActive("help"),
+    image: checkIfActive("help") ? activeInformation : information,
+    link: "/help"
+  }
+];
 
   const navigateToPage = (link) => {
     navigate(link)
@@ -52,6 +96,9 @@ function Sidebar({ openMenu, setOpenMenu }) {
   }
 
   useEffect(() => {
+
+    setOpenMenu(true)
+
     const closeMenu = () => {
       setOpenMenu(false)
     }
@@ -125,7 +172,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
                       item?.newNotifications  && <div className='absolute top-1 right-0 h-05 w-05 bg-red-500 rounded-circle'> </div>
                     }
                   </div>
-                  <div className='inline-block text-white'>{item.label}</div>
+                  <div className={cn('inline-block text-white hover:text-aqua',item?.isActive && "text-aqua")}>{item.label}</div>
                 </div>
               )
             })}

@@ -2,6 +2,9 @@ import { useEffect, useState } from "react"
 import axiosInstance from "../utils/axios"
 import { useAuthStore } from "../store/auth"
 import { Link, useNavigate } from "react-router-dom"
+import { getFirebaseToken } from "../utils/firebaseConfig"
+
+
 
 const Terms = ({ setStep, signUpFormValues,withButton=false }) => {
   const [isLoading, setIsLoading] = useState(false)
@@ -14,29 +17,30 @@ const Terms = ({ setStep, signUpFormValues,withButton=false }) => {
 
     try {
       setIsLoading(true);
-      let notificationTokens;
+       let notificationToken = "";
 
-     try {
-       if (Notification.permission !== 'granted') {
-        const permission = await Notification.requestPermission();
-        if (permission === 'granted') {
-          notificationTokens = await getFirebaseToken();
+      try {
+        if (Notification.permission !== 'granted') {
+          const permission = await Notification.requestPermission();
+          if (permission === 'granted') {
+            notificationToken = await getFirebaseToken();
+          }
+        } else {
+          notificationToken = await getFirebaseToken();
         }
-      } else {
-        notificationTokens = await getFirebaseToken();
+        
+      } catch (error) {
+        console.log("Errrrrr",error)
       }
-     } catch (error) {
-      console.log("Errrrrr",error)
-     }
+
 
       const response = await axiosInstance.post('/api/v1/auth/register', {
         ...signUpFormValues,
-        ...(notificationTokens && { notificationTokens : [notificationTokens] }),
+         notificationTokens : notificationToken ,
       })
       if (response?.data?.statusCode == 201) {
         const user = response.data?.user
-        const token = "dummyToken"
-        login({ user, token })
+        login({ user })
         navigate("/dashboard")
       }
     } finally {

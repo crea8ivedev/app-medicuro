@@ -6,8 +6,12 @@ import CommonBackBtn from '../../components/CommonBackBtn'
 import BookAppointmentItem from './views/BookAppointmentItem';
 import axiosInstance from '../../utils/axios';
 import DynamicForm from './views/DynamicForm';
+import { useNavigate } from 'react-router-dom';
+
 
 function BookAppointmentIndexPage() {
+
+const navigate = useNavigate()
 
 const [bookingItems,setBookingItems] = useState([])
 const [selectedItemId, setSelectedItemId] = useState(null)
@@ -59,7 +63,9 @@ const handleSubmit = () => {
          <div className="md:py-10 py-5 md:px-10   lg:ps-7  relative">
             {
                 isSubmitted ? <CommonBackBtn className="md:mb-32 mb-5 px-2" label='Back to Services'  onClick={() => setIsSubmitted(false)}/> : 
-                        <CommonBackBtn className="md:mb-32 mb-5 px-2" label='Back to Dashboard'  link='/dashboard'/>
+                        <div onClick={() => navigate("/dashboard")}>
+                             <CommonBackBtn className="md:mb-32 mb-5 px-2" label='Back to Dashboard'  link='/dashboard'/>
+                        </div>
             }
 
             <div className='flex items-center justify-around container m-auto'>

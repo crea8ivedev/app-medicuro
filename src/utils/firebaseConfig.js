@@ -11,8 +11,19 @@ const firebaseConfig = {
     measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 }
 
-const firebaseApp = initializeApp(firebaseConfig)
-const messaging = getMessaging(firebaseApp)
+
+let firebaseApp = ""
+let messaging = ""
+
+
+try {
+     firebaseApp = initializeApp(firebaseConfig)
+     messaging = getMessaging(firebaseApp)
+
+} catch (error) {
+        console.log("Errrrrr",error)
+}
+
 
 export const getOrRegisterServiceWorker = async () => {
     if ('serviceWorker' in navigator) {

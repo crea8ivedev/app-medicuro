@@ -52,30 +52,35 @@ export default function ForgetPassword() {
         </div>
 
         <FormikProvider value={formik} >
-          <form onSubmit={formik.handleSubmit} className='bg-mint py-24 mx-4  md:px-24 px-5 sm:px-10 outline-40 outline-white rounded-xl max-w-md'>
-          <CommonBackBtn  label='Forget Password' />
-              <div className='mt-4 flex flex-col gap-1'>
-                <div className='text-navy font-semibold text-2xl font-league capitalize'>
-                  Welcome to medicuro
-                </div>
+          <form onSubmit={formik.handleSubmit} className='bg-mint py-10   mx-4  outline-40 outline-white rounded-xl max-w-md'>
+          
+          <div className='sm:px-10 px-3 md:mb-22 mb-10'>
+              <CommonBackBtn  label='Forget Password' /> 
+          </div>
+              <div className='md:px-24 px-5 w-full'>
+                  <div className='mt-4 flex flex-col gap-1'>
+                    <div className='text-navy font-semibold text-2xl font-league capitalize'>
+                      Welcome to medicuro
+                    </div>
 
-                <div className='text-xs'>
-                  Enter your registered email address below, and we'll send you a link to reset your password.
-                </div>
-              </div>
+                    <div className='text-xs'>
+                      Enter your registered email address below, and we'll send you a link to reset your password.
+                    </div>
+                  </div>
 
-              <div className='mt-10 flex flex-col gap-3'>
-                  <Field
-                    type='email'
-                    name='email'
-                    label="Email"
-                    placeholder='Email'
-                    component={CustomInput}
-                    className='forn-field'
-                  />
-              </div>
-              <div className='text-center my-10'>
-                    <button disabled={loading} onClick={formik.handleSubmit}  type='submit' className='common-btn'>Send Link</button>
+                  <div className='mt-10 flex flex-col gap-3'>
+                      <Field
+                        type='email'
+                        name='email'
+                        label="Email"
+                        placeholder='Email'
+                        component={CustomInput}
+                        className='forn-field'
+                      />
+                  </div>
+                  <div className='text-center my-10'>
+                        <button disabled={loading} onClick={formik.handleSubmit}  type='submit' className='common-btn'>Send Link</button>
+                  </div>
               </div>
           </form>
 

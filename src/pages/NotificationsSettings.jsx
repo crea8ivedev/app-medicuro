@@ -26,8 +26,8 @@ function NotificationsSettings() {
         generalNotification: isChecked,
       })
 
-      if (response.data?.statusCode === 200 && response.data?.data) {
-        showToast.success(response.data.message)
+      if (response.data?.statusCode === 200) {
+        showToast.success(response.data?.message)
         changeNotificationSettings(isChecked)
       }
     } catch (err) {

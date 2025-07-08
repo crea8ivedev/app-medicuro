@@ -18,7 +18,7 @@ export default function DeleteAccount() {
       const response = await axiosInstance.post("/api/v1/auth/profile/delete")
         if(response.data?.statusCode == 200){
             logout()
-            showToast.success(response.data?.message)
+            showToast.success("Your account has been successfully deleted.")
             navigate("/login")
         }
     } finally {
@@ -50,7 +50,7 @@ export default function DeleteAccount() {
         <button
           to='signup'
           disabled={isLoading}
-          className={cn("py-2.5 px-10  text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit",isLoading ? "spinner" : "")}
+          className={cn("py-2.5 px-10  text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit")}
           onClick={deleteACcount}
         >
           Logout

@@ -1,6 +1,6 @@
 import CommonBackBtn from '../components/CommonBackBtn'
-import dummyProfile from "../assets/images/dummy-profile.png"
-import whitePen from "../assets/images/white-pen.png"
+import dummyProfile from "../assets/images/dummy-profile.svg"
+import whitePen from "../assets/images/white-pen.svg"
 import { useFormik,Field,FormikProvider } from 'formik'
 import CustomInput from '../components/CustomInput'
 import * as Yup from 'yup';
@@ -8,7 +8,6 @@ import { useEffect, useRef, useState } from 'react'
 import { useAuthStore } from '../store/auth'
 import axiosInstance from '../utils/axios'
 import { showToast } from '../utils/toast'
-import { cn } from '../utils/cn'
 
 function UpdateProfile() {
 const profilePicRef = useRef()
@@ -44,9 +43,9 @@ return (
             <div className='common-right-design  z-10 bottom-5 right-5'></div>
                         <div className='relative max-w-max m-auto text-center'>
                                 <img className='m-auto w-105 h-105 object-cover rounded-circle' src={profilePic ?? user?.profilePic ?? dummyProfile} alt="" />
-                                <div onClick={() => profilePicRef?.current?.click()}  className='p-3 bg-bluewave rounded-circle flex justify-center items-center w-30 h-30 absolute right-0 bottom-0 cursor-pointer'>
+                                <div onClick={() => profilePicRef?.current?.click()}  className=' bg-bluewave rounded-circle flex justify-center items-center w-30 h-30 absolute right-0 bottom-0 cursor-pointer'>
                                     <img src={whitePen} alt="" />
-                                    <input onChange={(e) => changeProfilePic(e)} ref={profilePicRef} type="file" hidden />
+                                    <input onChange={(e) => changeProfilePic(e)} accept='image/*' ref={profilePicRef} type="file" hidden />
 
                                 </div>
                         </div>  
@@ -157,20 +156,25 @@ const MyProfileInfo = ({profilePic}) => {
             formData.append(key, value);
         });
 
-        console.log("fileee",profilePic)
-
         if (profilePic) {
             formData.append('profilePic', profilePic);
         }
 
-        const response = await axiosInstance.post("/api/v1/auth/profile/update",formData)
-        setIsLoading(false)
-        if(response.data?.statusCode == 200){
-            if(response.data?.updatedUser){
-                login({user:response.data?.updatedUser})
-            }
-            showToast.success(response.data?.message)
+        try {
+            const response = await axiosInstance.post("/api/v1/auth/profile/update",formData)
+            
+            if(response.data?.statusCode == 200){
+                if(response.data?.updatedUser){
+                    login({user:response.data?.updatedUser})
+                }
+                showToast.success(response.data?.message)
         }
+        } catch (error) {
+        } finally {
+            setIsLoading(false)
+        }
+
+        
     }
 
     const formik = useFormik({
@@ -218,7 +222,7 @@ const MyProfileInfo = ({profilePic}) => {
         </div>
 
         <div className='text-center mt-10'>
-            <button className={cn('common-btn ',isLoading ? "spinner" : "")} disabled={isLoading} onClick={() => formik.handleSubmit()}>Update Profile</button>        
+            <button className="common-btn" disabled={isLoading} onClick={() => formik.handleSubmit()}>Update Profile</button>        
         </div>
     </div>
     

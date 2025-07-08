@@ -45,7 +45,7 @@ const NaturopathicMedicineForm = ({serviceId}) => {
         <FormikProvider value={formik}>
             <div className='flex flex-col gap-5'>
             <div className='flex flex-col gap-2'>
-                <div className='text-white'>Please select a Naturopathic appointment type</div>
+                <div className='text-white font-[500]'>Please select a Naturopathic appointment type</div>
                 {/* <CommonSelectBox /> */}
                 <Field 
                     name="type"
@@ -55,7 +55,7 @@ const NaturopathicMedicineForm = ({serviceId}) => {
             </div>
 
               <div className='flex flex-col gap-2 relative'>
-                <div className='text-white'>This service is not covered by MCP. How will this service be paid for?</div>
+                <div className='text-white font-[500]'>This service is not covered by MCP. How will this service be paid for?</div>
                 <div className="relative"> 
                       <Field 
                       name="paid"
@@ -68,7 +68,7 @@ const NaturopathicMedicineForm = ({serviceId}) => {
             </div>
 
             <div className='flex flex-col gap-2'>
-                <div className='text-white'>Reason for Appointment</div>
+                <div className='text-white font-[500]'>Reason for Appointment</div>
                  <Field 
                         name='reason'
                         component={CustomInput}
