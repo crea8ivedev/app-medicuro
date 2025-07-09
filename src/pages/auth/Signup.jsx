@@ -6,6 +6,7 @@ import CustomInput from '../../components/CustomInput'
 import { FormikProvider, Field, useFormik } from 'formik'
 import * as Yup from 'yup'
 import Terms from '../Terms'
+import { useEffect } from 'react'
 
 export default function Signup() {
   const [step, setStep] = useState(0)
@@ -20,6 +21,12 @@ export default function Signup() {
     mcpExpiryDate: '',
   })
 
+  useEffect(() => {
+    if (window.location.hash === '#terms') {
+      setStep(1)
+    }
+  }, [])
+
   return (
     <div className='min-h-screen py-20 flex flex-col relative items-center z-100'>
       <div className='plus-bg-banner -z-10'></div>
@@ -30,7 +37,14 @@ export default function Signup() {
 
         <div className='bg-mint md:mt-24 md:pt-24 mx-4  px-5    sm:px-10  md:py-7 py-10 w-500 rounded-xl  outline-40 outline-white'>
           {step === 1 && (
-            <CommonBackBtn onClick={() => setStep(0)} label='Sign Up' className='font-semibold' />
+            <CommonBackBtn
+              onClick={() => {
+                setStep(0)
+                history.replaceState(null, '', window.location.pathname)
+              }}
+              label='Sign Up'
+              className='font-semibold'
+            />
           )}
 
           <div className='mt-4 mb-7 px-3 md:px-[50px]'>
@@ -92,6 +106,7 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
   const submitHandler = (values) => {
     setSignUpFormValues(values)
     setStep(1)
+    window.location.hash = 'terms'
   }
 
   const formik = useFormik({

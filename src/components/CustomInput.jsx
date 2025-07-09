@@ -33,6 +33,8 @@ function CustomInput({
   ...props
 }) {
   const [showPassword, setShowPassword] = useState(false)
+  const [open, setOpen] = useState(false)
+  const [tempValue, setTempValue] = useState(null)
   const inputRef = useRef()
 
   const handleChange = (e) => {
@@ -98,10 +100,24 @@ function CustomInput({
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 label={label}
-                value={field.value || null}
-                onChange={(val) => setFieldValue(field.name, val)}
+                value={field.value || tempValue}
+                onChange={(val) => {
+                  setTempValue(null)
+                  setFieldValue(field.name, val)
+                }}
                 onBlur={() => setFieldTouched(field.name, true)}
+                onOpen={() => {
+                  setOpen(true)
+                  if (!field.value) setTempValue(new Date())
+                }}
+                onClose={() => {
+                  setOpen(false)
+                  setTempValue(null)
+                }}
+                open={open}
+                onClick={() => setOpen(true)}
                 slots={{ openPickerIcon: MyCalendarIcon }}
+                openTo='day'
               />
             </LocalizationProvider>
           </div>
