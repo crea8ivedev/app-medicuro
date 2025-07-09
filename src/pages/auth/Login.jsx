@@ -153,7 +153,7 @@ export default function Login() {
                 /> */}
             </div>
 
-            <div className='text-end text-navy font-bold text-xs mt-2 cursor-pointer' onClick={handleForgetPassword}>
+            <div className='text-end text-navy font-bold text-xs mt-2 cursor-pointer hover:underline' onClick={handleForgetPassword}>
               Forget Password
             </div>
 
@@ -176,7 +176,7 @@ export default function Login() {
               <div className='text-sm'>
                 Don’t have an account?{' '}
                 <NavLink to='/signup'>
-                  <span className='text-navy font-bold cursor-pointer'>
+                  <span className='text-navy font-bold cursor-pointer hover:underline'>
                     {' '}
                     Sign Up{' '}
                   </span>

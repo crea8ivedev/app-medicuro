@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Container from '../../components/Container'
 import signupSideImg from '../../assets/images/signup-vector.png'
 import CommonBackBtn from '../../components/CommonBackBtn'
@@ -8,8 +8,7 @@ import * as Yup from 'yup'
 import Terms from '../Terms'
 
 export default function Signup() {
-
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState(1)
   const [signUpFormValues, setSignUpFormValues] = useState({
     fullName: '',
     password: '',
@@ -18,7 +17,7 @@ export default function Signup() {
     dob: '',
     mcp: '',
     mcpValidationDate: '',
-    mcpExpiryDate: ''
+    mcpExpiryDate: '',
   })
 
   return (
@@ -29,33 +28,40 @@ export default function Signup() {
           <img className='left-img' src={signupSideImg} alt='img' />
         </div>
 
-        <div
-          className='bg-mint md:mt-24 md:pt-24 mx-4  px-5    sm:px-10  md:py-7 py-10 w-500 rounded-xl  outline-40 outline-white'
-        >
-          {
-            step === 1 && <CommonBackBtn onClick={() => setStep(0)} label='Sign Up' />
-          }
+        <div className='bg-mint md:mt-24 md:pt-24 mx-4  px-5    sm:px-10  md:py-7 py-10 w-500 rounded-xl  outline-40 outline-white'>
+          {step === 1 && (
+            <CommonBackBtn onClick={() => setStep(0)} label='Sign Up' className='font-semibold' />
+          )}
 
           <div className='mt-4 mb-7 px-3 md:px-[50px]'>
-            {step === 0 && <ProfileForm signUpFormValues={signUpFormValues} setSignUpFormValues={setSignUpFormValues} setStep={setStep} />}
-            {step === 1 && <Terms signUpFormValues={signUpFormValues} withButton={true} setStep={setStep} />}
+            {step === 0 && (
+              <ProfileForm
+                signUpFormValues={signUpFormValues}
+                setSignUpFormValues={setSignUpFormValues}
+                setStep={setStep}
+              />
+            )}
+            {step === 1 && (
+              <Terms
+                signUpFormValues={signUpFormValues}
+                withButton={true}
+                setStep={setStep}
+              />
+            )}
           </div>
         </div>
-
       </Container>
     </div>
   )
 }
 
 const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
-
   const signUpSchema = Yup.object().shape({
     fullName: Yup.string()
       .required('Full name is required')
       .min(2, 'Full name must be at least 2 characters'),
 
-    password: Yup.string()
-      .required('Password is required'),
+    password: Yup.string().required('Password is required'),
     // .min(6, 'Password must be at least 6 characters'),
 
     email: Yup.string()
@@ -63,26 +69,24 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
       .required('Email is required'),
 
     phone: Yup.string()
-      .required('Mobile number is required'),
+      .required('Mobile number is required')
+      .matches(/^[0-9]+$/, 'Mobile number must contain only digits'),
     // .matches(/^[0-9]{10,15}$/, 'Enter a valid phone number'),
 
     dob: Yup.date()
       .required('Date of birth is required')
       .max(new Date(), 'Date of birth cannot be in the future'),
 
-    mcp: Yup.string()
-      .required('MCP number is required')
+    mcp: Yup.string().required('MCP number is required'),
     // .matches(/^[0-9\s]{12}$/, 'MCP should be 12 digits'),
-    ,
-    mcpValidationDate: Yup.date()
-      .required('MCP validation date is required'),
+    mcpValidationDate: Yup.date().required('MCP validation date is required'),
 
     mcpExpiryDate: Yup.date()
       .required('MCP expiry date is required')
       .min(
         Yup.ref('mcpValidationDate'),
-        'Expiry date must be after validation date'
-      )
+        'Expiry date must be after validation date',
+      ),
   })
 
   const submitHandler = (values) => {
@@ -93,7 +97,7 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
   const formik = useFormik({
     initialValues: signUpFormValues,
     onSubmit: (values, helpers) => submitHandler(values, helpers),
-    validationSchema: signUpSchema
+    validationSchema: signUpSchema,
   })
 
   return (
@@ -155,7 +159,6 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
             className='forn-field'
           />
         </div>
-
 
         <Field
           type='date'

@@ -30,10 +30,15 @@ export const useAuthStore = create(
         })
       },
 
-      changeNotificationSettings : (isChecked) => {
+      changeNotificationSettings: (isChecked) => {
         const { user } = get()
-        set({...user,generalNotification : isChecked })
-      }
+        set({
+          user: {
+            ...user,
+            generalNotification: isChecked,
+          },
+        })
+      },
     }),
     {
       name: 'medicuro-webapp',

@@ -154,6 +154,26 @@ input::placeholder{
   font-weight: 400;
 }
 
+.date-picker .MuiPickersInputBase-root {
+  @apply bg-white border border-teal-600 w-full outline-none !py-0.5 !px-2.5;
+}
+
+.date-picker .MuiFormControl-root {
+  @apply w-full;
+}
+
+.date-picker .MuiInputLabel-outlined {
+  @apply hidden;
+}
+
+.date-picker fieldset {
+  @apply !border-none !outline-none;
+}
+
+.date-picker .MuiPickersInputBase-sectionsContainer {
+  @apply !opacity-100 !py-2;
+}
+
 @keyframes spin {
   0%   { transform:  rotate(0deg); }
   100% { transform:  rotate(360deg); }
