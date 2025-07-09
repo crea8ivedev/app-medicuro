@@ -86,6 +86,7 @@ const MyProfileInfo = ({profilePic}) => {
             label: "Phone Number",
             name: "phone",
             type: "number",
+            placeholder : "1709 XXX XXXX"
         },
         {
             label: "Email",
@@ -102,7 +103,6 @@ const MyProfileInfo = ({profilePic}) => {
             label: "MCP",
             name: "mcp",
             type: "text",
-            isMcp:true
         },
         {
             label: "MCP Validation Date",

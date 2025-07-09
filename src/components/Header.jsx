@@ -35,7 +35,7 @@ function Header({setOpenMenu}) {
           e.stopPropagation();
           setOpenMenu(true)
         }}>&#8801;</div>
-        <NavLink to={"/profile"}><img src={user?.profilePic ??  dummyProfile} alt="profile-image" className='w-10 rounded-circle' />  </NavLink>
+        <NavLink to={"/profile"}><img src={user?.profilePic ??  dummyProfile} alt="profile-image" className='w-10 aspect-square rounded-circle' />  </NavLink>
       </div>
 
       <div className='md:flex gap-14 hidden'>

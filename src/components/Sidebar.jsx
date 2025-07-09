@@ -117,23 +117,28 @@ function Sidebar({ openMenu, setOpenMenu }) {
         }}
         className='flex justify-between pe-2 whitespace-nowrap cursor-pointer'
       >
-        <div className='md:flex   md:w-66 text-center h-[93px] bg-navy hidden' onClick={() => navigateToPage("/profile")}>
+        <div className='md:flex items-center   md:w-66 text-center h-[93px] bg-navy hidden' onClick={() => navigateToPage("/profile")}>
           <img className='m-auto w-5 w-[35px] h-[35px] object-cover rounded-circle ' src={user?.profilePic ??  dummyProfile} alt='profile-pic' />
         </div>
       </div>
 
       <div className='flex overflow-hidden w-full'>
-        <div onMouseEnter={() => setOpenMenu(true)} className='h-screen bg-navy hidden md:block' onClick={(e) => e.stopPropagation()}>
+        <div onMouseEnter={() => setOpenMenu(true)} className='h-screen bg-navy hidden md:flex md:flex-col gap-4' onClick={(e) => e.stopPropagation()}>
           {menuItems.map((item, index) => {
             return (
               <div
-                className='whitespace-nowrap my-3 cursor-pointer rela'
+                className='whitespace-nowrap max-h-[19px]'
                 key={index}
                 onClick={() => navigateToPage(item.link)}
               >
-                <div className='inline-block w-66 text-center relative'>
+                <div className='inline-block w-66 text-center relative'
+                key={index}
+                onClick={() => navigateToPage(item.link)}
+                >
                   <div className='m-auto max-w-max relative'>
-                    <img className='m-auto ' src={item.image} alt='' />
+                    <div className=' flex items-center'>
+                       <img className='m-auto max-h-[19px]' src={item.image} alt='' />
+                    </div>
                     {
                       item?.newNotifications && <div className='absolute top-1 right-0 h-05 w-05 bg-red-500 rounded-circle'> </div>
                     }
@@ -158,11 +163,11 @@ function Sidebar({ openMenu, setOpenMenu }) {
               alt=''
             />
           </div>
-          <div className='pt-[67px] pe-40'>
+          <div className='pt-[61px] pe-40 flex flex-col md:gap-4 gap-10'>
             {menuItems.map((item, index) => {
               return (
                 <div
-                  className='whitespace-nowrap sm:my-3 my-10 cursor-pointer flex items-center gap-5  '
+                  className='whitespace-nowrap   cursor-pointer flex items-center gap-5  '
                   key={index}
                   onClick={() => navigateToPage(item.link)}
                 >
@@ -172,7 +177,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
                       item?.newNotifications  && <div className='absolute top-1 right-0 h-05 w-05 bg-red-500 rounded-circle'> </div>
                     }
                   </div>
-                  <div className={cn('inline-block text-white hover:text-aqua',item?.isActive && "text-aqua")}>{item.label}</div>
+                  <div className={cn('md:inline-block text-white hover:text-aqua flex items-center max-h-[19px]',item?.isActive && "text-aqua")}>{item.label}</div>
                 </div>
               )
             })}

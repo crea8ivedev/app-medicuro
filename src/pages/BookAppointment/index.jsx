@@ -95,7 +95,7 @@ const handleSubmit = () => {
                             :
                             (!selectedItemId || !isSubmitted) ? ( bookingItems?.length  ? <div className='flex flex-col gap-4 mt-10  mb-10 '>
                                 <div className='text-white flex font-bold gap-2 items-center'> <div className='text-xl'>&#43;</div> <div>fees apply</div></div>
-                                <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-2'>
+                                <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-2 pe-4 md:pe-0'>
                                     {
                                         bookingItems.map(({name,isFeesApply,isSelected,id},index) => {
                                             return <BookAppointmentItem id={id} onClick={handleSelectItem} isSelected={isSelected} name={name} key={index} isFeesApply={isFeesApply} />
