@@ -45,7 +45,7 @@ return (
                                 <img className='m-auto w-105 h-105 object-cover rounded-circle' src={profilePic ?? user?.profilePic ?? dummyProfile} alt="" />
                                 <div onClick={() => profilePicRef?.current?.click()}  className=' bg-bluewave rounded-circle flex justify-center items-center w-30 h-30 absolute right-0 bottom-0 cursor-pointer'>
                                     <img src={whitePen} alt="" />
-                                    <input onChange={(e) => changeProfilePic(e)} accept='image/*' ref={profilePicRef} type="file" hidden />
+                                    <input onChange={(e) => changeProfilePic(e)} accept='image/jpeg,image/png,image/webp,image/avif,image/jpg' ref={profilePicRef} type="file" hidden />
 
                                 </div>
                         </div>  

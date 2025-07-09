@@ -126,7 +126,7 @@ return (
                                 <img className='m-auto w-105 h-105 rounded-circle object-cover' src={ profilePic ?? (user?.profilePic ?? dummyProfile)} alt="" />
                                 <div onClick={() => profilePicRef?.current?.click()}  className=' bg-bluewave rounded-circle flex justify-center items-center w-30 h-30 absolute right-0 bottom-0 cursor-pointer'>
                                     <img src={whitePen}  alt="profile-pic" className={cn(profilePicSubmitting && "opacity-70 cursor-not-allowed")} />
-                                    <input onChange={(e) => changeProfilePic(e)} accept="image/*" disabled={profilePicSubmitting}  ref={profilePicRef} type="file" hidden />
+                                    <input onChange={(e) => changeProfilePic(e)} accept="image/jpeg,image/png,image/webp,image/avif,image/jpg" disabled={profilePicSubmitting}  ref={profilePicRef} type="file" hidden />
                                 </div>
                         </div>  
                         <div className='my-10'>
