@@ -23,7 +23,7 @@ export default function Login() {
   const navigate = useNavigate()
 
   const socialItems = [
-    { icon: googleLoginIcon, link: `${import.meta.env.VITE_API_BASE_URL}/auth/login/google`, alt: "google-icon" },
+    { icon: googleLoginIcon, link: `/auth/login/google`, alt: "google-icon" },
     { icon: facebookLoginIcon, link: '', alt: "facebook icon" },
     // { icon: fingerprintLoginIcon, link: '',alt:"fingerprint icon" },
   ]
