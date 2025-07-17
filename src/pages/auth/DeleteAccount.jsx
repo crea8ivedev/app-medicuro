@@ -11,11 +11,16 @@ export default function DeleteAccount() {
   const [isLoading,setIsLoading] = useState(false)
   const { logout } = useAuthStore();
   const navigate = useNavigate();
+  const [sendData,setsendData] = useState(false)
+
+  const handleChange = (e) => {
+    setsendData(e.checked)
+  }
   
   const deleteACcount = async () => {
     try {
       setIsLoading(true)
-      const response = await axiosInstance.post("/api/v1/auth/profile/delete")
+      const response = await axiosInstance.post("/api/v1/auth/profile/delete",{sendData})
         if(response.data?.statusCode == 200){
             logout()
             showToast.success("Your account has been successfully deleted.")
@@ -43,22 +48,22 @@ export default function DeleteAccount() {
       <div className='flex flex-col gap-4'>
         <Link
           to='/login'
-          className='py-2.5 px-10 text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit'
+          className='py-2.5 px-10 text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit hover:bg-bluewave hover:text-white'
         >
           Cancel
         </Link>
         <button
           to='signup'
           disabled={isLoading}
-          className={cn("py-2.5 px-10  text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit")}
+          className={cn("py-2.5 px-10  text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit hover:bg-bluewave hover:text-white",isLoading && "opacity-70 cursor-not-allowed")}
           onClick={deleteACcount}
         >
-          Logout
+          Delete
         </button>
       </div>
 
       <div className='flex gap-4'>
-        <div><input type="checkbox" className='scale-150 outline-none' /></div>
+        <div><input type="checkbox" onChange={(e) => handleChange(e.target)} className='scale-150 outline-none' /></div>
         <div className='text-sm text-start'>Send me a copy of my data and usage history</div>
       </div>
     </div>

@@ -78,7 +78,7 @@ function CustomInput({
     <div className='flex flex-col gap-2'>
       <label
         htmlFor={field.name}
-        className={cn('font-bold text-[18px]', labelclasses)}
+        className={cn('font-bold', labelclasses)}
       >
         {label}
       </label>
@@ -151,12 +151,6 @@ function CustomInput({
               src={showPassword ? hidePassword : viewPassword}
               alt=''
             />
-          </div>
-        )}
-
-        {isMcp && (
-          <div className='absolute right-2 top-1/2 -translate-y-50-per cursor-pointer'>
-            <img className='max-w-20 max-h-20' src={mcpCameraICon} alt='' />
           </div>
         )}
 

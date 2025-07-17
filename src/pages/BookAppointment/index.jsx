@@ -105,7 +105,7 @@ const handleSubmit = () => {
                             </div>  : <div className='text-white my-10 text-xl'>No service available at this moment</div> )
                             :
                             <div className='md:mt-10 mt-7'> 
-                                <DynamicForm id={bookingItems.find((e) =>  e.id == selectedItemId )?.id} serviceId={bookingItems.find((e) =>  e.id == selectedItemId )?.serviceTypeId}/>
+                                <DynamicForm item={bookingItems.find((e) =>  e.id == selectedItemId)} id={bookingItems.find((e) =>  e.id == selectedItemId )?.id} serviceId={bookingItems.find((e) =>  e.id == selectedItemId )?.id}/>
                             </div>
                         }
 
