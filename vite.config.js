@@ -22,6 +22,11 @@ export default defineConfig(({ command, mode }) => {
       changeOrigin: true,
       secure: env.VITE_NODE_ENV === "production",
     },
+    '/facebook': {
+      target: env.VITE_API_BASE_URL,
+      changeOrigin: true,
+      secure: env.VITE_NODE_ENV === "production",
+    },
     '/auth': {
       target: env.VITE_API_BASE_URL,
       changeOrigin: true,
