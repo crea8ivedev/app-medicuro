@@ -7,6 +7,7 @@ import BookAppointmentItem from './views/BookAppointmentItem';
 import axiosInstance from '../../utils/axios';
 import DynamicForm from './views/DynamicForm';
 import { useNavigate } from 'react-router-dom';
+import { showToast } from '../../utils/toast';
 
 
 function BookAppointmentIndexPage() {
@@ -53,7 +54,7 @@ const handleSubmit = () => {
     if(selectedItemId){
         setIsSubmitted(true)
     }else{
-        alert("please select any one item")
+       showToast.error("Please select any service")
     }
 }
 
@@ -105,7 +106,11 @@ const handleSubmit = () => {
                             </div>  : <div className='text-white my-10 text-xl'>No service available at this moment</div> )
                             :
                             <div className='md:mt-10 mt-7'> 
-                                <DynamicForm item={bookingItems.find((e) =>  e.id == selectedItemId)} id={bookingItems.find((e) =>  e.id == selectedItemId )?.id} serviceId={bookingItems.find((e) =>  e.id == selectedItemId )?.id}/>
+                                <DynamicForm 
+                                    item={bookingItems.find((e) =>  e.id == selectedItemId)}  
+                                    serviceId={bookingItems.find((e) =>  e.id == selectedItemId )?.id}
+                                    callback={() => setSelectedItemId(null)}
+                                />
                             </div>
                         }
 
@@ -117,7 +122,7 @@ const handleSubmit = () => {
                         }
                     </div>
             </div>
-           </div>
+        </div>
      </div>
   )
 }

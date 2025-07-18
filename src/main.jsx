@@ -8,6 +8,8 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthProvider } from './context/authContext.jsx'
 import { SocketProvider } from './context/socketContext.jsx'
+import { Toaster } from 'react-hot-toast';
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -17,7 +19,7 @@ createRoot(document.getElementById('root')).render(
           <App />
         </AuthProvider>
       </SocketProvider>
-      <ToastContainer />
+      <Toaster position="top-right"/>
     </BrowserRouter>
   </StrictMode>,
 )

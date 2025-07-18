@@ -27,7 +27,6 @@ import UpdateProfile from './pages/UpdateProfile'
 import ForgetPassword from './pages/auth/ForgetPassword.jsx'
 import { useAuthStore } from './store/auth.js'
 import ConditionalRoute from './config/conditionalRoute.jsx'
-import Terms from './pages/Terms.jsx'
 
 function App() {
   const {user} = useAuthStore()
@@ -80,16 +79,11 @@ function App() {
           <Route path='/profile/account/delete' element={<DeleteAccount />} />
         </Route>
 
-      </Route>
-      
-          
-            <Route element={<ConditionalRoute/>}>
-              <Route path='/privacy' element={<Privacy />} />
-              <Route path='/faqs' element={<Faqs />} />
-
-            </Route>
-         
-
+         </Route>
+        <Route element={<ConditionalRoute/>}>
+          <Route path='/privacy' element={<Privacy />} />
+          <Route path='/faqs' element={<Faqs />} />
+        </Route>
     </Routes>
     
   )

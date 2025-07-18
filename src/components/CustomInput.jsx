@@ -1,7 +1,6 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import hidePassword from '../assets/images/hide-password.png'
 import viewPassword from '../assets/images/show-password.png'
-import mcpCameraICon from '../assets/images/camera-black.png'
 import calenderIcon from '../assets/images/calendar.svg'
 
 import { cn } from '../utils/cn'
@@ -99,11 +98,16 @@ function CustomInput({
           <div className='relative w-full date-picker'>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
+              format='yyyy-MM-dd'
                 label={label}
-                value={field.value || tempValue}
+                value={field.value ? new Date(field.value)  : tempValue}
                 onChange={(val) => {
-                  setTempValue(null)
-                  setFieldValue(field.name, val)
+                  if(val){
+                    const isoString = val.toISOString()
+                    setFieldValue(field.name, isoString)
+                    setTempValue(null)
+
+                  }
                 }}
                 onBlur={() => setFieldTouched(field.name, true)}
                 onOpen={() => {

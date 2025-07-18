@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+import toast from 'react-hot-toast';
 
 export const showToast = {
   success: (message, options = {}) => {
@@ -8,9 +8,12 @@ export const showToast = {
     toast.error(message, { ...options });
   },
   info: (message, options = {}) => {
-    toast.info(message, { ...options });
+    toast(message, { ...options }); // Default neutral toast
   },
   warning: (message, options = {}) => {
-    toast.warning(message, { ...options });
+    toast(message, {
+      icon: '⚠️',
+      ...options,
+    });
   },
-}
+};

@@ -17,22 +17,17 @@ import { useAuthStore } from "../../../store/auth"
 import PhotosUploader from "./PhotosUploader"
 
 
-function DynamicForm({item,serviceId,id}) {
+function DynamicForm({item,serviceId,callback}) {
     const [isLoading,setIsLoading] = useState(false)
-    const { user } = useAuthStore(); // Hook is called correctly inside this custom hook
+    const { user } = useAuthStore();
 
     const fields = item?.form?.fields
-
-    useEffect(() => {
-      console.log("filedsssssssssssssss",item)
-    },[item])
  
     const initialValues = fields?.reduce((acc, field) => {
         acc[field.name] = field.type === "file" ? [] : "";
         return acc;
       }, {}); 
 
-  // ✅ Generate Yup schema dynamically
      const validationSchema = Yup.object().shape(
         fields?.reduce((acc, field) => {
           if (field.type !== "file") {
@@ -69,6 +64,7 @@ function DynamicForm({item,serviceId,id}) {
 
           if (response.data?.statusCode === 200) {
             showToast.success("Appointment request added successfully");
+            callback();
           }
         } catch (error) {
           showToast.error("Something went wrong");
@@ -87,7 +83,6 @@ function DynamicForm({item,serviceId,id}) {
   return (
     <div>
         {
-          isLoading ? <img  src={spinner} className="w-10"  alt="loading"/> : 
          <FormikProvider value={formik}>
                   <div className='pb-10 space-y-5'>
                     {fields?.map((field) => (
@@ -118,7 +113,7 @@ function DynamicForm({item,serviceId,id}) {
                       <button
                         disabled={isLoading}
                         onClick={formik.handleSubmit}
-                        className={cn('common-btn')}
+                        className={cn('common-btn', isLoading && "opacity-60 cursor-not-allowed")}
                       >
                         Send Request
                       </button>
@@ -132,14 +127,3 @@ function DynamicForm({item,serviceId,id}) {
 }
 
 export default DynamicForm
-
-const BookAppointmentForm = ({name,serviceId,id}) => {
-    const allItems = {
-        "physical" : PhysicalAppointmentForm,
-        "medical" : MedicationRefillForm,
-        "comnpanyPartner" : CompanyPartnerAppointmentForm,
-        "naturopathy" : NaturopathicMedicineForm
-    }
-    const SelectedComponent = allItems[name];
-    return SelectedComponent ? <SelectedComponent serviceId={id} id={id}/> : ""
-}

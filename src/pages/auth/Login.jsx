@@ -24,7 +24,7 @@ export default function Login() {
 
   const socialItems = [
     { icon: googleLoginIcon, link: `/auth/login/google`, alt: "google-icon" },
-    { icon: facebookLoginIcon, link: '', alt: "facebook icon" },
+    { icon: facebookLoginIcon, link: '/auth/login/facebook', alt: "facebook icon" },
     // { icon: fingerprintLoginIcon, link: '',alt:"fingerprint icon" },
   ]
 
