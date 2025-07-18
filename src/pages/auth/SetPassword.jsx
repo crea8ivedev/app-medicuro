@@ -111,7 +111,7 @@ export default function SetPassword() {
             </FormikProvider>
 
             <div className='text-center mt-7 mb-20'>
-              <button onClick={formik.handleSubmit} className={cn("common-btn",isLoading ? "spinner" : "")} disabled={isLoading}>Create New Password</button>
+              <button onClick={formik.handleSubmit} className="common-btn" disabled={isLoading}>Create New Password</button>
             </div>
           </div>
         </form>

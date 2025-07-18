@@ -6,10 +6,11 @@ import CommonBackBtn from '../components/CommonBackBtn'
 import CustomInput from '../components/CustomInput'
 import axiosInstance from '../utils/axios'
 import { showToast } from '../utils/toast'
-import { cn } from '../utils/cn'
+import { useNavigate } from 'react-router-dom'
 
 function PasswordReset() {
   const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate()
 
   const passwordFields = [
     {
@@ -60,6 +61,8 @@ function PasswordReset() {
         if (response.data?.statusCode === 200) {
           showToast.success(response.data.message)
           formik.resetForm()
+          navigate("/")
+          
         }
       } catch (error) {
         console.error('Password Reset error:', error);
@@ -104,7 +107,7 @@ function PasswordReset() {
           <div>
             <button
               onClick={formik.handleSubmit}
-              className={cn('common-btn relative z-1', isLoading ? 'spinner' : '')}
+              className='common-btn relative z-1'
               disabled={isLoading}
             >
               Change Password
