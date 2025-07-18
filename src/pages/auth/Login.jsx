@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Container from '../../components/Container'
 import loginSideImg from '../../assets/images/login-vector.png'
 import CommonBackBtn from '../../components/CommonBackBtn'
@@ -7,18 +7,27 @@ import CustomInput from '../../components/CustomInput'
 import facebookLoginIcon from '../../assets/images/facebook.svg'
 import googleLoginIcon from '../../assets/images/google.svg'
 import fingerprintLoginIcon from '../../assets/images/fingerprint.svg'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom'
 import { Field, FormikProvider, useFormik } from 'formik'
 import * as Yup from "yup"
 import axiosInstance from '../../utils/axios'
 import { useAuthStore } from '../../store/auth'
 import { getFirebaseToken } from '../../utils/firebaseConfig'
+import { showToast } from '../../utils/toast'
 
 export default function Login() {
 
   const { login } = useAuthStore()
   const [isLoading, setIsLoading] = useState(false)
-
+  const [query,setSearchParams] = useSearchParams()
+  
+  useEffect(() => {
+    if(query.get("restricted")){
+      showToast.error("Your account has been restricted. Please contact support.")
+    }
+    query.delete("restricted");
+    setSearchParams(query, { replace: true });
+  },[query])
 
   const navigate = useNavigate()
 

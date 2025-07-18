@@ -4,9 +4,16 @@ import profileIcon from "../assets/images/profile.png"
 import bulbIcon from "../assets/images/bulb.png"
 import keyIcon from "../assets/images/key.png"
 import { NavLink } from 'react-router-dom'
+import { useAuthStore } from '../store/auth'
+import { useEffect } from 'react'
+// provider
 
 function Settings() {
+const user = useAuthStore(state => state.user)
 
+useEffect(() => {
+    console.log("userrrrrrrrrrrrrrrrrrr",user)
+},[user])
 
 const menuItems = [
   
@@ -15,19 +22,19 @@ const menuItems = [
     icon: bulbIcon,
     action: "navigate",
     route: "/notifications/settings"
-  },
-  {
-    label: "Password Manager",
-    icon: keyIcon,
-    action: "navigate",
-    route: "/password/reset"
-  },
+  }, 
   {
     label: "Delete Account",
     icon: profileIcon,
     action: "navigate",
     route: "/profile/account/delete"
   },
+  ...((user?.provider != "google" && user?.provider != "facebook") ? [{
+            label: "Password Manager",
+            icon: keyIcon,
+            action: "navigate",
+            route: "/password/reset"
+  }] : [] )
 ];
 
 return (

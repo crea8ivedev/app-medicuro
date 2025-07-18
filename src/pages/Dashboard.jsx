@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import loginSideImg from '../assets/images/login-vector.png';
 import plusBtn from '../assets/images/bookIcon.svg';
 import AppointmentItem from "../components/AppointmentItem";
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 import { cn } from '../utils/cn';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import axiosInstance from '../utils/axios';
@@ -22,6 +22,7 @@ export default function Dashboard() {
   const [currentPastAppointmentPage, setCurrentPastAppointmentPage] = useState(0)
 
   const navigate = useNavigate()
+
 
   useEffect(() => {
     const fetchData = async () => {
