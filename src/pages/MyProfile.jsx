@@ -80,7 +80,6 @@ const changeProfilePic = (e) => {
     fileReader.onload = () => {
         const fileData = fileReader.result;
         setProfilePic(fileData)
-        console.log(fileData)
     }
     fileReader.readAsDataURL(file)
     uploadProfilePic(file); 

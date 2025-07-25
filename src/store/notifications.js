@@ -34,7 +34,6 @@ export const useNotificationStore = create(
           set({ notifications: data });
         }
       } catch (error) {
-        console.error("Failed to fetch notifications", error);
       } finally {
         set({ isLoading: false });
       }

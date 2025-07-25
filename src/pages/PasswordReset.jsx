@@ -65,7 +65,6 @@ function PasswordReset() {
           
         }
       } catch (error) {
-        console.error('Password Reset error:', error);
       }
 
       setIsLoading(false)

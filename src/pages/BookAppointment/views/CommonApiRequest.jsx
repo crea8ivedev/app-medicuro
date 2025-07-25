@@ -27,7 +27,6 @@ export const useSubmitAppointmentRequest = () => {
 
       return true
     } catch (error) {
-      console.error("Appointment submission error:", error);
         showToast.error("Something went wrong")
 
       return false

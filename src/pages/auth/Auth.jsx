@@ -23,13 +23,13 @@ export default function Auth() {
       <div className='flex flex-col gap-4 mt-7'>
         <Link
           to='/login'
-          className='py-3 px-15 text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit hover:opacity-90'
+          className='py-3 px-15 text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit hover:bg-bluewave hover:text-white'
         >
           Log In
         </Link>
         <Link
           to='signup'
-          className='py-3 px-10 md:w-[162px]  text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit hover:opacity-90'
+          className='py-3 px-10 md:w-[162px]  text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit hover:bg-bluewave hover:text-white'
         >
           Sign Up
         </Link>

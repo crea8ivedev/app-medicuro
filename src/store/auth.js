@@ -14,22 +14,9 @@ export const useAuthStore = create(
 
       logout: () => {
         set({
-          user: {
-            fullName: '',
-            // profile: '',
-          },
-          token: null,
+          user: {},
         })
       },
-
-      profileUpdate: ({ name, profile }) => {
-        const { token } = get()
-        set({
-          user: { name, profile },
-          token,
-        })
-      },
-
       changeNotificationSettings: (isChecked) => {
         const { user } = get()
         set({

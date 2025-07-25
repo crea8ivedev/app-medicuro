@@ -67,7 +67,6 @@ export default function Login() {
         }
         
       } catch (error) {
-        console.log("Errrrrr",error)
       }
 
       const response = await axiosInstance.post('/api/v1/auth/login', {
@@ -79,14 +78,12 @@ export default function Login() {
         const user = response.data?.user;
         const token = "dummyToken";
         await new Promise((res) => setTimeout(res, 1000));
-        login({ user, token });
+        login({user});
         navigate("/dashboard");
       } else {
-        console.error('Login failed:', response.data);
       }
 
     } catch (error) {
-      console.error('Login error:', error);
     } finally {
       setIsLoading(false);
     }

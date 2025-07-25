@@ -30,7 +30,6 @@ const Terms = ({ setStep, signUpFormValues,withButton=false }) => {
         }
         
       } catch (error) {
-        console.log("Errrrrr",error)
       }
 
 
@@ -47,10 +46,6 @@ const Terms = ({ setStep, signUpFormValues,withButton=false }) => {
       setIsLoading(false)
     }
   }
-
-  useEffect(() => {
-    console.log(user)
-  }, [user])
 
   return (
     <div>

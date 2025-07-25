@@ -21,7 +21,6 @@ try {
      messaging = getMessaging(firebaseApp)
 
 } catch (error) {
-        console.log("Errrrrr",error)
 }
 
 

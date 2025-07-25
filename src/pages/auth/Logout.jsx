@@ -12,25 +12,14 @@ export default function Logout() {
   const navigate = useNavigate()
   const { logout:logoutUser } = useAuthStore();
   const [loading,setLoading] = useState(false)
-  const [sendData,setsendData] = useState(false)
-
-
-  const handleChange = (e) => {
-    setsendData(e.checked)
-  }
-
 
   const logout = async () => {
     try {
       setLoading(true)
-      const response = await  axiosInstance.post('/api/v1/auth/logout',{sendData})
+      const response = await  axiosInstance.post('/api/v1/auth/logout')
       if(response.data.statusCode == 200){
         logoutUser()
         navigate("/")
-
-        if(sendData){
-          showToast.success("Your data has been sent to your email address.")
-        }
       }
     } finally {
       setLoading(false)
@@ -63,11 +52,6 @@ export default function Logout() {
         >
           Logout
         </button>
-      </div>
-
-      <div className='flex items-center gap-4 mt-20'>
-        <input type="checkbox" onChange={(e) => handleChange(e.target)} className='scale-150 outline-0 border-0 hover:outline-0 hover:border-0' />
-        <div className='text-sm text-start'>Send me a copy of my data and usage history</div>
       </div>
     </div>
   )

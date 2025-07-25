@@ -1,12 +1,6 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import axiosInstance from "../../../utils/axios"
 import { showToast } from "../../../utils/toast"
-import PhysicalAppointmentForm from "./PhysicalAppointmentForm"
-import MedicationRefillForm from "./MedicationRefillForm"
-import CompanyPartnerAppointmentForm from "./CompanyPartnerAppointment"
-import NaturopathicMedicineForm from "./NaturopathicMedicine"
-import spinner from "../../../assets/images/spinner.gif"
-
 
 import { useFormik,Field,FormikProvider } from "formik"
 import CustomInput from "../../../components/CustomInput"
@@ -15,7 +9,6 @@ import * as Yup from "yup"
 import { cn } from "../../../utils/cn"
 import { useAuthStore } from "../../../store/auth"
 import PhotosUploader from "./PhotosUploader"
-
 
 function DynamicForm({item,serviceId,callback}) {
     const [isLoading,setIsLoading] = useState(false)
@@ -44,7 +37,7 @@ function DynamicForm({item,serviceId,callback}) {
         fields?.forEach((field) => {
             if (field.type === "file") {
               const files = values[field.name] || [];
-              
+              delete values[field.name]
               files.forEach((fileObj) => {
                 if (fileObj?.file) {
                   formData.append(field.name, fileObj.file); // Use dynamic field name!
@@ -52,7 +45,6 @@ function DynamicForm({item,serviceId,callback}) {
               });
             }
           }) 
-     
         formData.append("formData", JSON.stringify(values));
         formData.append("serviceId", serviceId);
         formData.append("userId", user?.id);
@@ -97,14 +89,13 @@ function DynamicForm({item,serviceId,callback}) {
                               component={field.type === 'select' ? CommonSelectBox : CustomInput}
                               options={field?.options}
                               inputclasses='w-full'
-                              rows={field.type === 'textarea' ? 6 : undefined}
+                              rows={field.type === 'textarea' ? (field?.rows || 6) : undefined}
                               errorStyle='text-white'
                               className="forn-field"
                               type={field.type}
                               label={field.label}
                               labelclasses="text-white font-bold mb-2"
                             />
-
                         }
                       </div>
                     ))}

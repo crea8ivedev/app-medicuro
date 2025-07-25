@@ -11,10 +11,6 @@ import { useEffect } from 'react'
 function Settings() {
 const user = useAuthStore(state => state.user)
 
-useEffect(() => {
-    console.log("userrrrrrrrrrrrrrrrrrr",user)
-},[user])
-
 const menuItems = [
   
   {

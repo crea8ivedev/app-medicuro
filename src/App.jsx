@@ -1,91 +1,96 @@
 import { Route, Routes } from 'react-router-dom'
-import Login from './pages/auth/Login'
-import Dashboard from './pages/Dashboard'
-import Signup from './pages/auth/Signup'
-import Auth from './pages/auth/Auth'
+import { Suspense, lazy } from 'react'
 import PublicRoute from './config/PublicRoute.jsx'
-import PageNotFound from './pages/PageNotFound'
-import AuthLayout from './components/layout/AuthLayout'
-import DefaultLayout from './components/layout/DefaultLayout'
-import PrivateRoute from './config/PrivateRoute'
-import Logout from './pages/auth/Logout'
-import SetPassword from './pages/auth/SetPassword'
-import BookAppointmentIndexPage from './pages/BookAppointment/index'
-import CancelAppointment from './pages/CancelAppointment'
-import RebookAppointment from './pages/RebookAppointment'
-import ViewlAppointment from './pages/ViewlAppointment'
-import Notifications from './pages/Notifications'
-import MyProfile from './pages/MyProfile'
-import Settings from './pages/Settings'
-import NotificationsSettings from './pages/NotificationsSettings'
-import PasswordReset from './pages/PasswordReset'
-import Help from './pages/Help'
-import Privacy from './pages/Privacy'
-import Faqs from './pages/Faqs'
-import DeleteAccount from './pages/auth/DeleteAccount'
-import UpdateProfile from './pages/UpdateProfile'
-import ForgetPassword from './pages/auth/ForgetPassword.jsx'
-import { useAuthStore } from './store/auth.js'
+import PrivateRoute from './config/PrivateRoute.jsx'
 import ConditionalRoute from './config/conditionalRoute.jsx'
+import { useAuthStore } from './store/auth.js'
+import FallbackSkeleton from './pages/fallbacks/index.jsx'
+
+// Layouts
+const AuthLayout = lazy(() => import('./components/layout/AuthLayout'))
+const DefaultLayout = lazy(() => import('./components/layout/DefaultLayout'))
+
+// Auth Pages
+const Auth = lazy(() => import('./pages/auth/Auth'))
+const Login = lazy(() => import('./pages/auth/Login'))
+const Signup = lazy(() => import('./pages/auth/Signup'))
+const Logout = lazy(() => import('./pages/auth/Logout'))
+const SetPassword = lazy(() => import('./pages/auth/SetPassword'))
+const ForgetPassword = lazy(() => import('./pages/auth/ForgetPassword.jsx'))
+const DeleteAccount = lazy(() => import('./pages/auth/DeleteAccount'))
+
+// Main Pages
+const Dashboard = lazy(() => import('./pages/Dashboard'))
+const BookAppointmentIndexPage = lazy(() => import('./pages/BookAppointment/index'))
+const CancelAppointment = lazy(() => import('./pages/CancelAppointment'))
+const RebookAppointment = lazy(() => import('./pages/RebookAppointment'))
+const ViewlAppointment = lazy(() => import('./pages/ViewlAppointment'))
+const Notifications = lazy(() => import('./pages/Notifications'))
+const MyProfile = lazy(() => import('./pages/MyProfile'))
+const UpdateProfile = lazy(() => import('./pages/UpdateProfile'))
+const Settings = lazy(() => import('./pages/Settings'))
+const NotificationsSettings = lazy(() => import('./pages/NotificationsSettings'))
+const PasswordReset = lazy(() => import('./pages/PasswordReset'))
+const Help = lazy(() => import('./pages/Help'))
+const Privacy = lazy(() => import('./pages/Privacy'))
+const Faqs = lazy(() => import('./pages/Faqs'))
+const PageNotFound = lazy(() => import('./pages/PageNotFound'))
+
 
 function App() {
-  const {user} = useAuthStore()
+  const { user } = useAuthStore()
+
   return (
-    <Routes>
-      <Route path='/*' element={<PageNotFound />} />
+    <Suspense fallback={<FallbackSkeleton/>}>
+      <Routes>
+        <Route path="/*" element={<PageNotFound />} />
 
-      <Route element={<PublicRoute />}>
-        <Route element={<AuthLayout />}>
-          <Route index path='/' element={<Auth />} />
+        <Route element={<PublicRoute />}>
+          <Route element={<AuthLayout />}>
+            <Route index path="/" element={<Auth />} />
+          </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/reset-password" element={<SetPassword />} />
+          <Route path="/auth/forget-password" element={<ForgetPassword />} />
         </Route>
-        <Route path='/login' element={<Login />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/reset-password' element={<SetPassword />} />
-        <Route path='/auth/forget-password' element={<ForgetPassword />} />
-      </Route>
 
-      <Route element={<PrivateRoute />}>
-        <Route element={<DefaultLayout />}>
-          <Route path='/dashboard' element={<Dashboard />} />
+        <Route element={<PrivateRoute />}>
+          <Route element={<DefaultLayout />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/profile" element={<MyProfile />} />
+            <Route path="/profile/update" element={<UpdateProfile />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/notifications/settings" element={<NotificationsSettings />} />
+            <Route path="/password/reset" element={<PasswordReset />} />
+            <Route path="/help" element={<Help />} />
 
-          <Route path='/profile' element={<MyProfile />} />
-          <Route path='/profile/update' element={<UpdateProfile />} />
-
-          <Route path='/notifications' element={<Notifications />} />
-
-          <Route path='/settings' element={<Settings />} />
-          <Route path='/notifications/settings' element={<NotificationsSettings />} />
-          <Route path='/password/reset' element={<PasswordReset />} />
-
-          <Route path='/help' element={<Help />} />
-          {
-            user?.fullName && (
+            {user?.fullName && (
               <>
-                <Route path='/privacy' element={<Privacy />} />
-                <Route path='/faqs' element={<Faqs />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/faqs" element={<Faqs />} />
               </>
-            )
-          }
-          
+            )}
 
-          <Route path='/book-appointment' element={<BookAppointmentIndexPage />} />
-          <Route path='/cancel-appointment/:id' element={<CancelAppointment />} />
-          <Route path='/rebook-appointment/:id' element={<RebookAppointment />} />
-          <Route path='/view-appointment/:type/:id' element={<ViewlAppointment />} />
+            <Route path="/book-appointment" element={<BookAppointmentIndexPage />} />
+            <Route path="/cancel-appointment/:id" element={<CancelAppointment />} />
+            <Route path="/rebook-appointment/:id" element={<RebookAppointment />} />
+            <Route path="/view-appointment/:type/:id" element={<ViewlAppointment />} />
+          </Route>
+
+          <Route element={<AuthLayout />}>
+            <Route path="/log-out" element={<Logout />} />
+            <Route path="/profile/account/delete" element={<DeleteAccount />} />
+          </Route>
         </Route>
 
-        <Route element={<AuthLayout />}>
-          <Route path='/log-out' element={<Logout />} />
-          <Route path='/profile/account/delete' element={<DeleteAccount />} />
+        <Route element={<ConditionalRoute />}>
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/faqs" element={<Faqs />} />
         </Route>
-
-         </Route>
-        <Route element={<ConditionalRoute/>}>
-          <Route path='/privacy' element={<Privacy />} />
-          <Route path='/faqs' element={<Faqs />} />
-        </Route>
-    </Routes>
-    
+      </Routes>
+    </Suspense>
   )
 }
 

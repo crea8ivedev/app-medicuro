@@ -6,7 +6,6 @@ import { useFormikContext } from "formik";
 const PhotosUploader = ({ name, maxPhotos = 3 }) => {
   const { values, setFieldValue } = useFormikContext();
 
-
   const photos = values[name] || [];
 
   const fileInputRef = useRef(null);
