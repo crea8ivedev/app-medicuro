@@ -8,11 +8,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import axiosInstance from '../utils/axios';
 import { useAppointmentStore } from '../store/appointments';
 import spinner from '../assets/images/spinner.gif';
+import { useSocket } from '../context/socketContext';
 import 'swiper/css';
 
 export default function Dashboard() {
 
   const { upcomingAppointments, pastAppointments, setAppointments, clearAppointments } = useAppointmentStore()
+  const socket = useSocket();
 
   const upcomingContainerRef = useRef(null)
   const pastContainerRef = useRef(null)
@@ -32,6 +34,7 @@ export default function Dashboard() {
         if (response.data?.statusCode == 200) {
           const data = response.data
           setAppointments(data)
+
         } else {
           clearAppointments()
         }
@@ -45,7 +48,29 @@ export default function Dashboard() {
     }
     fetchData()
 
+    const deleteAppointment = (id) => {
+      const isUpcoming = upcomingAppointments?.find(e => e.id == id);
+      const isPast = pastAppointments?.find(e => e.id == id);
+
+      if(isUpcoming || isPast){
+         fetchData()
+      }
+    }
+
+    socket.on("update-appointments-list" ,fetchData)
+
+    socket.on("cancel-appointments-list" , deleteAppointment)
+    
+
+    return () => {
+      socket && socket.off("update-appointments-list",fetchData)
+      socket.off("cancel-appointments-list" , deleteAppointment)
+    }
+
   }, [])
+
+
+  // 
 
   const ViewpastAppoinments = (id) => {
     navigate(`/view-appointment/Past/${id}`)

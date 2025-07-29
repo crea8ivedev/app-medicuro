@@ -8,9 +8,13 @@ import axiosInstance from '../../utils/axios';
 import DynamicForm from './views/DynamicForm';
 import { useNavigate } from 'react-router-dom';
 import { showToast } from '../../utils/toast';
+import { useSocket } from '../../context/socketContext';
+
 
 
 function BookAppointmentIndexPage() {
+    // 
+const socket = useSocket();
 
 const navigate = useNavigate()
 
@@ -36,7 +40,18 @@ useEffect(() => {
        }
     }
     fetchServices()
-},[])
+
+    const fetchAgain = () => {
+        if(!isSubmitted){
+            fetchServices()
+        }
+    }
+
+    socket &&  socket.on("services-updated",fetchAgain)
+    return () => {
+        socket && socket.off("services-updated",fetchAgain)
+    }
+},[socket])
 
 const handleSelectItem = (id) => {
     const temp = bookingItems.map((item) => {

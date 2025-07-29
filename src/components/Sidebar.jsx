@@ -21,12 +21,14 @@ import { useNotificationStore } from '../store/notifications'
 
 import { useSocket } from '../context/socketContext';
 import { useAuthStore } from '../store/auth'
+import { showToast } from '../utils/toast'
 
 function Sidebar({ openMenu, setOpenMenu }) {
 
   const navigate = useNavigate()
   const { notifications: allNotifications,getNotifications } = useNotificationStore()
-  const {user} = useAuthStore()
+  const {user,logout} = useAuthStore()
+  
   const socket = useSocket();
 
   const {pathname } = useLocation();
@@ -47,8 +49,16 @@ function Sidebar({ openMenu, setOpenMenu }) {
     }
     socket.on("recieved_notification",getNotifications)
 
+    const logoutWithToast = () => {
+      showToast.error("Password was changed by admin.");
+      logout();
+    }
+    
+    socket.on("logout-user",logoutWithToast)
+
     return () => {
        socket && socket.off("recieved_notification",getNotifications)
+       socket && socket.off("logout-user",logoutWithToast)
     }
   }, [socket])
   

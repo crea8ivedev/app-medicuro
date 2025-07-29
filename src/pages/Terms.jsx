@@ -35,7 +35,7 @@ const Terms = ({ setStep, signUpFormValues,withButton=false }) => {
 
       const response = await axiosInstance.post('/api/v1/auth/register', {
         ...signUpFormValues,
-         notificationTokens : notificationToken ,
+         ...(notificationToken ? {notificationTokens : notificationToken} : {}) ,
       })
       if (response?.data?.statusCode == 201) {
         const user = response.data?.user

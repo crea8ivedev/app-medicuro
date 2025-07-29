@@ -5,10 +5,13 @@ import sideImage from "../assets/images/book-appointment-vector.png"
 import axiosInstance from '../utils/axios';
 import { useAppointmentStore } from '../store/appointments';
 import spinner from '../assets/images/spinner.gif';
+import { useSocket } from '../context/socketContext';
+import { showToast } from '../utils/toast';
 
 function ViewlAppointment() {
    const { id,type } = useParams();
    const navigate = useNavigate()
+   const socket = useSocket();
 
     const {getAppointmentById } = useAppointmentStore()
     const [appointment,setAppointment] = useState()
@@ -31,7 +34,27 @@ function ViewlAppointment() {
           }
         }
         fetchFormData()
-     },[id])
+
+        const navigateToDashboard = (appointmentId) => {
+          if(appointmentId == id){
+            showToast.error("This appoitnment was canceled by admin")
+            navigate("/dashboard")
+          }
+        }
+
+        const refetchForm = (appointmentId) => {
+          if(appointmentId == id) fetchFormData();
+        }
+
+        socket && socket.on("cancel-appointments-list",navigateToDashboard);
+        socket && socket.on("update-appointments-list",(id) =>  refetchForm(id));
+
+        return () => {
+          socket && socket.off("cancel-appointments-list", navigateToDashboard);
+          socket && socket.off("update-appointments-list",refetchForm);
+        }
+
+     },[id,socket])
 
     const buttons = [
       {name : "Rebook",action : (index) => navigate(`/rebook-appointment/${index}`)},

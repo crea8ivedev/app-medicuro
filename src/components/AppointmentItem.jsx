@@ -34,7 +34,7 @@ export default function AppointmentItem({
           )}
           <div className=''>
             <div className='text-ocean font-semibold whitespace-break-spaces'>{doctor}</div>
-            <div className='text-sm whitespace-break-spaces'>{service}</div>
+            <div className='text-sm whitespace-break-spaces pe-1'>{service}</div>
           </div>
         </div>
 
