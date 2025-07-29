@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - main
+      - staging
 
 jobs:
-  deploy:
+  deploy-prod:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,14 +21,14 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VPS_IP }} >> ~/.ssh/known_hosts
 
-      - name: Deploy Application via SSH
+      - name: Deploy Production App via SSH
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOF
           set -e
 
-          echo "${{ secrets.ENV_FILE_CONTENT }}" > /apps/medicuro-app/.env
+          echo "${{ secrets.ENV_FILE_CONTENT_PROD }}" > /apps/medicuro-app/.env
 
-          echo "Navigating to app directory..."
+          echo "Navigating to production app directory..."
           cd /apps/medicuro-app
 
           echo "Ensuring Node.js and npm are in PATH..."
@@ -42,9 +44,51 @@ jobs:
           echo "Generating build..."
           npm run build
 
-
-          echo "Starting server..."
+          echo "Starting production app via PM2..."
           pm2 restart ecosystem.config.cjs
 
-          echo "Deployment complete!"
+          echo "✅ Production deployment complete!"
+          EOF
+
+  deploy-staging:
+    if: github.ref == 'refs/heads/staging'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.VPS_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy Staging App via SSH
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.VPS_USERNAME }}@${{ secrets.VPS_IP }} <<EOF
+          set -e
+
+          echo "${{ secrets.ENV_FILE_CONTENT_STAGING }}" > /apps/medicuro-staging/app-medicuro/.env
+
+          echo "Navigating to staging app directory..."
+          cd /apps/medicuro-staging/app-medicuro
+
+          echo "Ensuring Node.js and npm are in PATH..."
+          export PATH=/root/.nvm/versions/node/v22.14.0/bin:/usr/bin
+          
+          echo "Pulling latest code from GitHub..."
+          git reset --hard
+          git pull origin staging
+
+          echo "Installing dependencies..."
+          npm install
+
+          echo "Generating build..."
+          npm run build
+
+          echo "Starting staging app via PM2..."
+          pm2 restart ecosystem.config.cjs
+
+          echo "✅ Staging deployment complete!"
           EOF
