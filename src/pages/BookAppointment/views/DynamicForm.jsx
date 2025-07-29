@@ -48,12 +48,9 @@ function DynamicForm({item,serviceId,callback}) {
         formData.append("formData", JSON.stringify(values));
         formData.append("serviceId", serviceId);
         formData.append("userId", user?.id);
-
         try {
           setIsLoading(true);
-
           const response = await axiosInstance.post("/api/v1/appointments/request", formData);
-
           if (response.data?.statusCode === 200) {
             showToast.success("Appointment request added successfully");
             callback();
@@ -75,6 +72,7 @@ function DynamicForm({item,serviceId,callback}) {
   return (
     <div>
         {
+         !fields?.length  ?  <div className="text-white"> Form is under construction  </div> : 
          <FormikProvider value={formik}>
                   <div className='pb-10 space-y-5'>
                     {fields?.map((field) => (

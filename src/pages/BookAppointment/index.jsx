@@ -13,7 +13,6 @@ import { useSocket } from '../../context/socketContext';
 
 
 function BookAppointmentIndexPage() {
-    // 
 const socket = useSocket();
 
 const navigate = useNavigate()
@@ -73,6 +72,18 @@ const handleSubmit = () => {
     }
 }
 
+const submitFormCallback = () => {
+    setSelectedItemId(null)
+    setIsSubmitted(false)
+    const temp = bookingItems.map((item) => {
+        {
+            return {...item,isSelected: false}
+        }
+    })
+    setBookingItems(temp)
+
+}
+
     return (
       <div className="bg-ice min-h-screen w-full justify-between relative">
         <div className='common-bg'></div>
@@ -124,7 +135,7 @@ const handleSubmit = () => {
                                 <DynamicForm 
                                     item={bookingItems.find((e) =>  e.id == selectedItemId)}  
                                     serviceId={bookingItems.find((e) =>  e.id == selectedItemId )?.id}
-                                    callback={() => setSelectedItemId(null)}
+                                    callback={() => submitFormCallback()}
                                 />
                             </div>
                         }
