@@ -1,15 +1,16 @@
+
 importScripts("https://www.gstatic.com/firebasejs/9.10.0/firebase-app-compat.js")
 importScripts("https://www.gstatic.com/firebasejs/9.10.0/firebase-messaging-compat.js")
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCAujOiJTaSOy4Hm9ioGpNDrBK-zsLOVMI",
-    authDomain: "notification-7bdf0.firebaseapp.com",
-    projectId: "notification-7bdf0",
-    storageBucket: "notification-7bdf0.firebasestorage.app",
-    messagingSenderId: "727355685130",
-    appId: "1:727355685130:web:9c422ae9b4ce21852d22f3",
-    measurementId: "G-P8JG6MYFTW"
-}
+  apiKey: "AIzaSyA2l6WLHfRO3ojo97HLuinnn6Z_WIlx6eY",
+  authDomain: "medicuro-72eb4.firebaseapp.com",
+  projectId: "medicuro-72eb4",
+  storageBucket: "medicuro-72eb4.firebasestorage.app",
+  messagingSenderId: "827064676481",
+  appId: "1:827064676481:web:9825e1abcc3d1f2f165d80",
+  measurementId: "G-56GC382FE4"
+};
 
 firebase.initializeApp(firebaseConfig)
 const messaging = firebase.messaging()
