@@ -87,10 +87,22 @@ function ViewlAppointment() {
               <div className='appointment-bg my-4 flex bg-foam  flex-col gap-5  p-5 rounded-xl min-h-320'>
                 {
                  fields ?   (Object.entries(fields)).map(([label,value],index) => {
+                  const isImageArray =
+                              Array.isArray(value) &&
+                                value.every(
+                                  (item) =>
+                                    typeof item === "string" &&
+                                    (item.startsWith("http") || item.startsWith("/")) &&
+                                    (item.endsWith(".jpg") ||
+                                      item.endsWith(".jpeg") ||
+                                      item.endsWith(".png") ||
+                                      item.endsWith(".webp") ||
+                                      item.endsWith(".gif"))
+                                );
                     return <div key={index} > 
                         <div className='font-bold'>{label}</div>
                         {
-                          label == "photos" ? <div className='flex my-3 flex-wrap gap-2'> 
+                         isImageArray ? <div className='flex my-3 flex-wrap gap-2'> 
                             {
                               value.map((item,index) => {
                                 return <a href={item} target='_blank' key={index} ><img className='w-[50px] cursor-pointer' src={item}  /> </a> 

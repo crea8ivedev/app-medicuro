@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import axiosInstance from "../utils/axios"
 import { useAuthStore } from "../store/auth"
 import { Link, useNavigate } from "react-router-dom"
