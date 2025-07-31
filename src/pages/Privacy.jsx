@@ -1,21 +1,30 @@
+import { useEffect, useState } from 'react';
 import CommonBackBtn from '../components/CommonBackBtn'
 import { useAuthStore } from '../store/auth';
+import axiosInstance from '../utils/axios';
+import spinner from "../assets/images/spinner.gif"
+
 
 function Privacy() {
 
-    const { user } = useAuthStore()
+    const { user } = useAuthStore();
 
-    const termsAndConditions = [
-        "Ut lacinia justo sit amet lorem sodales accumsan. Proin malesuada eleifend fermentum. Donec condimentum, nunc at rhoncus faucibus, ex nisi laoreet ipsum, eu pharetra eros est vitae orci. Morbi quis rhoncus mi. Nullam lacinia ornare accumsan. Duis laoreet, ex eget rutrum pharetra, lectus nisl posuere risus, vel facilisis nisi tellus ac turpis.",
-        "Ut lacinia justo sit amet lorem sodales accumsan. Proin malesuada eleifend fermentum. Donec condimentum, nunc at rhoncus faucibus, ex nisi laoreet ipsum, eu pharetra eros est vitae orci. Morbi quis rhoncus mi. Nullam lacinia ornare accumsan. Duis laoreet, ex eget rutrum pharetra, lectus nisl posuere risus, vel facilisis nisi tellus.",
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pellentesque congue lorem, vel tincidunt tortor placerat a. Proin ac diam quam. Aenean in sagittis magna, ut feugiat diam."
-    ];
+    const [terms, setTerms] = useState([]);
+
+    const fetchTerms = async () => {
+        const res = await axiosInstance.get("/api/v1/terms");
+        setTerms(res.data)
+    }
+
+    useEffect(() => {
+        fetchTerms()
+    }, [])
 
     return (
         <div className='bg-sky-foam min-h-screen pb-16 relative'>
             <div className='common-bg absolute left-0 right-0'></div>
             {
-                user?.fullName && 
+                user?.fullName &&
                 <div className='flex flex-col p-5'>
                     <CommonBackBtn label='Privacy Policy' />
                 </div>
@@ -24,20 +33,51 @@ function Privacy() {
                 <div className='bg-mint relative w-825 pt-10 pb-36 md:px-10 px-5 flex flex-col rounded-xl'>
                     <div className='common-right-design  z-10 bottom-5 right-5'></div>
 
-                    <div>
-                        <div className='text-ocean font-bold'>Last Update: 14/04/2025</div>
-                        <div className='mt-3 mb-4'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pellentesque congue lorem, vel tincidunt tortor placerat a. Proin ac diam quam. Aenean in sagittis magna, ut feugiat diam. Fusce a scelerisque neque, sed accumsan metus.</div>
-                        <div>Nunc auctor tortor in dolor luctus, quis euismod urna tincidunt. Aenean arcu metus, bibendum at rhoncus at, volutpat ut lacus. Morbi pellentesque malesuada eros semper ultrices. Vestibulum lobortis enim vel neque auctor, a ultrices ex placerat. Mauris ut lacinia justo, sed suscipit tortor. Nam egestas nulla posuere neque tincidunt porta.</div>
-                    </div>
-
-                    <div className='text-ocean font-bold mt-4 text-xl'>Terms & Conditions</div>
-                    <ul className='list-decimal px-10 md:px-5'>
+   
+                    <div className='flex flex-col gap-5'>
                         {
-                            termsAndConditions.map((item, index) => {
-                                return <li className='my-3' key={index}>{item} </li>
+                            !terms.length  ? 
+                             <img src={spinner} className='w-20 m-auto' alt='loading' />
+                            : terms.map(t => {
+                                return Object.entries(t).map(([key, value], index) => {
+                                    return <div >
+                                        {
+                                            key ?
+                                                (
+                                                    <div className='flex flex-col gap-1'>
+                                                        <div className='text-ocean font-bold mt-4 text-xl'>{key.replaceAll("_" ," ")}</div>
+                                                        <div>
+                                                            {
+                                                                typeof value == "string" ? <div>{value} </div> : <div>
+                                                                    <ul className='list-decimal px-10 md:px-5'>
+                                                                        {
+                                                                            value.map((item, index) => {
+                                                                                return <li className='my-3' index={index}>{item}</li>
+
+
+                                                                            })
+                                                                        }
+                                                                    </ul>
+                                                                </div>
+
+                                                            }
+                                                        </div>
+                                                    </div>
+
+                                                ) : <div className='flex  flex-col gap-5'>
+                                                    {
+                                                        Array.isArray(value) && value?.map((terms, index) => {
+                                                            return <div index={index}> {terms} </div>
+                                                        })
+                                                    }
+                                                </div>
+                                        }
+
+                                    </div>
+                                })
                             })
                         }
-                    </ul>
+                    </div>
                 </div>
             </div>
         </div>
