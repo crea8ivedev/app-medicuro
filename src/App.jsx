@@ -5,6 +5,8 @@ import PrivateRoute from './config/PrivateRoute.jsx'
 import ConditionalRoute from './config/conditionalRoute.jsx'
 import { useAuthStore } from './store/auth.js'
 import FallbackSkeleton from './pages/fallbacks/index.jsx'
+import NewGoogle from './pages/new-google.jsx'
+import FacebookLoginButton from './pages/new-facebook.jsx'
 
 // Layouts
 const AuthLayout = lazy(() => import('./components/layout/AuthLayout'))
@@ -36,7 +38,6 @@ const Privacy = lazy(() => import('./pages/Privacy'))
 const Faqs = lazy(() => import('./pages/Faqs'))
 const PageNotFound = lazy(() => import('./pages/PageNotFound'))
 
-
 function App() {
   const { user } = useAuthStore()
 
@@ -44,6 +45,8 @@ function App() {
     <Suspense fallback={<FallbackSkeleton/>}>
       <Routes>
         <Route path="/*" element={<PageNotFound />} />
+        <Route path='/app/google/login' element={<NewGoogle/>} />
+        <Route path='/app/facebook/login' element={<FacebookLoginButton/>} />
 
         <Route element={<PublicRoute />}>
           <Route element={<AuthLayout />}>

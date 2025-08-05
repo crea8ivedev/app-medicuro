@@ -4,7 +4,7 @@ import { cn } from '../utils/cn'
 
 import arrow from "../assets/images/left-arrow.png"
 import axiosInstance from '../utils/axios'
-import spinner from "../assets/images/spinner.gif"
+import FaqFallback from './fallbacks/FaqFallback'
 
 
 function Faqs() {
@@ -37,7 +37,7 @@ return (
             <div className='common-right-design  z-10 bottom-5 right-5'></div>
                 {
                   faqs.length  ?   faqs.map((faq,index) => {
-                        return <div key={index} className='my-3' onClick={() => setSelectedIndex(index)}> 
+                        return <div key={index} className='my-3' onClick={() => setSelectedIndex(selectedIndex ==  index ? null : index)}> 
                             <div className='flex items-center justify-between bg-ice py-3 px-4 rounded-xl cursor-pointer'>
                                 <div className='font-semibold'>{faq.question}</div>
                                 <img src={arrow} alt="" className={cn("rotate-90 transition-all",selectedIndex == index ? "-rotate-90" : "")} />
@@ -45,10 +45,8 @@ return (
                             <div className={cn("h-0 px-4 overflow-hidden transition-all font-semibold",selectedIndex == index ? "pt-7 pb-5 h-auto" : "")}>{faq.answer}</div>
                         </div>
                     })
-
                     :
-
-                    <img  className='w-20 m-auto' src={spinner} alt='loading' />
+                    <FaqFallback/>
                 }
             </div>
         </div>

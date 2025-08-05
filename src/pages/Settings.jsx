@@ -19,18 +19,19 @@ const menuItems = [
     action: "navigate",
     route: "/notifications/settings"
   }, 
-  {
-    label: "Delete Account",
-    icon: profileIcon,
-    action: "navigate",
-    route: "/profile/account/delete"
-  },
+  
   ...((user?.provider != "google" && user?.provider != "facebook") ? [{
             label: "Password Manager",
             icon: keyIcon,
             action: "navigate",
             route: "/password/reset"
-  }] : [] )
+  }] : [] ),
+  {
+    label: "Delete Account",
+    icon: profileIcon,
+    action: "navigate",
+    route: "/profile/account/delete"
+  }
 ];
 
 return (

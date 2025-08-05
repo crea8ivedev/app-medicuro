@@ -6,6 +6,7 @@ const CommonSelectBox = ({
   options = [],
   className = "",
   name,
+  label,
   field,
   ...props
 }) => {
@@ -13,6 +14,10 @@ const CommonSelectBox = ({
 
   return (
     <div className="relative w-full">
+      {
+        label && <div className="text-white font-bold mb-3">{label}</div>
+      }
+      
       <select
         name={name}
         {...field}

@@ -83,7 +83,7 @@ const MyProfileInfo = ({profilePic}) => {
             type: "text",
         },
         {
-            label: "Phone Number",
+            label: "Phone",
             name: "phone",
             type: "number",
             placeholder : "1709 XXX XXXX"
