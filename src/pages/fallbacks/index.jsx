@@ -4,12 +4,13 @@ import BookAppointmentSkeleton from './BookAppointmentFallback'
 import NotificationsFallback from './NotificationsFallback'
 import SettingsFallback from './SettingsFallback'
 import HelpFallback from './HelpFallback'
+import AuthScreenFallback from './AuthScreenFallback'
 
 const FallbackSkeleton = ({ showHeader = true, showSidebar = true }) => {
   const location = useLocation()
 
   const pathParts = location.pathname.split('/').filter(Boolean)
-  let type = pathParts[0] || 'dashboard'
+  let type = pathParts[0] || 'auth'
   if (type === 'patients' && pathParts.length > 1) type = 'patients-id'
 
   const fallbackComponents = {
@@ -17,7 +18,8 @@ const FallbackSkeleton = ({ showHeader = true, showSidebar = true }) => {
     "book-appointment" : <BookAppointmentSkeleton/>,
     notifications : <NotificationsFallback/>,
     settings : <SettingsFallback/>,
-    help : <HelpFallback/>
+    help : <HelpFallback/>,
+    "auth" : <AuthScreenFallback/>
   }
 
   const fallbackContent = fallbackComponents[type]

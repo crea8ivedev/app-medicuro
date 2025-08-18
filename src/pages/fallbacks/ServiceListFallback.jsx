@@ -31,9 +31,7 @@ function ServiceListFallback() {
       </div>
 
       {/* Next button placeholder */}
-      <div className="md:text-end text-center mt-4">
-        <div className="h-10 w-24 bg-gray-200 rounded-md inline-block"></div>
-      </div>
+     
     </div>
   );
 }
