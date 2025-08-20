@@ -8,7 +8,7 @@ const DashboardFallback = () => {
       {/* Main Content */}
       <div className="container mx-auto md:py-24 flex flex-col gap-6 xl:flex-row items-start relative md:px-5">
         {/* Left Image Placeholder (loginSideImg) */}
-        <div className="hidden xl:block w-[200px] h-[300px] bg-gray-300 rounded-lg"></div>
+        <div className="hidden xl:block invisible w-[200px] h-[300px] bg-gray-300 rounded-lg"></div>
 
         <div className="w-full">
           {/* Header Card */}

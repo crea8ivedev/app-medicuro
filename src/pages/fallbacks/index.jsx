@@ -5,8 +5,10 @@ import NotificationsFallback from './NotificationsFallback'
 import SettingsFallback from './SettingsFallback'
 import HelpFallback from './HelpFallback'
 import AuthScreenFallback from './AuthScreenFallback'
+import LoginFallback from './LoginFallback'
+import SignupTermsFallback from './SignupTermsFallback'
 
-const FallbackSkeleton = ({ showHeader = true, showSidebar = true }) => {
+const FallbackSkeleton = ({ showHeader = true }) => {
   const location = useLocation()
 
   const pathParts = location.pathname.split('/').filter(Boolean)
@@ -19,15 +21,39 @@ const FallbackSkeleton = ({ showHeader = true, showSidebar = true }) => {
     notifications : <NotificationsFallback/>,
     settings : <SettingsFallback/>,
     help : <HelpFallback/>,
-    "auth" : <AuthScreenFallback/>
+    "auth" : <AuthScreenFallback/>,
+    "login" : <LoginFallback/>,
+    "signup" : <SignupTermsFallback/>
   }
+
+  const independant = ["auth","help","login","signup"]
 
   const fallbackContent = fallbackComponents[type]
 
+  const Child = () => {
+    return  <div className="p-6 space-y-4">
+          {fallbackContent ? (
+            fallbackContent
+          ) : (
+            <>
+              <div className="h-4 w-1/3 bg-gray-300 rounded" />
+              <div className="h-3 w-3/4 bg-gray-200 rounded" />
+              <div className="h-3 w-full bg-gray-100 rounded" />
+              <div className="h-3 w-11/12 bg-gray-200 rounded" />
+              <div className="h-3 w-4/5 bg-gray-300 rounded" />
+              <div className="h-3 w-full bg-gray-200 rounded" />
+            </>
+          )}
+        </div>
+  }
+
   return (
-    <div className="flex h-screen bg-sky-foam overflow-hidden relative animate-pulse">
+    <div>
+      {
+        independant?.includes(type) ? <Child/>  :
+        <div className="flex h-screen bg-sky-foam overflow-hidden relative animate-pulse">
       {/* Sidebar Skeleton */}
-      {showSidebar && (
+      
         <div className="fixed top-0 left-0 h-screen w-66 hidden md:flex flex-col z-10 bg-navy p-4 gap-6">
           {/* Profile Circle */}
           <div className="w-10 h-10 bg-gray-600 rounded-full self-center mb-6" />
@@ -38,7 +64,7 @@ const FallbackSkeleton = ({ showHeader = true, showSidebar = true }) => {
             ))}
           </div>
         </div>
-      )}
+      
 
       {/* Main Layout */}
       <div className="flex-1 w-full md:ps-66">
@@ -63,22 +89,14 @@ const FallbackSkeleton = ({ showHeader = true, showSidebar = true }) => {
         )}
 
         {/* Page Skeleton Content */}
-        <div className="p-6 space-y-4">
-          {fallbackContent ? (
-            fallbackContent
-          ) : (
-            <>
-              <div className="h-4 w-1/3 bg-gray-300 rounded" />
-              <div className="h-3 w-3/4 bg-gray-200 rounded" />
-              <div className="h-3 w-full bg-gray-100 rounded" />
-              <div className="h-3 w-11/12 bg-gray-200 rounded" />
-              <div className="h-3 w-4/5 bg-gray-300 rounded" />
-              <div className="h-3 w-full bg-gray-200 rounded" />
-            </>
-          )}
-        </div>
+        <Child/>
+    
       </div>
     </div>
+      }
+
+    </div>
+    
   )
 }
 

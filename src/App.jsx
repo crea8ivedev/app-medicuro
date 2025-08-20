@@ -38,6 +38,7 @@ const Privacy = lazy(() => import('./pages/Privacy'))
 const Faqs = lazy(() => import('./pages/Faqs'))
 const PageNotFound = lazy(() => import('./pages/PageNotFound'))
 
+
 function App() {
   const { user } = useAuthStore()
 
