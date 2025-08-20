@@ -72,7 +72,7 @@ function DynamicForm({item,serviceId,callback}) {
   return (
     <div>
         {
-         !fields?.length  ?  <div className="text-white"> Form is under construction  </div> : 
+         !fields?.length  ?  <div className="text-white"> Our team is currently setting this up, and the form will be available shortly.</div> : 
          <FormikProvider value={formik}>
                   <div className='pb-10 space-y-5'>
                     {fields?.map((field) => (
@@ -93,6 +93,8 @@ function DynamicForm({item,serviceId,callback}) {
                               type={field.type}
                               label={field.label}
                               labelclasses="text-white font-bold mb-2"
+                              futureDate={true}
+
                             />
                         }
                       </div>

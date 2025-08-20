@@ -122,6 +122,7 @@ function CustomInput({
                 onClick={() => setOpen(true)}
                 slots={{ openPickerIcon: MyCalendarIcon }}
                 openTo='day'
+                 {...(props.futureDate ? { minDate: new Date() }  : { })}
               />
             </LocalizationProvider>
           </div>

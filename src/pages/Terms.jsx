@@ -96,7 +96,7 @@ const Terms = ({ setStep, signUpFormValues,withButton=false }) => {
                             <button
                             disabled={isLoading}
                             className="common-btn my-4 cursor-pointer font-outfit w-full md:w-auto"
-                            onClick={() => submitSignUpForm()}
+                            onClick={() => setStep(0)}
                             >
                             Accept
                             </button>
