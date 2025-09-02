@@ -12,8 +12,12 @@ import activeHome from '../assets/images/active-home.svg'
 import activeNotifications from '../assets/images/active-notification.svg'
 import activeInformation from '../assets/images/active-info.svg'
 import activeBook from '../assets/images/active-book.svg'
+import activeUserProfile from '../assets/images/active-user-profile.svg'
 
-import dummyProfile from '../assets/images/dummy-profile.svg'
+import dummyProfile from '../assets/images/logo.svg'
+import userProfile from '../assets/images/user-profile.svg'
+
+import logoutIcon from '../assets/images/logout.svg'
 import closeMenu from '../assets/images/close-menu.png'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
@@ -73,6 +77,12 @@ function Sidebar({ openMenu, setOpenMenu }) {
     image: checkIfActive("dashboard") ? activeHome : home,
     link: "/dashboard"
   },
+   {
+    label: 'Profile',
+    isActive: checkIfActive("profile"),
+    image: checkIfActive("profile") ? activeUserProfile : userProfile,
+    link: "/profile"
+  },
   {
     label: 'Book Now',
     isActive: checkIfActive("book-appointment"),
@@ -97,6 +107,12 @@ function Sidebar({ openMenu, setOpenMenu }) {
     isActive: checkIfActive("help"),
     image: checkIfActive("help") ? activeInformation : information,
     link: "/help"
+  },
+  {
+    label: 'Logout',
+    isActive: false,
+    image: logoutIcon,
+    link: "/log-out"
   }
 ];
 
@@ -128,7 +144,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
         className='flex justify-between pe-2 whitespace-nowrap cursor-pointer'
       >
         <div className='md:flex items-center   md:w-66 text-center h-[93px] bg-navy hidden' onClick={() => navigateToPage("/profile")}>
-          <img className='m-auto w-5 w-[35px] h-[35px] object-cover rounded-circle ' src={user?.profilePic ??  dummyProfile} alt='profile-pic' />
+          <img className='m-auto w-5 w-[35px] h-[35px] object-cover rounded-circle hover:scale-110 transition-all  ' src={user?.profilePic ??  dummyProfile} alt='profile-pic' />
         </div>
       </div>
 
@@ -147,7 +163,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
                 >
                   <div className='m-auto max-w-max relative'>
                     <div className=' flex items-center'>
-                       <img className='m-auto max-h-[19px]' src={item.image} alt='' />
+                       <img className='m-auto h-[17px] w-[17px] hover:scale-110 transition-all cursor-pointer' src={item.image} alt='' />
                     </div>
                     {
                       item?.newNotifications && <div className='absolute top-1 right-0 h-05 w-05 bg-red-500 rounded-circle'> </div>

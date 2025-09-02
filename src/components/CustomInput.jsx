@@ -121,6 +121,12 @@ function CustomInput({
                 open={open}
                 onClick={() => setOpen(true)}
                 slots={{ openPickerIcon: MyCalendarIcon }}
+                 slotProps={{
+    textField: {
+      onClick: () => setOpen(true), // ✅ clicking input opens picker
+      readOnly: true                // optional: prevent manual typing
+    }
+  }}
                 openTo='day'
                  {...(props.futureDate ? { minDate: new Date() }  : { })}
               />

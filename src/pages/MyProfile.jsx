@@ -1,6 +1,6 @@
 import  { useRef, useState } from 'react'
 import CommonBackBtn from '../components/CommonBackBtn'
-import dummyProfile from "../assets/images/dummy-profile.svg"
+import dummyProfile from "../assets/images/logo.svg"
 import whitePen from "../assets/images/white-pen.svg"
 import leftArrow from "../assets/images/left-arrow.png"
 
@@ -122,25 +122,25 @@ return (
             <div className='bg-mint relative w-825 p-10 flex flex-col gap-7 py-24 rounded-xl'>
             <div className='common-right-design z-10 bottom-5 right-5'></div>
                         <div className='relative max-w-max m-auto text-center'>
-                                <img className='m-auto w-105 h-105 rounded-circle object-cover' src={ profilePic ?? (user?.profilePic ?? dummyProfile)} alt="" />
+                                <img className='m-auto w-105 h-105 rounded-circle object-contain' src={ profilePic ?? (user?.profilePic ?? dummyProfile)} alt="" />
                                 <div onClick={() => profilePicRef?.current?.click()}  className=' bg-bluewave rounded-circle flex justify-center items-center w-30 h-30 absolute right-0 bottom-0 cursor-pointer'>
                                     <img src={whitePen}  alt="profile-pic" className={cn(profilePicSubmitting && "opacity-70 cursor-not-allowed")} />
-                                    <input onChange={(e) => changeProfilePic(e)} accept="image/jpeg,image/png,image/webp,image/avif,image/jpg" disabled={profilePicSubmitting}  ref={profilePicRef} type="file" hidden />
+                                    <input disabled={profilePicSubmitting}  onChange={(e) => changeProfilePic(e)} accept="image/jpeg,image/png,image/webp,image/avif,image/jpg" disabled={profilePicSubmitting}  ref={profilePicRef} type="file" hidden />
                                 </div>
                         </div>  
                         <div className='my-10'>
                             {
                                 menuItems?.map((item,index) => {
-                                    return <div key={index} onClick={ item.onclick && item.onclick } className='flex items-center justify-between max-w-xs m-auto my-4  cursor-pointer'>
+                                    return <div key={index} onClick={ item.onclick && item.onclick } className='flex group items-center justify-between max-w-xs m-auto my-4  cursor-pointer'>
                                         <div className='flex gap-5 items-center'>
-                                            <div className='bg-teal h-40 w-40 flex  items-center justify-center rounded-circle'>
+                                            <div className='bg-teal h-40 w-40 flex group-hover:bg-teal-600  items-center justify-center rounded-circle'>
                                                 <img src={item.icon} alt="" />
                                             </div>
                                             <div className='text-xl font-semibold'>{item.label}</div>
                                         </div>
                                         {
                                             item.route &&  <div className='text-xl font-bold'>
-                                                <img src={leftArrow} alt="" />
+                                                <img src={leftArrow} alt="left-arrow" />
                                             </div>
                                         }
                                     </div>

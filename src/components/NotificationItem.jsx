@@ -1,14 +1,13 @@
-import { cn } from '../utils/cn';
 import deleteIcon from "../assets/images/delete.png"
 import axiosInstance from '../utils/axios';
-
 
 export default function NotificationItem({
   date,
   title,
   desc,
   id,
-  onDelete
+  onDelete,
+  deletable = true
 }) {
   const dateArray = date?.split(' ')
 
@@ -37,10 +36,12 @@ export default function NotificationItem({
           </div>
         </div>
 
-        <div onClick={() => deleteNotification()} className='absolute top-0   bg-black/80 h-full   text-white right-0 w-0 group-hover:w-100 transition-all flex flex-col gap-3 overflow-hidden items-center justify-center '> 
+        {
+          deletable &&  <div onClick={() => deleteNotification()} className='absolute top-0   bg-black/80 h-full   text-white right-0 w-0 group-hover:w-100 transition-all flex flex-col gap-3 overflow-hidden items-center justify-center '> 
           <img src={deleteIcon} alt="" />
           <div>delete</div>
         </div>
+        }
       </div>
     </div>
   )

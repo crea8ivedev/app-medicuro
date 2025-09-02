@@ -12,9 +12,9 @@ import 'swiper/css';
 import { showToast } from '../utils/toast';
 import { useNotificationStore } from '../store/notifications';
 import axiosInstance from '../utils/axios';
+import CommonBackBtn from '../components/CommonBackBtn';
 
 export default function Notifications() {
-
   const { notifications,isLoading,markAsRead,getNotifications } = useNotificationStore()
   const [perPage,setPerPage] = useState(4)
 
@@ -72,9 +72,21 @@ export default function Notifications() {
     
   },[currentNotificationsPage])
 
+
+  const noNotificationItem = {
+  date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }), 
+  title: "No Notifications",
+  desc: "You currently have no notifications. This section will display important updates and reminders, including information regarding your upcoming appointments. Please check back regularly for the latest notifications.",
+  id: "sample-id-1",
+  onDelete: () => console.log("Deleted notification")
+};
+
   return (
     <div className='bg-ocean min-h-screen w-full justify-between relative pb-10'>
       <div className='common-bg absolute left-0'></div>
+       <div className='px-7 py-5 text-white'>
+        <CommonBackBtn link='/dashboard' label='Back to Dashboard' varient='white'  />
+       </div>
       <div className='container mx-auto min-h-screen flex items-center justify-between relative  custom-wrap md:px-10 px-3  '>
         <img className='hidden md:block left-image' src={loginSideImg} alt='' />
 
@@ -85,7 +97,7 @@ export default function Notifications() {
           </div>
 
           <div className='flex gap-5 flex-wrap lg:flex-nowrap '>
-              <div className='md:min-w-500 md:max-w-500 w-full   max-h-max  rounded-xl'>
+              <div className='md:min-w-500 md:max-w-500 min-h-[500px] w-full   max-h-max  rounded-xl'>
                {
                 notifications.length ?  
                   <Fragment>
@@ -133,7 +145,14 @@ export default function Notifications() {
                   ( isLoading ? 
                       <img className='w-10 m-atuo'  src={spinner} />
                       : 
-                      "No Notifications" )
+                     <NotificationItem 
+                        title={noNotificationItem.title}
+                        desc={noNotificationItem.desc}
+                        date={noNotificationItem.date}
+                        deletable = {false}
+                        
+                     />  
+                    )
                   
                }
               </div>
@@ -145,7 +164,7 @@ export default function Notifications() {
                         <div>Book your appointment with a licensed Medicuro doctor at your convenience</div>
                       </div>
                         <NavLink to="/book-appointment">
-                            <div className="flex  flex-col gap-2 justify-center items-center bg-teal-500 p-5 rounded-md">
+                            <div className="flex  flex-col gap-2 justify-center items-center bg-teal-500 p-5 rounded-md hover:bg-[#19968F]">
                               <img src={plusBtn} alt="" />
                               <div className="text-sm whitespace-nowrap">Book Now</div>
                             </div>

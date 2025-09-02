@@ -10,6 +10,7 @@ import { useAppointmentStore } from '../store/appointments';
 import spinner from '../assets/images/spinner.gif';
 import { useSocket } from '../context/socketContext';
 import 'swiper/css';
+import NoAppointmentItem from '../components/NotificationItem';
 
 export default function Dashboard() {
 
@@ -92,6 +93,14 @@ export default function Dashboard() {
     return chunks
   }
 
+  const noUpcomingAppointmentItem = {
+  date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }), 
+  title : "No upcoming appointment",
+  desc: "You currently have no upcoming appointments. This section will display details of your scheduled appointments once they are booked. Please check back regularly for updates.",
+  id: "sample-id-1",
+
+};
+
   return (
     <div className='bg-ice px-3 py-5 md:py-0 min-h-screen w-full justify-between relative'>
       <div className='common-bg absolute left-0  bottom-100 bg-bottom'></div>
@@ -104,7 +113,7 @@ export default function Dashboard() {
               <div>Book your appointment with a licensed Medicuro doctor at your convenience</div>
             </div>
             <NavLink to="/book-appointment">
-              <div className="flex flex-col gap-1 justify-center items-center bg-teal p-4 rounded-xl">
+              <div className="flex flex-col gap-1 justify-center items-center bg-teal p-4 rounded-xl hover:bg-[#19968F]">
                 <img className='w-10' src={plusBtn} alt="" />
                 <div className="text-sm whitespace-nowrap">Book Now</div>
               </div>
@@ -163,7 +172,12 @@ export default function Dashboard() {
                     <div className='flex-1 flex items-center justify-center'>
                       <img className='w-10' alt='loading' src={spinner} />
                     </div> :
-                    <h1> No upcoming appointments </h1>
+                    <NoAppointmentItem 
+                        title={noUpcomingAppointmentItem.title}
+                        desc={noUpcomingAppointmentItem.desc}
+                        date={noUpcomingAppointmentItem.date}
+                        deletable = {false}
+                    />
               }
 
             </div>

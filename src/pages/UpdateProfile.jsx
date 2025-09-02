@@ -8,27 +8,68 @@ import { useEffect, useRef, useState } from 'react'
 import { useAuthStore } from '../store/auth'
 import axiosInstance from '../utils/axios'
 import { showToast } from '../utils/toast'
+import { cn } from '../utils/cn'
 
 function UpdateProfile() {
 const profilePicRef = useRef()
-const { user } = useAuthStore();
+const { user , login } = useAuthStore();
 
 const [profilePic,setProfilePic] = useState()
 const [profilePicFile,setProfilePicFile] = useState(false)
+const [profilePicSubmitting,setProfilePicSubmitting] = useState(false)
 
+
+
+// const changeProfilePic = (e) => {
+//     const file = e.target.files[0];
+//     const fileReader = new FileReader()
+
+//     fileReader.onload = () => {
+//         const fileData = fileReader.result;
+//         setProfilePic(fileData)
+//         setProfilePicFile(file)
+//     }
+
+//     fileReader.readAsDataURL(file)
+// }
 
 const changeProfilePic = (e) => {
     const file = e.target.files[0];
     const fileReader = new FileReader()
-
     fileReader.onload = () => {
         const fileData = fileReader.result;
         setProfilePic(fileData)
-        setProfilePicFile(file)
     }
-
     fileReader.readAsDataURL(file)
+    uploadProfilePic(file); 
 }
+
+const uploadProfilePic = async (file) => {
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append('profilePic', file);
+  setProfilePicSubmitting(true)
+  try {
+    const response = await axiosInstance.post('/api/v1/auth/profile-picture/update', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+
+    if (response.data?.statusCode === 200) {
+      showToast.success("Profile picture updated successfully");
+      if (response.data?.profilePic) {
+        // Optionally update user state
+        login({ user: { ...user, profilePic: response.data.profilePic } });
+      }
+    }
+  } catch (error) {
+    showToast.error("Failed to update profile picture");
+  } finally {
+    setProfilePicSubmitting(false)
+  }
+};
 
 return (
     <div className=' bg-sky-foam min-h-screen pb-16 relative'>
@@ -44,8 +85,8 @@ return (
                         <div className='relative max-w-max m-auto text-center'>
                                 <img className='m-auto w-105 h-105 object-cover rounded-circle' src={profilePic ?? user?.profilePic ?? dummyProfile} alt="" />
                                 <div onClick={() => profilePicRef?.current?.click()}  className=' bg-bluewave rounded-circle flex justify-center items-center w-30 h-30 absolute right-0 bottom-0 cursor-pointer'>
-                                    <img src={whitePen} alt="" />
-                                    <input onChange={(e) => changeProfilePic(e)} accept='image/jpeg,image/png,image/webp,image/avif,image/jpg' ref={profilePicRef} type="file" hidden />
+                                    <img src={whitePen} alt="" className={cn(profilePicSubmitting && "opacity-70 cursor-not-allowed")} />
+                                    <input disabled={profilePicSubmitting} onChange={(e) => changeProfilePic(e)} accept='image/jpeg,image/png,image/webp,image/avif,image/jpg' ref={profilePicRef} type="file" hidden />
 
                                 </div>
                         </div>  

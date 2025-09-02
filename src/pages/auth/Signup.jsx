@@ -6,7 +6,6 @@ import CustomInput from '../../components/CustomInput'
 import { FormikProvider, Field, useFormik } from 'formik'
 import * as Yup from 'yup'
 import Terms from '../Terms'
-import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/auth'
 import axiosInstance from '../../utils/axios'
@@ -75,37 +74,41 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
   
     const navigate = useNavigate()
     const signUpSchema = Yup.object().shape({
-      fullName: Yup.string()
-        .required('Full name is required')
-        .min(2, 'Full name must be at least 2 characters'),
+  fullName: Yup.string()
+    .required('Full name is required')
+    .matches(/^[A-Za-z\s]+$/, 'Full name must contain only letters'),
 
-      password: Yup.string().required('Password is required'),
-      // .min(6, 'Password must be at least 6 characters'),
+  password: Yup.string().required('Password is required'),
+  // .min(6, 'Password must be at least 6 characters'),
 
-      email: Yup.string()
-        .email('Invalid email format')
-        .required('Email is required'),
+  email: Yup.string()
+    .email('Invalid email format')
+    .required('Email is required'),
 
-      phone: Yup.string()
-        .required('Mobile number is required')
-        .matches(/^[0-9]+$/, 'Mobile number must contain only digits'),
-      // .matches(/^[0-9]{10,15}$/, 'Enter a valid phone number'),
+  phone: Yup.string()
+    .required('Mobile number is required')
+    .matches(
+      /^1\s\d{3}\s\d{3}\s\d{4}$/,
+      'Enter a valid phone number'
+    ),
 
-      dob: Yup.date()
-        .required('Date of birth is required')
-        .max(new Date(), 'Date of birth cannot be in the future'),
+  dob: Yup.date()
+    .required('Date of birth is required')
+    .max(new Date(), 'Date of birth cannot be in the future'),
 
-      mcp: Yup.string().required('MCP number is required'),
-      // .matches(/^[0-9\s]{12}$/, 'MCP should be 12 digits'),
-      mcpValidationDate: Yup.date().required('MCP validation date is required'),
+  mcp: Yup.string()
+    .required('MCP number is required')
+    .matches(/^\d{12}$/, 'Enter 12 numbers without spaces'),
 
-      mcpExpiryDate: Yup.date()
-        .required('MCP expiry date is required')
-        .min(
-          Yup.ref('mcpValidationDate'),
-          'Expiry date must be after validation date',
-        ),
-    })
+  mcpValidationDate: Yup.date().required('MCP validation date is required'),
+
+  mcpExpiryDate: Yup.date()
+    .required('MCP expiry date is required')
+    .min(
+      Yup.ref('mcpValidationDate'),
+      'Expiry date must be after validation date'
+    ),
+});
 
 
     const submitSignUpForm = async (values, helpers) => {
