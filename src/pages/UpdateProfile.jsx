@@ -164,7 +164,7 @@ const MyProfileInfo = ({profilePic}) => {
  
    mcp: Yup.string()
      .required('MCP number is required')
-     .matches(/^\d{12}$/, 'Enter valid mcp number'),
+     .matches(/^\d{12}$/, 'Please enter 12 numbers without spaces'),
  
    mcpValidationDate: Yup.date().required('MCP validation date is required'),
  
