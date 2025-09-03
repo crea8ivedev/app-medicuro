@@ -17,9 +17,9 @@ function CommonBackBtn({ label = '', link = '', className = '', onClick , varien
   }
 
   return (
-    <div className={cn('relative', className)}>
+    <div className={cn('relative hover:opacity-70', className)}>
       {link ? (
-        <NavLink to={link} className='flex gap-4 items-center w-fit cursor-pointer'>
+        <NavLink to={link} className='flex gap-4 items-center w-fit cursor-pointer '>
           <img src={varient == "white" ? backBtnIconWhite :  backBtnIcon} alt='back-button' />
           <div className={cn("text-navy text-2xl font-league mt-1",varient == "white" ? "text-white" : "")}>{label}</div>
         </NavLink>

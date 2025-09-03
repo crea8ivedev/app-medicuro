@@ -18,21 +18,6 @@ const [profilePic,setProfilePic] = useState()
 const [profilePicFile,setProfilePicFile] = useState(false)
 const [profilePicSubmitting,setProfilePicSubmitting] = useState(false)
 
-
-
-// const changeProfilePic = (e) => {
-//     const file = e.target.files[0];
-//     const fileReader = new FileReader()
-
-//     fileReader.onload = () => {
-//         const fileData = fileReader.result;
-//         setProfilePic(fileData)
-//         setProfilePicFile(file)
-//     }
-
-//     fileReader.readAsDataURL(file)
-// }
-
 const changeProfilePic = (e) => {
     const file = e.target.files[0];
     const fileReader = new FileReader()
@@ -143,7 +128,7 @@ const MyProfileInfo = ({profilePic}) => {
         {
             label: "MCP",
             name: "mcp",
-            type: "text",
+            type: "number",
         },
         {
             label: "MCP Validation Date",
@@ -159,35 +144,37 @@ const MyProfileInfo = ({profilePic}) => {
         }
     ];
 
-    const  validationSchema = Yup.object({
-    fullName: Yup.string()
-        .required('Full Name is required'),
-
-    phone: Yup.string()
-        // .matches(/^1\s\d{3}\s\d{3}\s\d{4}$/, 'Phone Number must be in format: 1 709 XXX XXXX')
-        .required('Phone Number is required'),
-
-    email: Yup.string()
-        .email('Invalid email address')
-        .required('Email is required'),
-
-    dob: Yup.date()
-        .required('Date of Birth is required'),
-
-    mcp: Yup.string()
-        // .matches(/^\d{3}\s\d{3}\s\d{3}\s\d{3}$/, 'MCP must be in format: 000 000 000 000')
-        .required('MCP is required'),
-
-    mcpValidationDate: Yup.date()
-        .required('Validation Date is required'),
-
-    mcpExpiryDate: Yup.date()
-        .min(
-        Yup.ref('mcpValidationDate'),
-        'Expiry Date must be after Validation Date'
-        )
-        .required('Expiry Date is required'),
-    });
+   const validationSchema = Yup.object().shape({
+   fullName: Yup.string()
+     .required('Full name is required')
+     .matches(/^[A-Za-z\s]+$/, 'Full name must contain only letters'),
+   email: Yup.string()
+     .email('Invalid email format')
+     .required('Email is required'),
+ 
+   phone: Yup.string()
+     .required('Mobile number is required')
+    .max(10,"please enter a valid mobile number")
+     .min(10,"please enter a valid mobile number")
+ ,
+ 
+   dob: Yup.date()
+     .required('Date of birth is required')
+     .max(new Date(), 'Date of birth cannot be in the future'),
+ 
+   mcp: Yup.string()
+     .required('MCP number is required')
+     .matches(/^\d{12}$/, 'Enter valid mcp number'),
+ 
+   mcpValidationDate: Yup.date().required('MCP validation date is required'),
+ 
+   mcpExpiryDate: Yup.date()
+     .required('MCP expiry date is required')
+     .min(
+       Yup.ref('mcpValidationDate'),
+       'Expiry date must be after validation date'
+     ),
+ });
 
     const updateProfile = async (values) => {
         setIsLoading(true)
