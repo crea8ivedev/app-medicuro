@@ -87,10 +87,9 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
 
   phone: Yup.string()
     .required('Mobile number is required')
-    .matches(
-      /^1\s\d{3}\s\d{3}\s\d{4}$/,
-      'Enter a valid phone number'
-    ),
+   .max(10,"please enter a valid mobile number")
+    .min(10,"please enter a valid mobile number")
+,
 
   dob: Yup.date()
     .required('Date of birth is required')
