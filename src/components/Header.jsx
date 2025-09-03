@@ -45,7 +45,7 @@ function Header({setOpenMenu}) {
         </div>
 
         {
-          nextAppointment &&  <div onClick={() => navigate(`/view-appointment/Upcoming/${nextAppointment?.id}`) } className='md:flex flex-col bg-navy py-4 px-10 rounded-xl hidden cursor-pointer'>
+          nextAppointment &&  <div onClick={() => navigate(`/view-appointment/Upcoming/${nextAppointment?.id}`) } className='md:flex flex-col bg-navy py-4 px-10 rounded-xl hidden cursor-pointer hover:opacity-90'>
             <div className=' text-white font-light'>Next appointment</div>
             <div className='text-sky-cyan leading-4 font-light'>
               { nextAppointment?.date }

@@ -1,5 +1,5 @@
 import CommonBackBtn from '../components/CommonBackBtn'
-import dummyProfile from "../assets/images/dummy-profile.svg"
+import dummyProfile from "../assets/images/logo.svg"
 import whitePen from "../assets/images/white-pen.svg"
 import { useFormik,Field,FormikProvider } from 'formik'
 import CustomInput from '../components/CustomInput'

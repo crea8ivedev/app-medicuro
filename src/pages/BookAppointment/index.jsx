@@ -99,20 +99,23 @@ const submitFormCallback = () => {
 
             <div className='flex items-center justify-around container m-auto'>
                     <img className="left-image" src={appointmentSideImage} alt="" />
-                    <div className='bg-ocean md:px-10 md:py-16 p-5 md:rounded-xl w-[756px]'>
+                    <div className='bg-ocean md:px-5 md:py-8 p-5 md:rounded-xl w-[756px]'>
                         {
                             (selectedItemId && isSubmitted) ? 
                                 <div className='text-white'>
-                                    <div className='text-xl gap-3 relative mb-3 font-normal md:w-max md:max-w-[310px] whitespace-break-spaces'>
+                                    <div className='hidden md:flex'>
+                                         <CommonBackBtn varient='white' className=" mb-5 px-2" label='Back to Services'  onClick={() => setIsSubmitted(false)}/>
+                                    </div>
+                                    <div className='text-xl gap-3 relative mb-3 font-normal md:w-max md:max-w-[350px] whitespace-break-spaces ps-5'>
                                         <div>{bookingItems.find((e) =>  e.id == selectedItemId )?.name} </div>
                                         {
                                             bookingItems.find((e) =>  e.id == selectedItemId )?.isFeesApply ?  <div className='text-white absolute  md:bottom-[unset]  md:top-0 md:bottom right-0  md:-right-[100px]  gap-1 flex font-bold  items-center text-sm'> <div className='text-xl'>&#43;</div><div>fees apply</div></div> : ""
                                         }
                                     </div>
-                                    <div className='text-sm'>{bookingItems.find((e) =>  e.id == selectedItemId )?.desc}</div>
+                                    <div className='text-sm px-5'>{bookingItems.find((e) =>  e.id == selectedItemId )?.desc}</div>
                                 </div>
                             : 
-                                <div className='text-white'>
+                                <div className='text-white  px-5'>
                                     <div className='text-xl mb-3 '>Select Service</div>
                                     <div className='text-sm'>Due to increased demand, it may not be possible for our <br/> scheduling team to respond to all requests within 24 hours.</div>
                                 </div>
@@ -123,7 +126,7 @@ const submitFormCallback = () => {
                              <ServiceListFallback/>
                             :
                             (!selectedItemId || !isSubmitted) ? 
-                            ( bookingItems?.length  ? <div className='flex flex-col gap-4 mt-10  mb-10 '>
+                            ( bookingItems?.length  ? <div className='flex flex-col gap-4 mt-10  mb-10 px-5 '>
                                 <div className='text-white flex font-bold gap-2 items-center'> <div className='text-xl'>&#43;</div> <div>fees apply</div></div>
                                 <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-2 pe-4 md:pe-0'>
                                     {
@@ -134,7 +137,7 @@ const submitFormCallback = () => {
                                 </div>
                             </div>  : <div className='text-white my-10 text-xl'>No service available at this moment</div> )
                             :
-                            <div className='md:mt-10 mt-7'> 
+                            <div className='md:mt-10 mt-7 px-5'> 
                                 <DynamicForm 
                                     item={bookingItems.find((e) =>  e.id == selectedItemId)}  
                                     serviceId={bookingItems.find((e) =>  e.id == selectedItemId )?.id}
