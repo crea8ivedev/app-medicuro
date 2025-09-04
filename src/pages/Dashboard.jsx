@@ -1,77 +1,86 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
-import loginSideImg from '../assets/images/login-vector.png';
-import plusBtn from '../assets/images/bookIcon.svg';
-import AppointmentItem from "../components/AppointmentItem";
-import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
-import { cn } from '../utils/cn';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import axiosInstance from '../utils/axios';
-import { useAppointmentStore } from '../store/appointments';
-import spinner from '../assets/images/spinner.gif';
-import { useSocket } from '../context/socketContext';
-import 'swiper/css';
-import NoAppointmentItem from '../components/NotificationItem';
+import { Fragment, useEffect, useRef, useState } from 'react'
+import loginSideImg from '../assets/images/login-vector.png'
+import plusBtn from '../assets/images/bookIcon.svg'
+import AppointmentItem from '../components/AppointmentItem'
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom'
+import { cn } from '../utils/cn'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import axiosInstance from '../utils/axios'
+import { useAppointmentStore } from '../store/appointments'
+import spinner from '../assets/images/spinner.gif'
+import { useSocket } from '../context/socketContext'
+import 'swiper/css'
+import NoAppointmentItem from '../components/NotificationItem'
 
 export default function Dashboard() {
+  const {
+    upcomingAppointments,
+    pastAppointments,
+    pendingRequests,
+    setAppointments,
+    setPendingRequests,
+    clearAppointments,
+  } = useAppointmentStore()
 
-  const { upcomingAppointments, pastAppointments, setAppointments, clearAppointments } = useAppointmentStore()
-  const socket = useSocket();
+  const socket = useSocket()
 
   const upcomingContainerRef = useRef(null)
   const pastContainerRef = useRef(null)
 
   const [isLoading, setIsloading] = useState(false)
-  const [currentUpcomingAppointmentPage, setCurrentUpcomingAppointmentPage] = useState(0)
-  const [currentPastAppointmentPage, setCurrentPastAppointmentPage] = useState(0)
+  const [currentUpcomingAppointmentPage, setCurrentUpcomingAppointmentPage] =
+    useState(0)
+  const [currentPastAppointmentPage, setCurrentPastAppointmentPage] =
+    useState(0)
 
   const navigate = useNavigate()
 
-
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAppointments = async () => {
       try {
         setIsloading(true)
-        const response = await axiosInstance.get("/api/v1/appointments")
+        const response = await axiosInstance.get('/api/v1/appointments')
         if (response.data?.statusCode == 200) {
           const data = response.data
           setAppointments(data)
-
         } else {
           clearAppointments()
         }
-
       } catch (error) {
         clearAppointments()
       } finally {
         setIsloading(false)
       }
-
     }
-    fetchData()
 
-    const deleteAppointment = (id) => {
-      const isUpcoming = upcomingAppointments?.find(e => e.id == id);
-      const isPast = pastAppointments?.find(e => e.id == id);
-
-      if(isUpcoming || isPast){
-         fetchData()
+    const fetchPendingRequests = async () => {
+      try {
+        const response = await axiosInstance.get('/api/v1/appointments/pending')
+        if (response.status == 200) {
+          setPendingRequests(response.data.data || [])
+        } else {
+          setPendingRequests([])
+        }
+      } catch (error) {
+        setPendingRequests([])
       }
     }
 
-    socket.on("update-appointments-list" ,fetchData)
+    fetchAppointments()
+    fetchPendingRequests()
 
-    socket.on("cancel-appointments-list" , deleteAppointment)
-    
+    socket.on('update-appointments-list', fetchAppointments)
+    socket.on('cancel-appointments-list', fetchAppointments)
+    socket.on('update-pending-requests', fetchPendingRequests)
 
     return () => {
-      socket && socket.off("update-appointments-list",fetchData)
-      socket.off("cancel-appointments-list" , deleteAppointment)
+      socket && socket.off('update-appointments-list', fetchAppointments)
+      socket.off('cancel-appointments-list', fetchAppointments)
+      socket.off('update-pending-requests', fetchPendingRequests)
     }
-
   }, [])
 
-
-  // 
+  //
 
   const ViewpastAppoinments = (id) => {
     navigate(`/view-appointment/Past/${id}`)
@@ -80,7 +89,10 @@ export default function Dashboard() {
   const pastAppointmentBtns = [{ name: 'View', action: ViewpastAppoinments }]
 
   const upcomingAppoinmentBtns = [
-    { name: 'View', action: (id) => navigate(`/view-appointment/Upcoming/${id}`) },
+    {
+      name: 'View',
+      action: (id) => navigate(`/view-appointment/Upcoming/${id}`),
+    },
     { name: 'Rebook', action: (id) => navigate(`/rebook-appointment/${id}`) },
     { name: 'Cancel', action: (id) => navigate(`/cancel-appointment/${id}`) },
   ]
@@ -94,12 +106,15 @@ export default function Dashboard() {
   }
 
   const noUpcomingAppointmentItem = {
-  date: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }), 
-  title : "No upcoming appointment",
-  desc: "You currently have no upcoming appointments. This section will display details of your scheduled appointments once they are booked. Please check back regularly for updates.",
-  id: "sample-id-1",
-
-};
+    date: new Date().toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    }),
+    title: 'No upcoming appointment',
+    desc: 'You currently have no upcoming appointments. This section will display details of your scheduled appointments once they are booked. Please check back regularly for updates.',
+    id: 'sample-id-1',
+  }
 
   return (
     <div className='bg-ice px-3 py-5 md:py-0 min-h-screen w-full justify-between relative'>
@@ -107,35 +122,52 @@ export default function Dashboard() {
       <div className='container mx-auto md:py-24  flex items-center justify-between relative md:px-5'>
         <img className='left-image' src={loginSideImg} alt='left-image' />
         <div className='max-w-full m-auto'>
-          <div className="flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4 ps-10 pe-5 lg:w-lg ms-auto">
-            <div className="flex flex-col gap-1">
-              <div className="text-bluewave text-xl font-semibold">Book Appointment</div>
-              <div>Book your appointment with a licensed Medicuro doctor at your convenience</div>
+          <div className='flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4 ps-10 pe-5 lg:w-lg ms-auto'>
+            <div className='flex flex-col gap-1'>
+              <div className='text-bluewave text-xl font-semibold'>
+                Book Appointment
+              </div>
+              <div>
+                Book your appointment with a licensed Medicuro doctor at your
+                convenience
+              </div>
             </div>
-            <NavLink to="/book-appointment">
-              <div className="flex flex-col gap-1 justify-center items-center bg-teal p-4 rounded-xl hover:bg-[#19968F]">
-                <img className='w-10' src={plusBtn} alt="" />
-                <div className="text-sm whitespace-nowrap">Book Now</div>
+            <NavLink to='/book-appointment'>
+              <div className='flex flex-col gap-1 justify-center items-center bg-teal p-4 rounded-xl hover:bg-[#19968F]'>
+                <img className='w-10' src={plusBtn} alt='' />
+                <div className='text-sm whitespace-nowrap'>Book Now</div>
               </div>
             </NavLink>
           </div>
 
           <div className='flex flex-col xl:flex-row gap-4'>
             <div className=' mt-4 pb-5 p-5 max-w-full lg:w-lg rounded-xl bg-teal'>
-              <div className="text-white my-4 mb-7 text-xl">Upcoming Appointments</div>
-              {
-                upcomingAppointments.length ?
-                  <Fragment>
-                    <Swiper
-                      className='whitespace-nowrap overflow-x-hidden'
-                      onSwiper={(swiper) => upcomingContainerRef.current = swiper}
-                      onSlideChange={(swiper) => setCurrentUpcomingAppointmentPage(swiper.activeIndex)}
-                    >
-                      {arrayChunk(upcomingAppointments, 2).map((chunk, chunkIndex) => (
-                        <SwiperSlide key={`past-${chunkIndex}`} className='inline-block w-full px-1'>
+              <div className='text-white my-4 mb-7 text-xl'>
+                Upcoming Appointments
+              </div>
+              {upcomingAppointments.length ? (
+                <Fragment>
+                  <Swiper
+                    className='whitespace-nowrap overflow-x-hidden'
+                    onSwiper={(swiper) =>
+                      (upcomingContainerRef.current = swiper)
+                    }
+                    onSlideChange={(swiper) =>
+                      setCurrentUpcomingAppointmentPage(swiper.activeIndex)
+                    }
+                  >
+                    {arrayChunk(upcomingAppointments, 2).map(
+                      (chunk, chunkIndex) => (
+                        <SwiperSlide
+                          key={`past-${chunkIndex}`}
+                          className='inline-block w-full px-1'
+                        >
                           <div className='flex flex-col gap-4'>
                             {chunk.map(
-                              ({ doctor, service, date, day, time, id }, index) => (
+                              (
+                                { doctor, service, date, day, time, id },
+                                index,
+                              ) => (
                                 <AppointmentItem
                                   key={`${chunkIndex}-${index}`}
                                   buttons={upcomingAppoinmentBtns}
@@ -151,233 +183,164 @@ export default function Dashboard() {
                             )}
                           </div>
                         </SwiperSlide>
-                      ))}
-
-                    </Swiper>
-                    <div className='flex justify-center gap-2 my-4'>
-                      {arrayChunk(upcomingAppointments, 2).map((chunk, index) => (
-                        <div
-                          onClick={() => upcomingContainerRef.current?.slideTo(index)}
-                          key={`upcoming-dot-${index}`}
-                          className={cn(
-                            "h-15 w-15 cursor-pointer rounded-circle bg-black",
-                            currentUpcomingAppointmentPage === index ? "bg-teal-800" : "bg-white"
-                          )}
-                        />
-                      ))}
-                    </div>
-                  </Fragment>
-
-                  : isLoading ?
-                    <div className='flex-1 flex items-center justify-center'>
-                      <img className='w-10' alt='loading' src={spinner} />
-                    </div> :
-                    <NoAppointmentItem 
-                        title={noUpcomingAppointmentItem.title}
-                        desc={noUpcomingAppointmentItem.desc}
-                        date={noUpcomingAppointmentItem.date}
-                        deletable = {false}
-                    />
-              }
-
+                      ),
+                    )}
+                  </Swiper>
+                  <div className='flex justify-center gap-2 my-4'>
+                    {arrayChunk(upcomingAppointments, 2).map((chunk, index) => (
+                      <div
+                        onClick={() =>
+                          upcomingContainerRef.current?.slideTo(index)
+                        }
+                        key={`upcoming-dot-${index}`}
+                        className={cn(
+                          'h-15 w-15 cursor-pointer rounded-circle bg-black',
+                          currentUpcomingAppointmentPage === index
+                            ? 'bg-teal-800'
+                            : 'bg-white',
+                        )}
+                      />
+                    ))}
+                  </div>
+                </Fragment>
+              ) : isLoading ? (
+                <div className='flex-1 flex items-center justify-center'>
+                  <img className='w-10' alt='loading' src={spinner} />
+                </div>
+              ) : (
+                <NoAppointmentItem
+                  title={noUpcomingAppointmentItem.title}
+                  desc={noUpcomingAppointmentItem.desc}
+                  date={noUpcomingAppointmentItem.date}
+                  deletable={false}
+                />
+              )}
             </div>
             <div className='bg-ocean w-full lg:w-lg mt-4 pb-5 p-5 rounded-xl min-h-[360px]'>
-              <div className="text-white my-4 mb-7 text-xl">Past Appointments</div>
-              {
-                pastAppointments.length ?
-                  <Fragment>
-                    <Swiper
-                      onSwiper={(swiper) => pastContainerRef.current = swiper}
-                      onSlideChange={(swiper) => setCurrentPastAppointmentPage(swiper.activeIndex)}
-                      className='whitespace-nowrap overflow-x-hidden'
-                    >
-                      {arrayChunk(pastAppointments, 3).map((chunk, chunkIndex) => (
-                        <SwiperSlide key={`past-${chunkIndex}`} className='inline-block w-full px-1'>
+              <div className='text-white my-4 mb-7 text-xl'>
+                Past Appointments
+              </div>
+              {pastAppointments.length ? (
+                <Fragment>
+                  <Swiper
+                    onSwiper={(swiper) => (pastContainerRef.current = swiper)}
+                    onSlideChange={(swiper) =>
+                      setCurrentPastAppointmentPage(swiper.activeIndex)
+                    }
+                    className='whitespace-nowrap overflow-x-hidden'
+                  >
+                    {arrayChunk(pastAppointments, 3).map(
+                      (chunk, chunkIndex) => (
+                        <SwiperSlide
+                          key={`past-${chunkIndex}`}
+                          className='inline-block w-full px-1'
+                        >
                           <div className='flex flex-col gap-4'>
-                            {chunk.map(({ doctor, service, date, id }, index) => (
-                              <AppointmentItem
-                                key={`past-${chunkIndex}-${index}`}
-                                buttons={pastAppointmentBtns}
-                                doctor={doctor}
-                                service={service}
-                                date={date}
-                                id={id}
-                              />
-                            ))}
+                            {chunk.map(
+                              ({ doctor, service, date, id }, index) => (
+                                <AppointmentItem
+                                  key={`past-${chunkIndex}-${index}`}
+                                  buttons={pastAppointmentBtns}
+                                  doctor={doctor}
+                                  service={service}
+                                  date={date}
+                                  id={id}
+                                />
+                              ),
+                            )}
                           </div>
                         </SwiperSlide>
+                      ),
+                    )}
+                  </Swiper>
 
-
-                      ))}
-                    </Swiper>
-
-                    <div className='flex justify-center gap-2 my-4'>
-                      {
-                        pastAppointments?.length > 2 ?   
-                        arrayChunk(pastAppointments, 3).map((_, index) => (
-                        <div
-                          onClick={() => pastContainerRef.current?.slideTo(index)}
-                          key={`past-dot-${index}`}
-                          className={cn(
-                            "h-15 w-15 cursor-pointer rounded-circle",
-                            currentPastAppointmentPage === index ? "bg-sky-cyan" : "bg-white"
-                          )}
-                        />
-                      ))
-                        : ""
-                      }
-                      
-                    </div>
-                  </Fragment>
-                  :
-                  isLoading ?
-                    <div className=' flex items-center justify-center'>
-                      <img className='w-10' src={spinner} />
-                    </div>
-
-                    : <h1> No past appointments </h1>
-
-
-              }
-
-            </div>
-
-
-          </div>
-
-        </div>
-
-        {/* <div className='grid grid-cols-1 lg:grid-cols-2 gap-2 items-end lg:py-36 my-10 '>
-          <div className=' mt-4 pb-5 p-5 rounded-xl bg-teal min-h-455'>
-            <div className="text-white my-4 mb-7 text-xl">Upcoming Appointments</div>
-            {
-              upcomingAppointments.length ? 
-                    <Fragment>
-                            <Swiper
-                              className='whitespace-nowrap overflow-x-hidden'
-                              onSwiper={(swiper) => upcomingContainerRef.current = swiper}
-                              onSlideChange={(swiper) => setCurrentUpcomingAppointmentPage(swiper.activeIndex)}  
-                            >
-                              {arrayChunk(upcomingAppointments, 2).map((chunk, chunkIndex) => (
-                                <SwiperSlide key={`past-${chunkIndex}`} className='inline-block w-full px-1'>
-                                  <div className='flex flex-col gap-4'>
-                                    {chunk.map(
-                                      ({ doctor, service, date, day, time,id }, index) => (
-                                        <AppointmentItem
-                                          key={`${chunkIndex}-${index}`}
-                                          buttons={upcomingAppoinmentBtns}
-                                          doctor={doctor}
-                                          service={service}
-                                          date={date}
-                                          day={day}
-                                          time={time}
-                                          showDayTime={true}
-                                          id={id}
-                                        />
-                                      ),
-                                    )}
-                                  </div>
-                                </SwiperSlide>
-                              ))}
-
-                            </Swiper>
-
-                            <div className='flex justify-center gap-2 my-4'>
-                              {arrayChunk(pastAppointments, 2).map((_, index) => (
-                                <div
-                                  onClick={() => upcomingContainerRef.current?.slideTo(index)}
-                                  key={`past-dot-${index}`}
-                                  className={cn(
-                                    "h-15 w-15 cursor-pointer rounded-circle",
-                                    currentUpcomingAppointmentPage === index ? "bg-teal-800" : "bg-white"
-                                  )}
-                                />
-                              ))}
-                            </div>
-                      </Fragment>
-              
-              :  isLoading ?  
-                      <div className='flex-1 flex items-center justify-center'> 
-                                  <img className='w-10' src={spinner} />
-                      </div>   : 
-                      
-                      <h1> No upcoming appointments </h1>
-            }
-               
-          </div>
-
-           <div>
-              <div className="flex bg-white gap-10 rounded-xl py-4 ps-10 pe-5">
-                  <div className="flex flex-col gap-1">
-                    <div className="text-bluewave text-xl font-semibold">Book Appointment</div>
-                    <div>Book your appointment with a licensed Medicuro doctor at your convenience</div>
+                  <div className='flex justify-center gap-2 my-4'>
+                    {pastAppointments?.length > 2
+                      ? arrayChunk(pastAppointments, 3).map((_, index) => (
+                          <div
+                            onClick={() =>
+                              pastContainerRef.current?.slideTo(index)
+                            }
+                            key={`past-dot-${index}`}
+                            className={cn(
+                              'h-15 w-15 cursor-pointer rounded-circle',
+                              currentPastAppointmentPage === index
+                                ? 'bg-sky-cyan'
+                                : 'bg-white',
+                            )}
+                          />
+                        ))
+                      : ''}
                   </div>
-                    <NavLink to="/book-appointment">
-                        <div className="flex flex-col gap-1 justify-center items-center bg-teal p-4 rounded-xl">
-                          <img className='w-10' src={plusBtn} alt="" />
-                          <div className="text-sm whitespace-nowrap">Book Now</div>
-                        </div>
-                    </NavLink>
+                </Fragment>
+              ) : isLoading ? (
+                <div className=' flex items-center justify-center'>
+                  <img className='w-10' src={spinner} />
+                </div>
+              ) : (
+                <h1> No past appointments </h1>
+              )}
+            </div>
+          </div>
+
+          <div className='bg-ocean w-full lg:w-lg mt-4 pb-5 p-5 rounded-xl min-h-[360px]'>
+            <div className='text-white my-4 mb-7 text-xl'>Pending Requests</div>
+            {pendingRequests.length ? (
+              <Fragment>
+                <Swiper
+                  onSwiper={(swiper) => (pastContainerRef.current = swiper)}
+                  onSlideChange={(swiper) =>
+                    setCurrentPastAppointmentPage(swiper.activeIndex)
+                  }
+                  className='whitespace-nowrap overflow-x-hidden'
+                >
+                  {arrayChunk(pendingRequests, 5).map((chunk, chunkIndex) => (
+                    <SwiperSlide
+                      key={`pending-${chunkIndex}`}
+                      className='inline-block w-full px-1'
+                    >
+                      <div className='flex flex-col gap-4'>
+                        {chunk.map(({ formData, createdAt, id ,service }, index) => (
+                          <AppointmentItem
+                            key={`pending-${chunkIndex}-${index}`}
+                            buttons={[]}
+                            doctor={service?.name} // no doctor in pending API
+                            service={`${formData?.reason?.substring(0,100)}...`}
+                            date={new Date(createdAt).toDateString()} // ✅ format date
+                            id={id}
+                          />
+                        ))}
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+
+                <div className='flex justify-center gap-2 my-4'>
+                  {pendingRequests?.length > 2 &&
+                    arrayChunk(pendingRequests, 5).map((_, index) => (
+                      <div
+                        onClick={() => pastContainerRef.current?.slideTo(index)}
+                        key={`pending-dot-${index}`}
+                        className={cn(
+                          'h-15 w-15 cursor-pointer rounded-circle',
+                          currentPastAppointmentPage === index
+                            ? 'bg-sky-cyan'
+                            : 'bg-white',
+                        )}
+                      />
+                    ))}
+                </div>
+              </Fragment>
+            ) : isLoading ? (
+              <div className=' flex items-center justify-center'>
+                <img className='w-10' src={spinner} />
               </div>
-
-              <div className='bg-ocean mt-4 pb-5 p-5 rounded-xl min-h-[320px]'>
-                <div className="text-white my-4 mb-7 text-xl">Past Appointments</div>
-                {
-                  pastAppointments.length ? 
-                      <Fragment>
-                            <Swiper
-                                onSwiper={(swiper) => pastContainerRef.current = swiper}
-                                onSlideChange={(swiper) => setCurrentPastAppointmentPage(swiper.activeIndex)}  
-                                className='whitespace-nowrap overflow-x-hidden'
-                            >
-                              {arrayChunk(pastAppointments, 3).map((chunk, chunkIndex) => (
-                                <SwiperSlide key={`past-${chunkIndex}`} className='inline-block w-full px-1'>
-                                  <div className='flex flex-col gap-4'>
-                                    {chunk.map(({ doctor, service, date, id }, index) => (
-                                      <AppointmentItem
-                                        key={`past-${chunkIndex}-${index}`}
-                                        buttons={pastAppointmentBtns}
-                                        doctor={doctor}
-                                        service={service}
-                                        date={date}
-                                        id={id}
-                                      />
-                                    ))}
-                                  </div>
-                                </SwiperSlide>
-
-                                
-                              ))}
-                            </Swiper>
-
-                            <div className='flex justify-center gap-2 my-4'>
-                              {arrayChunk(pastAppointments, 3).map((_, index) => (
-                                <div
-                                  onClick={() => pastContainerRef.current?.slideTo(index)}
-                                  key={`past-dot-${index}`}
-                                  className={cn(
-                                    "h-15 w-15 cursor-pointer rounded-circle",
-                                    currentPastAppointmentPage === index ? "bg-sky-cyan" : "bg-white"
-                                  )}
-                                />
-                              ))}
-                            </div>
-                      </Fragment>
-                    :
-                    isLoading ? 
-                    <div className=' flex items-center justify-center'> 
-                                  <img className='w-10' src={spinner} />
-                    </div>
-                    
-                    : <h1> No past appointments </h1>
-                  
-                  
-                }
-                   
-              </div>
-           </div>
-        </div> */}
+            ) : (
+              <h1>No pending requests</h1>
+            )}
+          </div>
+        </div>
       </div>
     </div>
-  );
+  )
 }

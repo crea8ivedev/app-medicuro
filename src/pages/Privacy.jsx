@@ -18,8 +18,6 @@ function PrivacyPage() {
                 <div className='bg-mint relative w-825 pt-10 pb-36 md:px-10 px-5 flex flex-col rounded-xl'>
                     <div className='common-right-design  z-10 bottom-5 right-5'></div>
                         <Privacy/>
-   
-                    
                 </div>
             </div>
         </div>

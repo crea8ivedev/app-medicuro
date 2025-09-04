@@ -3,9 +3,10 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 
 export const useAppointmentStore = create(
   persist(
-    (set,get) => ({
+    (set, get) => ({
       upcomingAppointments: [],
       pastAppointments: [],
+      pendingRequests: [],
 
       setAppointments: ({ upcomingAppointments, pastAppointments }) => {
         set({
@@ -14,13 +15,18 @@ export const useAppointmentStore = create(
         })
       },
 
+      setPendingRequests: (pendingRequests) => {
+        set({ pendingRequests })
+      },
+
       clearAppointments: () => {
         set({
           upcomingAppointments: [],
           pastAppointments: [],
+          pendingRequests: []
         })
-      },
-
+      }
+      ,
       getAppointmentById: (id) => {
         const { upcomingAppointments, pastAppointments } = get()
 
@@ -32,7 +38,7 @@ export const useAppointmentStore = create(
       },
     }),
     {
-      name: 'medicuro-appointments',
+      name: 'appointments-storage',
       storage: createJSONStorage(() => localStorage),
     }
   )

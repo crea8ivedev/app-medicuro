@@ -76,7 +76,6 @@ export default function Login() {
       if (response?.data?.statusCode === 200) {
         resetForm();
         const user = response.data?.user;
-        const token = "dummyToken";
         await new Promise((res) => setTimeout(res, 1000));
         login({user});
         navigate("/dashboard");

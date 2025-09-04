@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import {useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import {useNavigate, useParams } from 'react-router-dom';
 import AppointmentItem from '../components/AppointmentItem';
 // book-appointment-vector.png
 import sideImage from "../assets/images/book-appointment-vector.png"
@@ -11,6 +11,7 @@ function RebookAppointment() {
    const { id } = useParams();
 
    const {getAppointmentById } = useAppointmentStore()
+   const navigate = useNavigate()
    
      const [appointment,setAppointment] = useState()
      const [loading, setLoading] = useState(false)
@@ -27,6 +28,7 @@ function RebookAppointment() {
             if(response.status == 201){
               showToast.success("Appointment rebooked successfully")
             }
+            navigate("/dashboard")
           } catch (error) {
             showToast.error("Something went wrong")
           } finally {

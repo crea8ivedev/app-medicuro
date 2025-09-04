@@ -16,7 +16,7 @@ function Privacy({ withCheckboxAndButton, onButtonClick }) {
   }, []);
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 ">
       {!terms.length ? (
         <img src={spinner} className="w-20 m-auto" alt="loading" />
       ) : (
@@ -25,18 +25,18 @@ function Privacy({ withCheckboxAndButton, onButtonClick }) {
             return (
               <div key={`${i}-${index}`}>
                 {key ? (
-                  <div className="flex flex-col gap-1">
-                    <div className="text-ocean font-bold mt-4 text-xl">
+                  <div className="flex flex-col gap-1 whitespace-break-spaces">
+                    <div className="text-ocean font-bold mt-4 text-xl whitespace-break-spaces">
                       {key.replaceAll("_", " ")}
                     </div>
                     <div>
                       {typeof value === "string" ? (
-                        <div>{value}</div>
+                        <div className='whitespace-break-spaces'>{value}</div>
                       ) : (
                         <div>
                           <ul className="list-decimal px-10 md:px-5">
                             {value.map((item, idx) => (
-                              <li className="my-3" key={idx}>
+                              <li className="my-3 whitespace-break-spaces" key={idx}>
                                 {item}
                               </li>
                             ))}
@@ -49,7 +49,7 @@ function Privacy({ withCheckboxAndButton, onButtonClick }) {
                   <div className="flex flex-col gap-5">
                     {Array.isArray(value) &&
                       value?.map((terms, idx) => (
-                        <div key={idx}>{terms}</div>
+                        <div key={idx} className='whitespace-break-spaces'>{terms}</div>
                       ))}
                   </div>
                 )}
