@@ -69,7 +69,7 @@ function Privacy({ withCheckboxAndButton, onButtonClick }) {
               onChange={(e) => setIsChecked(e.target.checked)}
               className="cursor-pointer accent-blue-600 w-4 h-4"
             />
-            <span>I agree to the Terms and Privacy Policy</span>
+            <span className='text-start '>I agree to the Terms and Privacy Policy</span>
           </label>
 
           {/* ✅ Button disabled until checked */}
