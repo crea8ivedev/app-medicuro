@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   if (retry) {
-    checkAuth();
+    // checkAuth();
   }
 
   return () => {
