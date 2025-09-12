@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../../store/auth'
 import axiosInstance from '../../utils/axios'
 import { cn } from '../../utils/cn'
+import toast from 'react-hot-toast'
 
 export default function Signup() {
   const [step, setStep] = useState(1)
@@ -134,10 +135,9 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
           ...values,
            ...(notificationToken ? {notificationTokens : notificationToken} : {}) ,
         })
-        if (response?.data?.statusCode == 201) {
-          const user = response.data?.user
-          login({ user })
-          navigate("/dashboard")
+        if (response?.status == 200) {
+          toast.success("A verification link has been sent to your email.")
+          navigate("/login")
         }
       } finally {
         setIsLoading(false)
