@@ -154,8 +154,8 @@ const MyProfileInfo = ({profilePic}) => {
  
    phone: Yup.string()
      .required('Mobile number is required')
-    .max(10,"please enter a valid mobile number")
-     .min(10,"please enter a valid mobile number")
+    .max(10,"Please enter a valid mobile number")
+     .min(10,"Please enter a valid mobile number")
  ,
  
    dob: Yup.date()

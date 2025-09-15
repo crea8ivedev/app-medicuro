@@ -1,5 +1,5 @@
 import { NavLink, useNavigate } from 'react-router-dom'
-import dummyProfile from '../assets/images/logo.svg'
+import dummyProfile from '../assets/images/medicuro-logo.png'
 import { useAuthStore } from '../store/auth';
 import { useEffect, useState } from 'react';
 import axiosInstance from "../utils/axios"

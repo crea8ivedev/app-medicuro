@@ -64,7 +64,7 @@ function NotificationsSettings() {
                   <div
                     key={index}
                     onClick={item.onclick && item.onclick}
-                    className='flex items-center justify-between max-w-md m-auto my-4 cursor-pointer gap-15'
+                    className='flex items-center justify-between max-w-md m-auto my-4 cursor-pointer gap-15 hover:scale-105 transition-all duration-75'
                   >
                     <div className='flex gap-5 items-center'>
                       <div className='sm:text-xl font-semibold'>{item.label}</div>

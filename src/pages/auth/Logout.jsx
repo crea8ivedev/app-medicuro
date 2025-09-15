@@ -47,6 +47,7 @@ export default function Logout() {
         </Link>
         <button
           onClick={logout}
+          disabled={loading}
           to='signup'
           className={cn("py-2.5 px-10 hover:bg-bluewave hover:text-white  text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit",loading && "opacity-70 cursor-not-allowed")}
         >

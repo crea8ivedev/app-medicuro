@@ -66,6 +66,14 @@ function CustomInput({
     setFieldValue(name, processedValue)
   }
 
+  const handleKeyDown = (e) => {
+    if(type == 'number'){
+       if (["e", "E", "+", "-", "."].includes(e.key)) {
+      e.preventDefault(); // block unwanted keys
+    }
+    }
+  }
+
   const handleFocus = () => {
     setFieldTouched(field.name, true, false)
   }
@@ -98,11 +106,11 @@ function CustomInput({
           <div className='relative w-full date-picker'>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
-              format='yyyy-MM-dd'
+                format='yyyy-MM-dd'
                 label={label}
-                value={field.value ? new Date(field.value)  : tempValue}
+                value={field.value ? new Date(field.value) : tempValue}
                 onChange={(val) => {
-                  if(val){
+                  if (val) {
                     const isoString = val.toISOString()
                     setFieldValue(field.name, isoString)
                     setTempValue(null)
@@ -121,14 +129,14 @@ function CustomInput({
                 open={open}
                 onClick={() => setOpen(true)}
                 slots={{ openPickerIcon: MyCalendarIcon }}
-                 slotProps={{
-    textField: {
-      onClick: () => setOpen(true), // ✅ clicking input opens picker
-      readOnly: true                // optional: prevent manual typing
-    }
-  }}
+                slotProps={{
+                  textField: {
+                    onClick: () => setOpen(true), // ✅ clicking input opens picker
+                    readOnly: true                // optional: prevent manual typing
+                  }
+                }}
                 openTo='day'
-                 {...(props.futureDate ? { minDate: new Date() }  : { })}
+                {...(props.futureDate ? { minDate: new Date() } : {})}
               />
             </LocalizationProvider>
           </div>
@@ -149,6 +157,7 @@ function CustomInput({
             value={field.value ?? ''}
             ref={inputRef}
             onDrop={(e) => e.preventDefault()}
+            onKeyDown={handleKeyDown}
           />
         )}
 

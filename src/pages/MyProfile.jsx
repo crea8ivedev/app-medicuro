@@ -131,9 +131,9 @@ return (
                         <div className='my-10'>
                             {
                                 menuItems?.map((item,index) => {
-                                    return <div key={index} onClick={ item.onclick && item.onclick } className='flex group items-center justify-between max-w-xs m-auto my-4  cursor-pointer'>
+                                    return <div key={index} onClick={ item.onclick && item.onclick } className='flex group items-center justify-between max-w-xs m-auto my-4  cursor-pointer hover:scale-105 transition-all duration-75'>
                                         <div className='flex gap-5 items-center'>
-                                            <div className='bg-teal h-40 w-40 flex group-hover:bg-teal-600  items-center justify-center rounded-circle'>
+                                            <div className='bg-teal h-40 w-40 flex   items-center justify-center rounded-circle'>
                                                 <img src={item.icon} alt="" />
                                             </div>
                                             <div className='text-xl font-semibold'>{item.label}</div>

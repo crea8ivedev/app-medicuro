@@ -20,12 +20,13 @@ const CommonSelectBox = ({
       
       <div className="relative">
           <select
+            style={{paddingRight : "40px"}}
             name={name}
             {...field}
             {...props}
             className={cn(
-              "bg-white w-full h-[45px] outline-0 appearance-none pr-10 ps-2 rounded-[3px] select-with-border border-teal-600",
-              className,
+              "bg-white w-full h-[45px] p-24 outline-0 appearance-none pr-10 ps-2 rounded-[3px] select-with-border border-teal-600",
+              className, "pe-[40px]"
             //   meta.touched && meta.error ? "border border-red-500" : ""
             )}
           >

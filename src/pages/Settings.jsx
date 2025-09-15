@@ -49,7 +49,7 @@ return (
                                 {
                                     menuItems?.map((item,index) => {
                                         return <NavLink key={index} to={item.route}>
-                                            <div key={index} onClick={ item.onclick && item.onclick } className='flex items-center justify-between max-w-xs m-auto py-3 rounded-md  hover:scale-105 px-2  cursor-pointer'>
+                                            <div key={index} onClick={ item.onclick && item.onclick } className='flex items-center justify-between max-w-xs m-auto py-3 rounded-md  hover:scale-105 px-2  cursor-pointer transition-all duration-75'>
                                             <div className='flex gap-5 items-center'>
                                                 <div className=' h-40 w-40 flex items-center justify-center rounded-circle'>
                                                     <img src={item.icon} alt="" />

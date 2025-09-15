@@ -67,7 +67,7 @@ function ViewlAppointment() {
 
       <div className='container mx-auto min-h-screen  flex items-center justify-around relative'>
         <img className='left-image' src={sideImage} alt='left-image' />
-            <div className='bg-teal max-w-550 md:min-w-550   max-h-max mt-4 py-10 md:px-10 px-2  rounded-xl'>
+            <div className='bg-teal max-w-550 min-w-[90%]  sm:min-w-550   max-h-max mt-4 md:py-10 py-2 md:px-10 px-5  rounded-xl'>
               <div className='text-white mt-4 mb-5 text-xl'>{type} Appointment</div>
               { appointment ?  <AppointmentItem
                             buttons={type != "Past" ?  buttons : []}

@@ -122,7 +122,7 @@ export default function Dashboard() {
       <div className='container mx-auto md:py-24  flex items-center justify-between relative md:px-5'>
         <img className='left-image' src={loginSideImg} alt='left-image' />
         <div className='max-w-full m-auto'>
-          <div className='flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4 ps-10 pe-5 lg:w-lg ms-auto'>
+          <div className='flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4 md:ps-10 ps-5 pe-5 lg:w-lg ms-auto'>
             <div className='flex flex-col gap-1'>
               <div className='text-bluewave text-xl font-semibold'>
                 Book Appointment
