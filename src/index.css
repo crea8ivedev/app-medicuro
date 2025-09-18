@@ -179,6 +179,12 @@ input::placeholder{
   100% { transform:  rotate(360deg); }
 }
 
+@media (max-width:1700px) {
+    .left-image{
+    display: none;
+  }
+}
+
 @media (max-width:1600px){
   .custom-wrap{
     flex-wrap: wrap !important;

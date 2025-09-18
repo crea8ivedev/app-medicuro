@@ -230,9 +230,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
                     <div className=' flex items-center cursor-pointer' onMouseEnter={() => handleMouseEnter(item.link)}
                       onMouseLeave={() => handleMouseLeave()}>
                       {
-                        // 
                         Icon && <Icon className={cn("text-white w-[20px] h-[20px] m-auto hover:text-[#5ef1fa]", (checkIfActive(item.link) || currentHoveredIcon == item.link) && "text-[#5ef1fa]")} />
-
                       }
                     </div>
                     {
