@@ -281,3 +281,7 @@ input::placeholder{
   to   { -webkit-transform: translate(-50%, -50%) rotate(360deg); }
 }
 
+.appointment-btns:hover {
+    border: 1px solid #397a99 !important;
+    background-color: transparent;
+}

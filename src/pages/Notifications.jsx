@@ -87,7 +87,7 @@ export default function Notifications() {
        <div className='px-7 py-5 text-white'>
         <CommonBackBtn link='/dashboard' label='Back to Dashboard' varient='white'  />
        </div>
-      <div className='container mx-auto min-h-screen flex items-center justify-between relative  custom-wrap md:px-10 px-3  '>
+      <div className='container mx-auto  min-h-screen flex items-start pt-10 justify-between relative  custom-wrap md:px-10 px-3  '>
         <img className='hidden md:block left-image' src={loginSideImg} alt='' />
 
         <div className='right-container max-w-full'>
@@ -158,7 +158,7 @@ export default function Notifications() {
               </div>
               
               <div className='w-full'>
-                  <div className="flex w-full md:flex-nowrap flex-wrap-reverse  items-center justify-center xl:min-w-500  md:max-w-500 bg-white gap-5 rounded-xl px-4 py-4">
+                  {/* <div className="flex w-full md:flex-nowrap flex-wrap-reverse  items-center justify-center xl:min-w-500  md:max-w-500 bg-white gap-5 rounded-xl px-4 py-4">
                       <div className="flex flex-col items-start md:items-start justify-center ">
                         <div className="text-bluewave font-semibold">Book Appointment</div>
                         <div>Book your appointment with a licensed Medicuro doctor at your convenience</div>
@@ -169,7 +169,24 @@ export default function Notifications() {
                               <div className="text-sm whitespace-nowrap">Book Now</div>
                             </div>
                         </NavLink>
-                  </div>
+                  </div> */}
+                  <div className='flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4  ps-5 pe-5 lg:w-lg ms-auto'>
+                              <div className='flex flex-col gap-1'>
+                                <div className='text-bluewave text-xl font-semibold'>
+                                  Book Appointment
+                                </div>
+                                <div>
+                                  Book your appointment with a licensed Medicuro doctor at your
+                                  convenience
+                                </div>
+                              </div>
+                              <NavLink to='/book-appointment'>
+                                <div className='flex flex-col gap-1 justify-center items-center bg-teal border-2 border-teal p-4 rounded-xl hover:bg-white hover:border-2 border-bg-teal'>
+                                  <img className='w-10' src={plusBtn} alt='' />
+                                  <div className='text-sm whitespace-nowrap'>Book Now</div>
+                                </div>
+                              </NavLink>
+                            </div>
               </div>
           </div>
         </div>

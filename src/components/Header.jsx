@@ -23,7 +23,6 @@ function Header({setOpenMenu}) {
             } catch (error) {
         
             }
-      
       }
       fetchData()
   },[upcomingAppointments])
@@ -45,9 +44,9 @@ function Header({setOpenMenu}) {
         </div>
 
         {
-          nextAppointment &&  <div onClick={() => navigate(`/view-appointment/Upcoming/${nextAppointment?.id}`) } className='md:flex flex-col bg-navy py-4 px-10 rounded-xl hidden cursor-pointer hover:opacity-90'>
-            <div className=' text-white font-light'>Next appointment</div>
-            <div className='text-sky-cyan leading-4 font-light'>
+          nextAppointment &&  <div onClick={() => navigate(`/view-appointment/Upcoming/${nextAppointment?.id}`) } className='md:flex flex-col bg-navy py-4 px-10 rounded-xl hidden cursor-pointer hover:opacity-90 hover:bg-white group hover:border-navy  border-navy  border-2 hover:border-2 hover:text-black'>
+            <div className=' text-white font-light group-hover:text-black group-hover:font-semibold'>Next appointment</div>
+            <div className='text-sky-cyan leading-4 font-light group-hover:text-navy group-hover:font-semibold'>
               { nextAppointment?.date }
             </div>
           </div>
