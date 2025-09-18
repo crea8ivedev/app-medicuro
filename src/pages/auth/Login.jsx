@@ -13,6 +13,7 @@ import axiosInstance from '../../utils/axios'
 import { useAuthStore } from '../../store/auth'
 import { getFirebaseToken } from '../../utils/firebaseConfig'
 import { showToast } from '../../utils/toast'
+import { cn } from '../../utils/cn'
 
 export default function Login() {
   const { login } = useAuthStore()
@@ -59,10 +60,13 @@ export default function Login() {
 
   const handleSubmit = async (values, formikHelpers) => {
     const { resetForm } = formikHelpers
+    setIsLoading(true)
+
+    
     try {
-      setIsLoading(true)
       let notificationToken
 
+      
       try {
         if (Notification.permission !== 'granted') {
           const permission = await Notification.requestPermission()
@@ -174,7 +178,7 @@ export default function Login() {
             <div className='flex flex-col items-center gap-4 mt-7'>
               <button
                 type='submit'
-                className='common-btn font-extralight font-outfit w-full md:w-auto relative z-10'
+                className={cn("btn-loader common-btn font-extralight font-outfit w-full md:w-auto relative z-10 ")}
                 disabled={isLoading}
               >
                 Log In

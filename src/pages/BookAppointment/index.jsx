@@ -87,19 +87,19 @@ const submitFormCallback = () => {
 }
 
     return (
-      <div className="bg-ice min-h-screen w-full justify-between relative">
+      <div className="bg-ice min-h-screen  w-full justify-between relative">
         <div className='common-bg'></div>
-         <div className="md:py-10 py-5 md:px-10   lg:ps-7  relative">
+         <div className="md:py md:py-5 pt-5 md:px-10   lg:ps-7  relative">
             {
-                isSubmitted ? <CommonBackBtn className="md:mb-32 mb-5 px-2" label='Back to Services'  onClick={() => setIsSubmitted(false)}/> : 
+                isSubmitted ? <CommonBackBtn className=" px-2" label='Back to Services'  onClick={() => setIsSubmitted(false)}/> : 
                         <div onClick={() => navigate("/dashboard")}>
-                             <CommonBackBtn className="md:mb-32 mb-5 px-2" label='Back to Dashboard'  link='/dashboard'/>
+                             <CommonBackBtn className=" mb-5 px-2" label='Back to Dashboard'  link='/dashboard'/>
                         </div>
             }
 
-            <div className='flex items-center justify-around container m-auto'>
-                    <img className="left-image" src={appointmentSideImage} alt="" />
-                    <div className='bg-ocean md:px-5 md:py-8 p-5 md:rounded-xl w-[756px]'>
+            <div className='flex items-start justify-around container m-auto'>
+                    <img className="left-image md:mt-10" src={appointmentSideImage} alt="" />
+                    <div className='bg-ocean md:px-5 md:py-8 md:p-5 py-4 md:rounded-xl w-[756px]'>
                         {
                             (selectedItemId && isSubmitted) ? 
                                 <div className='text-white'>
@@ -128,7 +128,8 @@ const submitFormCallback = () => {
                             (!selectedItemId || !isSubmitted) ? 
                             ( bookingItems?.length  ? <div className='flex flex-col gap-4 mt-10  mb-10 px-5 '>
                                 <div className='text-white flex font-bold gap-2 items-center'> <div className='text-xl'>&#43;</div> <div>fees apply</div></div>
-                                <div className='grid sm:grid-cols-2 lg:grid-cols-4 gap-2 pe-4 md:pe-0'>
+                                
+                                <div className='grid max-h-[425px]  overflow-auto hide-scrollbar sm:grid-cols-2 lg:grid-cols-4 gap-2 pe-4 md:pe-0'>
                                     {
                                         bookingItems.map(({name,isFeesApply,isSelected,id},index) => {
                                             return <BookAppointmentItem id={id} onClick={handleSelectItem} isSelected={isSelected} name={name} key={index} isFeesApply={isFeesApply} />

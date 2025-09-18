@@ -19,7 +19,6 @@ export default function DeleteAccount() {
   
   const deleteACcount = async () => {
     try {
-      setIsLoading(true)
       const response = await axiosInstance.post("/api/v1/auth/profile/delete",{sendData})
         if(response.data?.statusCode == 200){
             logout()
@@ -55,7 +54,7 @@ export default function DeleteAccount() {
         <button
           to='signup'
           disabled={isLoading}
-          className={cn("py-2.5 px-10  text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit hover:bg-bluewave hover:text-white",isLoading && "opacity-70 cursor-not-allowed")}
+          className={cn("btn-loader py-2.5 px-10  text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit hover:bg-bluewave hover:text-white",isLoading && "opacity-70 cursor-not-allowed")}
           onClick={deleteACcount}
         >
           Delete

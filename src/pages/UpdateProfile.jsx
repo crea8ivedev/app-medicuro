@@ -250,7 +250,7 @@ const MyProfileInfo = ({profilePic}) => {
         </div>
 
         <div className='text-center mt-10'>
-            <button className="common-btn" disabled={isLoading} onClick={() => formik.handleSubmit()}>Update Profile</button>        
+            <button className="btn-loader common-btn" disabled={isLoading} onClick={() => formik.handleSubmit()}>Update Profile</button>        
         </div>
     </div>
     

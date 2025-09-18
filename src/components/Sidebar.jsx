@@ -14,7 +14,7 @@ import activeInformation from '../assets/images/active-info.svg'
 import activeBook from '../assets/images/active-book.svg'
 import activeUserProfile from '../assets/images/active-user-profile.svg'
 
-import dummyProfile from '../assets/images/medicuro-logo.png'
+import dummyProfile from '../assets/images/logo.svg'
 import userProfile from '../assets/images/user-profile.svg'
 
 import logoutIcon from '../assets/images/logout.svg'
@@ -200,7 +200,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
   }
 
   return (
-    <div className='fixed h-screen top-0 left-0 transition-all z-1'>
+    <div className='fixed h-screen top-0 left-0 transition-all duration-500 z-1'>
       <div
         onClick={(e) => {
           e.stopPropagation()
@@ -208,13 +208,13 @@ function Sidebar({ openMenu, setOpenMenu }) {
         }}
         className='flex justify-between pe-2 whitespace-nowrap cursor-pointer'
       >
-        <div className='md:flex items-center   md:w-66 text-center h-[93px] bg-navy hidden' onClick={() => navigateToPage("/profile")}>
-          <img className='m-auto w-5 w-[35px] h-[35px] object-cover rounded-circle hover:scale-110 transition-all  ' src={user?.profilePic ?? dummyProfile} alt='profile-pic' />
+        <div className={cn('md:flex ms-3 md:ms-0 mt-5 md:mt-0 items-center   md:w-66 text-center md:h-[93px] bg-navy',!openMenu && "hidden")} onClick={() => navigateToPage("/profile")}>
+          <img className='m-auto  object-cover rounded-circle hover:scale-110 transition-all duration-500  ' src={user?.profilePic ?? dummyProfile} alt='profile-pic' />
         </div>
       </div>
 
       <div className='flex overflow-hidden w-full'>
-        <div onMouseEnter={() => setOpenMenu(true)} className='h-screen bg-navy hidden md:flex md:flex-col gap-4' onClick={(e) => e.stopPropagation()}>
+        <div onMouseEnter={() => setOpenMenu(true)} className='h-screen bg-navy pt-3 hidden md:flex md:flex-col gap-8' onClick={(e) => e.stopPropagation()}>
           {menuItems.map(({ Icon, ...item }, index) => {
             return (
               <div
@@ -245,7 +245,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
 
         <div
           className={cn(
-            'bg-navy md:bg-navy/95 w-full md:w-auto transition-all h-screen fixed left-0 top-0 -z-10 md:ps-75 ps-10 md:pt-0 ',
+            'bg-navy  w-full md:w-auto transition-all duration-500 h-screen fixed left-0 top-0 -z-10 md:ps-75  md:pt-0 ',
             openMenu ? 'left-0' : '-left-full',
           )}
           onClick={(e) => e.stopPropagation()}
@@ -257,11 +257,11 @@ function Sidebar({ openMenu, setOpenMenu }) {
               alt=''
             />
           </div>
-          <div className='md:pt-[61px] pt-[120px] pe-40 flex flex-col md:gap-4 gap-7'>
+          <div className='md:mt-[75px] mt-[60px] pe-40 flex flex-col md:gap-8 gap-8  border-t-[0.5px] border-aqua pt-8 md:border-0 md:pt-0'>
             {menuItems.map(({ Icon, ...item }, index) => {
               return (
                 <div
-                  className='whitespace-nowrap   cursor-pointer flex items-center gap-5  '
+                  className='whitespace-nowrap ps-5 md:ps-0   cursor-pointer flex items-center gap-5  '
                   key={index}
                   onClick={() => navigateToPage(item.link)}
                   onMouseEnter={() => handleMouseEnter(item.link)}

@@ -12,10 +12,7 @@ export default function DefaultLayout() {
       <Header openMenu={openMenu} setOpenMenu={setOpenMenu} />
 
       <div
-        className={cn(
-          openMenu ? 'md:ps-[182px]' : 'md:ps-[66px]',
-          'transition-all'
-        )}
+        className="md:ps-[66px]"
       >
         <Outlet />
       </div>

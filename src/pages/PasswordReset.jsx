@@ -106,7 +106,7 @@ function PasswordReset() {
           <div>
             <button
               onClick={formik.handleSubmit}
-              className='common-btn relative z-1'
+              className='btn-loader common-btn relative z-1'
               disabled={isLoading}
             >
               Change Password

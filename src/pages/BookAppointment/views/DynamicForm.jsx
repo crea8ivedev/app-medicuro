@@ -88,8 +88,8 @@ function DynamicForm({item,serviceId,callback}) {
                               options={field?.options}
                               inputclasses='w-full'
                               rows={field.type === 'textarea' ? (field?.rows || 6) : undefined}
-                              errorStyle='text-white'
-                              className="forn-field"
+                              errorStyle='text-red-500 font-light '
+                              className="forn-field "
                               type={field.type}
                               label={field.label}
                               labelclasses="text-white font-bold mb-2"
@@ -104,7 +104,7 @@ function DynamicForm({item,serviceId,callback}) {
                       <button
                         disabled={isLoading}
                         onClick={formik.handleSubmit}
-                        className={cn('common-btn', isLoading && "opacity-60 cursor-not-allowed")}
+                        className={cn('common-btn btn-loader', isLoading && " cursor-not-allowed")}
                       >
                         Send Request
                       </button>

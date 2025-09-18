@@ -122,7 +122,7 @@ export default function Dashboard() {
       <div className='container mx-auto md:py-24  flex items-center justify-between relative md:px-5'>
         <img className='left-image' src={loginSideImg} alt='left-image' />
         <div className='max-w-full m-auto'>
-          <div className='flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4 md:ps-10 ps-5 pe-5 lg:w-lg ms-auto'>
+          <div className='flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4  ps-5 pe-5 lg:w-lg ms-auto'>
             <div className='flex flex-col gap-1'>
               <div className='text-bluewave text-xl font-semibold'>
                 Book Appointment
@@ -133,7 +133,7 @@ export default function Dashboard() {
               </div>
             </div>
             <NavLink to='/book-appointment'>
-              <div className='flex flex-col gap-1 justify-center items-center bg-teal p-4 rounded-xl hover:bg-[#19968F]'>
+              <div className='flex flex-col gap-1 justify-center items-center bg-teal border-2 border-teal p-4 rounded-xl hover:bg-white hover:border-2 border-bg-teal'>
                 <img className='w-10' src={plusBtn} alt='' />
                 <div className='text-sm whitespace-nowrap'>Book Now</div>
               </div>
@@ -187,7 +187,7 @@ export default function Dashboard() {
                     )}
                   </Swiper>
                   <div className='flex justify-center gap-2 my-4'>
-                    {arrayChunk(upcomingAppointments, 2).map((chunk, index) => (
+                    {upcomingAppointments?.length > 2 &&  arrayChunk(upcomingAppointments, 2).map((chunk, index) => (
                       <div
                         onClick={() =>
                           upcomingContainerRef.current?.slideTo(index)
