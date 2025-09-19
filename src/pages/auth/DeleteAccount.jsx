@@ -22,7 +22,7 @@ export default function DeleteAccount() {
       const response = await axiosInstance.post("/api/v1/auth/profile/delete",{sendData})
         if(response.data?.statusCode == 200){
             logout()
-            showToast.success("Your account has been successfully deleted.")
+            showToast.success("The account has been successfully deleted.")
             navigate("/login")
         }
     } finally {

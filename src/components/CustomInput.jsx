@@ -9,6 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import { Eye, EyeOff } from 'lucide-react'
 
 export function MyCalendarIcon() {
   return <img src={calenderIcon} alt='calendar' className='w-5 h-5' />
@@ -141,38 +142,39 @@ function CustomInput({
             </LocalizationProvider>
           </div>
         ) : (
-          <input
-            className={cn(
-              'bg-white border border-teal-600 w-full p-4 outline-0',
-              inputclasses,
-            )}
-            type={inputType}
-            id={field.name}
-            placeholder={placeholder}
-            disabled={isDisabled}
-            onChange={(e) => handleChange(e)}
-            {...props}
-            {...field}
-            onFocus={handleFocus}
-            value={field.value ?? ''}
-            ref={inputRef}
-            onDrop={(e) => e.preventDefault()}
-            onKeyDown={handleKeyDown}
-          />
-        )}
-
-        {password && (
-          <div
-            onClick={() => setShowPassword((prev) => !prev)}
-            className='absolute right-2 top-1/2 -translate-y-50-per cursor-pointer'
-          >
-            <img
-              className='max-w-20 max-h-20'
-              src={showPassword ? hidePassword : viewPassword}
-              alt=''
+          <div className='relative'>
+            <input
+              className={cn(
+                'bg-white border border-teal-600 w-full p-4 outline-0',
+                inputclasses,
+              )}
+              type={inputType}
+              id={field.name}
+              placeholder={placeholder}
+              disabled={isDisabled}
+              onChange={(e) => handleChange(e)}
+              {...props}
+              {...field}
+              onFocus={handleFocus}
+              value={field.value ?? ''}
+              ref={inputRef}
+              onDrop={(e) => e.preventDefault()}
+              onKeyDown={handleKeyDown}
             />
+            {password && (
+              <div
+                onClick={() => setShowPassword((prev) => !prev)}
+                className='absolute right-2 top-1/2 -translate-y-50-per cursor-pointer'
+              >
+                {
+                  showPassword ? <Eye/> : <EyeOff/>
+                }
+              </div>
+            )}
           </div>
         )}
+
+
 
         <ErrorMessage
           name={field.name}

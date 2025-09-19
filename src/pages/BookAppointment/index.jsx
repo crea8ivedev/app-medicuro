@@ -89,7 +89,7 @@ const submitFormCallback = () => {
     return (
       <div className="bg-ice min-h-screen  w-full justify-between relative">
         <div className='common-bg'></div>
-         <div className="md:py md:py-5 pt-5 md:px-10   lg:ps-7  relative">
+         <div className="md:py md:py-5 pt-5 md:px-10   lg:ps-4  relative">
             {
                 isSubmitted ? <CommonBackBtn className=" px-2" label='Back to Services'  onClick={() => setIsSubmitted(false)}/> : 
                         <div onClick={() => navigate("/dashboard")}>

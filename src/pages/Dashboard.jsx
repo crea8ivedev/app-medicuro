@@ -11,6 +11,7 @@ import spinner from '../assets/images/spinner.gif'
 import { useSocket } from '../context/socketContext'
 import 'swiper/css'
 import NoAppointmentItem from '../components/NotificationItem'
+import { MessageCirclePlus } from 'lucide-react'
 
 export default function Dashboard() {
   const {
@@ -134,7 +135,8 @@ export default function Dashboard() {
             </div>
             <NavLink to='/book-appointment'>
               <div className='flex flex-col gap-1 justify-center items-center bg-teal border-2 border-teal p-4 rounded-xl hover:bg-white hover:border-2 border-bg-teal'>
-                <img className='w-10' src={plusBtn} alt='' />
+                {/* <img className='w-10' src={plusBtn} alt='' /> */}
+                <MessageCirclePlus size={45} className='w-10'/>
                 <div className='text-sm whitespace-nowrap'>Book Now</div>
               </div>
             </NavLink>

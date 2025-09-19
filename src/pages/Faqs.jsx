@@ -5,6 +5,7 @@ import { cn } from '../utils/cn'
 import arrow from "../assets/images/left-arrow.png"
 import axiosInstance from '../utils/axios'
 import FaqFallback from './fallbacks/FaqFallback'
+import { ChevronDown , ChevronUp } from 'lucide-react'
 
 
 function Faqs() {
@@ -40,7 +41,7 @@ return (
                         return <div key={index} className='my-3' onClick={() => setSelectedIndex(selectedIndex ==  index ? null : index)}> 
                             <div className='flex items-center justify-between bg-ice py-3 px-4 rounded-xl cursor-pointer'>
                                 <div className='font-semibold'>{faq.question}</div>
-                                <img src={arrow} alt="" className={cn("rotate-90 transition-all",selectedIndex == index ? "-rotate-90" : "")} />
+                                <ChevronDown className={cn(" transition-all",selectedIndex == index ? "-rotate-180" : "")} />
                             </div>
                             <div className={cn("h-0 px-4 overflow-hidden transition-all font-semibold",selectedIndex == index ? "pt-7 pb-5 h-auto" : "")}>{faq.answer}</div>
                         </div>

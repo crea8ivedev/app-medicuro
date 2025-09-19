@@ -3,6 +3,7 @@ import leftArrow from "../assets/images/left-arrow.png"
 import faqIcon from "../assets/images/question-2.png"
 import privacyIcon from "../assets/images/privacy-2.png"
 import { NavLink } from 'react-router-dom'
+import { HelpCircle,ShieldCheck } from 'lucide-react'
 
 function Help() {
 const menuItems = [
@@ -11,13 +12,15 @@ const menuItems = [
     label: "FAQ’s",
     icon: faqIcon,
     action: "navigate",
-    route: "/faqs"
+    route: "/faqs",
+    Icon : HelpCircle
   },
   {
     label: "Privacy Policy",
     icon: privacyIcon,
     action: "navigate",
-    route: "/privacy"
+    route: "/privacy",
+    Icon : ShieldCheck
   }
 ];
 
@@ -37,7 +40,8 @@ return (
                             <div key={index} onClick={ item.onclick && item.onclick } className='flex items-center justify-between max-w-xs m-auto py-2  px-2 rounded-md  cursor-pointer hover:scale-105 '>
                             <div className='flex gap-5 items-center'>
                                 <div className=' h-40 w-40 flex items-center justify-center rounded-circle'>
-                                    <img src={item.icon} alt="" />
+                                    {/* <img src={item.icon} alt="" /> */}
+                                    <item.Icon size={30}/>
                                 </div>
                                 <div className='text-xl font-semibold'>{item.label}</div>
                             </div>

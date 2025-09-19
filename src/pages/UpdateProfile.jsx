@@ -9,6 +9,7 @@ import { useAuthStore } from '../store/auth'
 import axiosInstance from '../utils/axios'
 import { showToast } from '../utils/toast'
 import { cn } from '../utils/cn'
+import { Pencil } from 'lucide-react'
 
 function UpdateProfile() {
 const profilePicRef = useRef()
@@ -69,8 +70,10 @@ return (
             <div className='common-right-design  z-10 bottom-5 right-5'></div>
                         <div className='relative max-w-max m-auto text-center'>
                                 <img className='m-auto w-105 h-105 object-cover rounded-circle' src={profilePic ?? user?.profilePic ?? dummyProfile} alt="" />
-                                <div onClick={() => profilePicRef?.current?.click()}  className=' bg-bluewave rounded-circle flex justify-center items-center w-30 h-30 absolute right-0 bottom-0 cursor-pointer'>
-                                    <img src={whitePen} alt="" className={cn(profilePicSubmitting && "opacity-70 cursor-not-allowed")} />
+                                
+                                <div onClick={() => profilePicRef?.current?.click()}  className=' bg-bluewave rounded-circle flex justify-center items-center w-30 h-30 absolute right-0 bottom-0 cursor-pointer p-2'>
+                                    <Pencil className={cn(profilePicSubmitting && "opacity-70 cursor-not-allowed" , "text-white")}  /> 
+                                    
                                     <input disabled={profilePicSubmitting} onChange={(e) => changeProfilePic(e)} accept='image/jpeg,image/png,image/webp,image/avif,image/jpg' ref={profilePicRef} type="file" hidden />
 
                                 </div>

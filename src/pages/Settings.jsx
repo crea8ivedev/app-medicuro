@@ -6,6 +6,7 @@ import keyIcon from "../assets/images/key.png"
 import { NavLink } from 'react-router-dom'
 import { useAuthStore } from '../store/auth'
 import { useEffect } from 'react'
+import { KeyRound, Lightbulb, Trash2 } from 'lucide-react'
 // provider
 
 function Settings() {
@@ -15,20 +16,20 @@ const menuItems = [
   
   {
     label: "Notification Setting",
-    icon: bulbIcon,
+    icon: Lightbulb,
     action: "navigate",
     route: "/notifications/settings"
   }, 
   
   ...((user?.provider != "google" && user?.provider != "facebook") ? [{
             label: "Password Manager",
-            icon: keyIcon,
+            icon: KeyRound,
             action: "navigate",
             route: "/password/reset"
   }] : [] ),
   {
     label: "Delete Account",
-    icon: profileIcon,
+    icon: Trash2,
     action: "navigate",
     route: "/profile/account/delete"
   }
@@ -39,7 +40,7 @@ return (
         <div className='common-bg absolute left-0 right-0 '></div>
 
         <div className='flex flex-col p-5  '>
-            <CommonBackBtn label='Settings'  />
+            <CommonBackBtn label='Back to Dashboard'  />
         </div>
 
         <div className='flex  w-full justify-center items-center lg:mt-24'>
@@ -52,7 +53,8 @@ return (
                                             <div key={index} onClick={ item.onclick && item.onclick } className='flex items-center justify-between max-w-xs m-auto py-3 rounded-md  hover:scale-105 px-2  cursor-pointer transition-all duration-75'>
                                             <div className='flex gap-5 items-center'>
                                                 <div className=' h-40 w-40 flex items-center justify-center rounded-circle'>
-                                                    <img src={item.icon} alt="" />
+                                                    {/* <img src={item.icon} alt="" /> */}
+                                                    <item.icon size={30}/>
                                                 </div>
                                                 <div className='sm:text-xl font-semibold'>{item.label}</div>
                                             </div>

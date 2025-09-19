@@ -1,33 +1,14 @@
 import { cn } from '../utils/cn'
-
-import settings from '../assets/images/settings.svg'
-import home from '../assets/images/home.svg'
-import notifications from '../assets/images/notifications.svg'
-import information from '../assets/images/information.svg'
-import book from '../assets/images/book.svg'
-
-//active icons
-import activesettings from '../assets/images/active-settings.svg'
-import activeHome from '../assets/images/active-home.svg'
-import activeNotifications from '../assets/images/active-notification.svg'
-import activeInformation from '../assets/images/active-info.svg'
-import activeBook from '../assets/images/active-book.svg'
-import activeUserProfile from '../assets/images/active-user-profile.svg'
-
 import dummyProfile from '../assets/images/logo.svg'
-import userProfile from '../assets/images/user-profile.svg'
-
-import logoutIcon from '../assets/images/logout.svg'
-import closeMenu from '../assets/images/close-menu.png'
+import closeMenu from '../assets/images/close.svg'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useNotificationStore } from '../store/notifications'
-
 import { useSocket } from '../context/socketContext';
 import { useAuthStore } from '../store/auth'
 import { showToast } from '../utils/toast'
 
-import { Home as HomeIcon, User, PlusCircle, Bell, Settings, Info, LogOut as logOutIcon, LogOutIcon } from "lucide-react";
+import { Home as HomeIcon, User, PlusCircle, Bell, Settings, Info, LogOutIcon, XCircle } from "lucide-react";
 
 
 function Sidebar({ openMenu, setOpenMenu }) {
@@ -209,7 +190,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
         className='flex justify-between pe-2 whitespace-nowrap cursor-pointer'
       >
         <div className={cn('md:flex ms-3 md:ms-0 mt-5 md:mt-0 items-center   md:w-66 text-center md:h-[93px] bg-navy',!openMenu && "hidden")} onClick={() => navigateToPage("/profile")}>
-          <img className='m-auto  object-cover rounded-circle hover:scale-110 transition-all duration-500  ' src={user?.profilePic ?? dummyProfile} alt='profile-pic' />
+          <img className='m-auto  object-cover rounded-circle h-[44px] w-[44px] object-cover hover:scale-110 transition-all duration-500  ' src={user?.profilePic ?? dummyProfile} alt='profile-pic' />
         </div>
       </div>
 
@@ -251,11 +232,12 @@ function Sidebar({ openMenu, setOpenMenu }) {
           onClick={(e) => e.stopPropagation()}
         >
           <div className='flex justify-end cursor-pointer' onClick={() => setOpenMenu(false)}>
-            <img
+            {/* <img
               src={closeMenu}
               className='ms-auto pe-3 pt-3'
               alt=''
-            />
+            /> */}
+            <XCircle size={27} className='ms-auto pe-3 pt-3 text-white'/>
           </div>
           <div className='md:mt-[75px] mt-[60px] pe-40 flex flex-col md:gap-8 gap-8  border-t-[0.5px] border-aqua pt-8 md:border-0 md:pt-0'>
             {menuItems.map(({ Icon, ...item }, index) => {

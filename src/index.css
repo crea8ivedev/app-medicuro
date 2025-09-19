@@ -185,6 +185,12 @@ input::placeholder{
     .left-image{
     display: none;
   }
+  .custom-wrap{
+    flex-wrap: wrap !important;
+  }
+  .right-container{
+    margin: auto !important;
+  }
 }
 
 @media (max-width:1600px){
@@ -281,7 +287,12 @@ input::placeholder{
   to   { -webkit-transform: translate(-50%, -50%) rotate(360deg); }
 }
 
+.appointment-btns {
+    border: 1px solid white !important;
+
+}
+
 .appointment-btns:hover {
-    border: 1px solid #397a99 !important;
+    border: 1px solid white !important;
     background-color: transparent;
 }

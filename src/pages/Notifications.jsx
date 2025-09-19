@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import loginSideImg from '../assets/images/login-vector.png';
 import spinner from '../assets/images/spinner.gif';
-import plusBtn from '../assets/images/plus-black.png';
+import plusBtn from '../assets/images/bookIcon.svg';
 import { NavLink } from 'react-router-dom';
 import NotificationItem from '../components/NotificationItem';
 import { cn } from '../utils/cn';
@@ -13,6 +13,7 @@ import { showToast } from '../utils/toast';
 import { useNotificationStore } from '../store/notifications';
 import axiosInstance from '../utils/axios';
 import CommonBackBtn from '../components/CommonBackBtn';
+import { MessageCirclePlus } from 'lucide-react';
 
 export default function Notifications() {
   const { notifications,isLoading,markAsRead,getNotifications } = useNotificationStore()
@@ -84,10 +85,10 @@ export default function Notifications() {
   return (
     <div className='bg-ocean min-h-screen w-full justify-between relative pb-10'>
       <div className='common-bg absolute left-0'></div>
-       <div className='px-7 py-5 text-white'>
+       <div className='px-4 py-5 text-white'>
         <CommonBackBtn link='/dashboard' label='Back to Dashboard' varient='white'  />
        </div>
-      <div className='container mx-auto  min-h-screen flex items-start pt-10 justify-between relative  custom-wrap md:px-10 px-3  '>
+      <div className='container mx-auto  min-h-screen flex items-start md:pt-10 pt-2 justify-between relative  custom-wrap md:px-10 px-3  '>
         <img className='hidden md:block left-image' src={loginSideImg} alt='' />
 
         <div className='right-container max-w-full'>
@@ -182,7 +183,8 @@ export default function Notifications() {
                               </div>
                               <NavLink to='/book-appointment'>
                                 <div className='flex flex-col gap-1 justify-center items-center bg-teal border-2 border-teal p-4 rounded-xl hover:bg-white hover:border-2 border-bg-teal'>
-                                  <img className='w-10' src={plusBtn} alt='' />
+                                  {/* <img className='w-10' src={plusBtn} alt='' /> */}
+                                  <MessageCirclePlus size={40} className='w-10'/>
                                   <div className='text-sm whitespace-nowrap'>Book Now</div>
                                 </div>
                               </NavLink>

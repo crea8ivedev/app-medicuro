@@ -1,3 +1,4 @@
+import { LoaderIcon, Trash2 } from "lucide-react";
 import deleteIcon from "../assets/images/delete.png"
 import axiosInstance from '../utils/axios';
 import { cn } from "../utils/cn";
@@ -39,7 +40,8 @@ export default function NotificationItem({
 
         {
           deletable &&  <div onClick={() => deleteNotification()} className={cn(" absolute top-0   bg-black/80 h-full   text-white right-0 w-0 group-hover:w-100 transition-all flex flex-col gap-3 overflow-hidden items-center justify-center")}> 
-          <img src={deleteIcon} alt="" />
+          {/* <img src={deleteIcon} alt="" /> */}
+          <Trash2/>
           <div>delete</div>
         </div>
         }
