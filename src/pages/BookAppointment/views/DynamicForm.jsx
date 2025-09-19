@@ -52,7 +52,7 @@ function DynamicForm({item,serviceId,callback}) {
           setIsLoading(true);
           const response = await axiosInstance.post("/api/v1/appointments/request", formData);
           if (response.data?.statusCode === 200) {
-            showToast.success("Appointment request added successfully");
+            showToast.success("Your appointment request was successfully submitted.");
             callback();
           }
         } catch (error) {

@@ -26,7 +26,7 @@ function RebookAppointment() {
             setLoading(true)
             const response = await axiosInstance.post("/api/v1/appointments/rebook",{appointmentId})
             if(response.status == 201){
-              showToast.success("Appointment rebooked successfully")
+              showToast.success("The appointment has been rebooked successfully.")
             }
             navigate("/dashboard")
           } catch (error) {

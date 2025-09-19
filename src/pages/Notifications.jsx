@@ -34,7 +34,7 @@ export default function Notifications() {
   }
 
   const handleDelete = () => {
-    showToast.success("Notification deleted successfully")
+    showToast.success("The notification has been deleted successfully.")
     getNotifications()  
   }
   

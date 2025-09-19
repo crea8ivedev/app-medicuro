@@ -43,7 +43,7 @@ const uploadProfilePic = async (file) => {
     });
 
     if (response.data?.statusCode === 200) {
-      showToast.success("Profile picture updated successfully");
+      showToast.success("Your profile picture has been updated successfully.");
       if (response.data?.profilePic) {
         // Optionally update user state
         login({ user: { ...user, profilePic: response.data.profilePic } });

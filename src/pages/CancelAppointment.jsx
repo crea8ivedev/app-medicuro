@@ -25,7 +25,7 @@ const cancelAppoinment = async  (appointmentId) => {
     setCancelLoading(true)
     const response = await axiosInstance.post("/api/v1/appointments/cancel",{appointmentId})
     if(response.data?.statusCode == 200){
-      showToast.success("Appoinment canceled successfully")
+      showToast.success("The appointment has been canceled successfully.")
       navigate("/dashboard")
     }
    } catch (error) {

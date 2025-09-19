@@ -19,7 +19,7 @@ export const useSubmitAppointmentRequest = () => {
       const response = await axiosInstance.post("/api/v1/appointments/request", payload);
 
       if(response?.data.statusCode == 200){
-        showToast.success("Appointment request created successfully")
+        showToast.success("Your appointment request was successfully submitted.")
         // navigate("/book-appointment")
         window.location.reload()
         

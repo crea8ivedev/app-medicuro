@@ -136,7 +136,7 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
            ...(notificationToken ? {notificationTokens : notificationToken} : {}) ,
         })
         if (response?.status == 200) {
-          toast.success("A verification link has been sent to your email.")
+          toast.success("We’ve sent a verification link to your email.")
           navigate("/login")
         }
       } finally {
