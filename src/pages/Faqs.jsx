@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import CommonBackBtn from '../components/CommonBackBtn'
 import { cn } from '../utils/cn'
 
-import arrow from '../assets/images/left-arrow.png'
 import axiosInstance from '../utils/axios'
 import FaqFallback from './fallbacks/FaqFallback'
-import { ChevronDown, ChevronUp } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 
 function Faqs() {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [faqs, setFaqs] = useState([])
   const [loading, setLoading] = useState(false)
+
+  const [searchParams] = useSearchParams()
+  const profile = searchParams.get('profile')
 
   const fetchFaqs = async () => {
     try {
@@ -27,7 +30,10 @@ function Faqs() {
     <div className=' bg-sky-foam min-h-screen pb-16 relative'>
       <div className='common-bg absolute left-0 right-0'></div>
       <div className='flex flex-col p-5  '>
-        <CommonBackBtn label='Help' link='/help' />
+        <CommonBackBtn
+          label='Help'
+          link={profile ? '/help?profile=true' : '/help'}
+        />
       </div>
       <div className='flex  w-full justify-center items-center '>
         <div className='bg-mint relative w-825 pt-10 pb-36 px-5  md:px-10 flex flex-col md:mt-24 rounded-xl '>

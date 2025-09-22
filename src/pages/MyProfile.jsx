@@ -54,7 +54,7 @@ function MyProfile() {
       icon: settingIcon,
       action: 'navigate',
       route: '/settings',
-      onclick: () => navigateToPage('/settings'),
+      onclick: () => navigateToPage('/settings?profile=true'),
       Icon: Settings,
     },
     {
@@ -62,7 +62,7 @@ function MyProfile() {
       icon: helpIcon,
       action: 'navigate',
       route: '/help',
-      onclick: () => navigateToPage('/help'),
+      onclick: () => navigateToPage('/help?profile=true'),
       Icon: HelpCircle,
     },
     {
@@ -70,7 +70,7 @@ function MyProfile() {
       icon: privacyIcon,
       action: 'navigate',
       route: '/privacy',
-      onclick: () => navigateToPage('/privacy'),
+      onclick: () => navigateToPage('/privacy?profile=true'),
       Icon: Lock,
     },
     {

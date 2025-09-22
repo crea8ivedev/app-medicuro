@@ -1,16 +1,15 @@
 import CommonBackBtn from '../components/CommonBackBtn'
 import leftArrow from '../assets/images/left-arrow.png'
-import profileIcon from '../assets/images/profile.png'
-import bulbIcon from '../assets/images/bulb.png'
-import keyIcon from '../assets/images/key.png'
 import { NavLink } from 'react-router-dom'
 import { useAuthStore } from '../store/auth'
-import { useEffect } from 'react'
 import { KeyRound, Lightbulb, Trash2 } from 'lucide-react'
-// provider
+import { useSearchParams } from 'react-router-dom'
 
 function Settings() {
   const user = useAuthStore((state) => state.user)
+
+  const [searchParams] = useSearchParams()
+  const profile = searchParams.get('profile')
 
   const menuItems = [
     {
@@ -26,7 +25,7 @@ function Settings() {
             label: 'Password Manager',
             icon: KeyRound,
             action: 'navigate',
-            route: '/password/reset',
+            route: profile ? '/password/reset?profile=true' : '/password/reset',
           },
         ]
       : []),
@@ -43,7 +42,10 @@ function Settings() {
       <div className='common-bg absolute left-0 right-0 '></div>
 
       <div className='flex flex-col p-5  '>
-        <CommonBackBtn label='Back to Dashboard' link='/' />
+        <CommonBackBtn
+          label={profile ? 'My Profile' : 'Back to Dashboard'}
+          link={profile ? '/profile' : '/'}
+        />
       </div>
 
       <div className='flex  w-full justify-center items-center lg:mt-24'>
