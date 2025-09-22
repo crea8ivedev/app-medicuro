@@ -62,11 +62,9 @@ export default function Login() {
     const { resetForm } = formikHelpers
     setIsLoading(true)
 
-    
     try {
       let notificationToken
 
-      
       try {
         if (Notification.permission !== 'granted') {
           const permission = await Notification.requestPermission()
@@ -178,7 +176,9 @@ export default function Login() {
             <div className='flex flex-col items-center gap-4 mt-7'>
               <button
                 type='submit'
-                className={cn("btn-loader common-btn font-extralight font-outfit w-full md:w-auto relative z-10 ")}
+                className={cn(
+                  'btn-loader common-btn font-extralight font-outfit w-full md:w-auto relative z-10 ',
+                )}
                 disabled={isLoading}
               >
                 Log In

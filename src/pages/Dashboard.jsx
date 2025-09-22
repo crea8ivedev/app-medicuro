@@ -11,7 +11,7 @@ import spinner from '../assets/images/spinner.gif'
 import { useSocket } from '../context/socketContext'
 import 'swiper/css'
 import NoAppointmentItem from '../components/NotificationItem'
-import { MessageCirclePlus } from 'lucide-react'
+import { CirclePlus } from 'lucide-react'
 
 export default function Dashboard() {
   const {
@@ -136,7 +136,7 @@ export default function Dashboard() {
             <NavLink to='/book-appointment'>
               <div className='flex flex-col gap-1 justify-center items-center bg-teal border-2 border-teal p-4 rounded-xl hover:bg-white hover:border-2 border-bg-teal'>
                 {/* <img className='w-10' src={plusBtn} alt='' /> */}
-                <MessageCirclePlus size={45} className='w-10'/>
+                <CirclePlus size={45} className='w-10' />
                 <div className='text-sm whitespace-nowrap'>Book Now</div>
               </div>
             </NavLink>
@@ -189,20 +189,23 @@ export default function Dashboard() {
                     )}
                   </Swiper>
                   <div className='flex justify-center gap-2 my-4'>
-                    {upcomingAppointments?.length > 2 &&  arrayChunk(upcomingAppointments, 2).map((chunk, index) => (
-                      <div
-                        onClick={() =>
-                          upcomingContainerRef.current?.slideTo(index)
-                        }
-                        key={`upcoming-dot-${index}`}
-                        className={cn(
-                          'h-15 w-15 cursor-pointer rounded-circle bg-black',
-                          currentUpcomingAppointmentPage === index
-                            ? 'bg-teal-800'
-                            : 'bg-white',
-                        )}
-                      />
-                    ))}
+                    {upcomingAppointments?.length > 2 &&
+                      arrayChunk(upcomingAppointments, 2).map(
+                        (chunk, index) => (
+                          <div
+                            onClick={() =>
+                              upcomingContainerRef.current?.slideTo(index)
+                            }
+                            key={`upcoming-dot-${index}`}
+                            className={cn(
+                              'h-15 w-15 cursor-pointer rounded-circle bg-black',
+                              currentUpcomingAppointmentPage === index
+                                ? 'bg-teal-800'
+                                : 'bg-white',
+                            )}
+                          />
+                        ),
+                      )}
                   </div>
                 </Fragment>
               ) : isLoading ? (
@@ -302,16 +305,18 @@ export default function Dashboard() {
                       className='inline-block w-full px-1'
                     >
                       <div className='flex flex-col gap-4'>
-                        {chunk.map(({ formData, createdAt, id ,service }, index) => (
-                          <AppointmentItem
-                            key={`pending-${chunkIndex}-${index}`}
-                            buttons={[]}
-                            doctor={service?.name} // no doctor in pending API
-                            service={`${formData?.reason?.substring(0,100)}...`}
-                            date={new Date(createdAt).toDateString()} // ✅ format date
-                            id={id}
-                          />
-                        ))}
+                        {chunk.map(
+                          ({ formData, createdAt, id, service }, index) => (
+                            <AppointmentItem
+                              key={`pending-${chunkIndex}-${index}`}
+                              buttons={[]}
+                              doctor={service?.name} // no doctor in pending API
+                              service={`${formData?.reason?.substring(0, 100)}...`}
+                              date={new Date(createdAt).toDateString()} // ✅ format date
+                              id={id}
+                            />
+                          ),
+                        )}
                       </div>
                     </SwiperSlide>
                   ))}
