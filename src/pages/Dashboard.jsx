@@ -123,7 +123,7 @@ export default function Dashboard() {
       <div className='container mx-auto md:py-24  flex items-center justify-between relative md:px-5'>
         <img className='left-image' src={loginSideImg} alt='left-image' />
         <div className='max-w-full m-auto'>
-          <div className='flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4  ps-5 pe-5 lg:w-lg ms-auto'>
+          <div className='flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4  ps-5 pe-5 lg:w-[495px] ms-auto'>
             <div className='flex flex-col gap-1'>
               <div className='text-bluewave text-xl font-semibold'>
                 Book Appointment
@@ -221,7 +221,7 @@ export default function Dashboard() {
                 />
               )}
             </div>
-            <div className='bg-ocean w-full lg:w-lg mt-4 pb-5 p-5 rounded-xl min-h-[360px]'>
+            <div className='bg-ocean w-full 2xl:w-[495px] lg:w-lg mt-4 pb-5 p-5 rounded-xl min-h-[360px]'>
               <div className='text-white my-4 mb-7 text-xl'>
                 Past Appointments
               </div>

@@ -89,7 +89,7 @@ export default function Notifications() {
   }
 
   return (
-    <div className='bg-ocean min-h-screen w-full justify-between relative pb-10'>
+    <div className='bg-ocean min-h-screen w-full justify-between relative pb-0'>
       <div className='common-bg absolute left-0'></div>
       <div className='px-4 py-5 text-white'>
         <CommonBackBtn
@@ -98,7 +98,7 @@ export default function Notifications() {
           varient='white'
         />
       </div>
-      <div className='container mx-auto  min-h-screen flex items-start md:pt-10 pt-2 justify-between relative  custom-wrap md:px-10 px-3  '>
+      <div className='container mx-auto  min-h-screen flex items-start md:pt-10 pt-2 justify-between relative custom-wrap md:px-10 px-3  '>
         <img className='hidden md:block left-image' src={loginSideImg} alt='' />
 
         <div className='right-container max-w-full'>
@@ -110,7 +110,7 @@ export default function Notifications() {
           </div>
 
           <div className='flex gap-5 flex-wrap lg:flex-nowrap '>
-            <div className='md:min-w-500 md:max-w-500 min-h-[500px] w-full   max-h-max  rounded-xl'>
+            <div className='md:min-w-[480px] md:max-w-[480px] min-h-[500px] w-[450px] max-h-max rounded-xl'>
               {notifications.length ? (
                 <Fragment>
                   <Swiper
@@ -190,7 +190,7 @@ export default function Notifications() {
                             </div>
                         </NavLink>
                   </div> */}
-              <div className='flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4  ps-5 pe-5 lg:w-lg ms-auto'>
+              <div className='flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4  ps-5 pe-5 lg:w-[480px] ms-auto'>
                 <div className='flex flex-col gap-1'>
                   <div className='text-bluewave text-xl font-semibold'>
                     Book Appointment

@@ -221,14 +221,17 @@ function Sidebar({ openMenu, setOpenMenu }) {
         <div
           className={cn(
             'md:flex ms-3 md:ms-0 mt-5 md:mt-0 items-center   md:w-66 text-center md:h-[93px] bg-navy',
-            !openMenu && 'hidden',
+            openMenu ? 'flex' : 'hidden md:flex',
           )}
           onClick={() => navigateToPage('/profile')}
         >
           <img
             className='m-auto  object-cover rounded-circle h-[44px] w-[44px] object-cover hover:scale-110 transition-all duration-500  '
-            src={user?.profilePic ?? dummyProfile}
+            src={user?.profilePic || dummyProfile}
             alt='profile-pic'
+            onError={(e) => {
+              e.target.src = dummyProfile
+            }}
           />
         </div>
       </div>

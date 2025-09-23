@@ -41,8 +41,19 @@ function CustomInput({
     const { name, value } = e.target
     let processedValue = value
 
+    // Trim whitespace for text inputs
+    if (
+      type === 'text' ||
+      type === 'email' ||
+      type === 'textarea' ||
+      !type ||
+      type === 'password'
+    ) {
+      processedValue = processedValue.trim()
+    }
+
     if (uppercase) {
-      processedValue = value.toUpperCase()
+      processedValue = processedValue.toUpperCase()
     }
 
     if (name === 'phone') {
@@ -68,10 +79,10 @@ function CustomInput({
   }
 
   const handleKeyDown = (e) => {
-    if(type == 'number'){
-       if (["e", "E", "+", "-", "."].includes(e.key)) {
-      e.preventDefault(); // block unwanted keys
-    }
+    if (type == 'number') {
+      if (['e', 'E', '+', '-', '.'].includes(e.key)) {
+        e.preventDefault() // block unwanted keys
+      }
     }
   }
 
@@ -84,10 +95,7 @@ function CustomInput({
 
   return (
     <div className='flex flex-col gap-2'>
-      <label
-        htmlFor={field.name}
-        className={cn('font-bold', labelclasses)}
-      >
+      <label htmlFor={field.name} className={cn('font-bold', labelclasses)}>
         {label}
       </label>
       <div className='relative'>
@@ -102,6 +110,8 @@ function CustomInput({
               'bg-white outline-0 p-2 border-2 rounded-sm border-teal-600 ',
               inputclasses,
             )}
+            onChange={handleChange}
+            onFocus={handleFocus}
           ></textarea>
         ) : type === 'date' ? (
           <div className='relative w-full date-picker'>
@@ -115,7 +125,6 @@ function CustomInput({
                     const isoString = val.toISOString()
                     setFieldValue(field.name, isoString)
                     setTempValue(null)
-
                   }
                 }}
                 onBlur={() => setFieldTouched(field.name, true)}
@@ -133,8 +142,8 @@ function CustomInput({
                 slotProps={{
                   textField: {
                     onClick: () => setOpen(true), // ✅ clicking input opens picker
-                    readOnly: true                // optional: prevent manual typing
-                  }
+                    readOnly: true, // optional: prevent manual typing
+                  },
                 }}
                 openTo='day'
                 {...(props.futureDate ? { minDate: new Date() } : {})}
@@ -166,15 +175,11 @@ function CustomInput({
                 onClick={() => setShowPassword((prev) => !prev)}
                 className='absolute right-2 top-1/2 -translate-y-50-per cursor-pointer'
               >
-                {
-                  showPassword ? <Eye/> : <EyeOff/>
-                }
+                {showPassword ? <Eye /> : <EyeOff />}
               </div>
             )}
           </div>
         )}
-
-
 
         <ErrorMessage
           name={field.name}
