@@ -42,7 +42,6 @@ const PageNotFound = lazy(() => import('./pages/PageNotFound'))
 
 function App() {
   const { user } = useAuthStore()
-  console.log("restarted")
 
   return (
     <Suspense fallback={<FallbackSkeleton />}>

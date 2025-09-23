@@ -85,7 +85,6 @@ export default function Notifications() {
     title: 'No Notifications',
     desc: 'You currently have no notifications. This section will display important updates and reminders, including information regarding your upcoming appointments. Please check back regularly for the latest notifications.',
     id: 'sample-id-1',
-    onDelete: () => console.log('Deleted notification'),
   }
 
   return (
@@ -110,7 +109,7 @@ export default function Notifications() {
           </div>
 
           <div className='flex gap-5 flex-wrap lg:flex-nowrap '>
-            <div className='md:min-w-[480px] md:max-w-[480px] min-h-[500px] w-[450px] max-h-max rounded-xl'>
+            <div className='md:min-w-[480px] md:max-w-[480px] min-h-[500px] w-full max-h-max rounded-xl'>
               {notifications.length ? (
                 <Fragment>
                   <Swiper
