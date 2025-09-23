@@ -226,7 +226,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
           onClick={() => navigateToPage('/profile')}
         >
           <img
-            className='m-auto  object-cover rounded-circle h-[44px] w-[44px] object-cover hover:scale-110 transition-all duration-500  '
+            className='m-auto  object-cover rounded-circle h-[44px] w-[44px] hover:scale-110 transition-all duration-500  '
             src={user?.profilePic || dummyProfile}
             alt='profile-pic'
             onError={(e) => {
@@ -239,6 +239,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
       <div className='flex overflow-hidden w-full'>
         <div
           onMouseEnter={() => setOpenMenu(true)}
+          onMouseLeave={() => setOpenMenu(false)}
           className='h-screen bg-navy pt-3 hidden md:flex md:flex-col gap-8'
           onClick={(e) => e.stopPropagation()}
         >
