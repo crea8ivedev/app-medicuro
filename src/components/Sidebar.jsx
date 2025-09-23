@@ -210,7 +210,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
   }
 
   return (
-    <div className='fixed h-screen top-0 left-0 transition-all duration-500 z-1'>
+    <div className='fixed h-screen top-0 left-0 transition-all duration-500 z-60'>
       <div
         onClick={(e) => {
           e.stopPropagation()
@@ -220,7 +220,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
       >
         <div
           className={cn(
-            'md:flex ms-3 md:ms-0 mt-5 md:mt-0 items-center   md:w-66 text-center md:h-[93px] bg-navy',
+            'md:flex ms-3 md:ms-0 mt-5 md:mt-0 items-center md:w-66 text-center md:h-[93px] bg-navy',
             openMenu ? 'flex' : 'hidden md:flex',
           )}
           onClick={() => navigateToPage('/profile')}
@@ -239,7 +239,6 @@ function Sidebar({ openMenu, setOpenMenu }) {
       <div className='flex overflow-hidden w-full'>
         <div
           onMouseEnter={() => setOpenMenu(true)}
-          onMouseLeave={() => setOpenMenu(false)}
           className='h-screen bg-navy pt-3 hidden md:flex md:flex-col gap-8'
           onClick={(e) => e.stopPropagation()}
         >
@@ -290,6 +289,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
             openMenu ? 'left-0' : '-left-full',
           )}
           onClick={(e) => e.stopPropagation()}
+          onMouseLeave={() => !isMobile && setOpenMenu(false)}
         >
           <div
             className='flex justify-end cursor-pointer'
