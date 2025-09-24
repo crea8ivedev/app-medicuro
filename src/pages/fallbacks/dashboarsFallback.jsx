@@ -14,7 +14,7 @@ const DashboardFallback = () => {
           <div className='flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4 ps-10 pe-5 lg:w-lg ms-auto mb-6'>
             <div className='flex flex-col gap-1 flex-1'>
               <div className='h-5 w-40 bg-blue-200 rounded' />
-              <div className='h-4 w-72 bg-gray-200 rounded' />
+              <div className='h-4 w-64 bg-gray-200 rounded' />
             </div>
             <div className='flex flex-col gap-1 justify-center items-center bg-teal p-4 rounded-xl'>
               <div className='w-10 h-10 bg-white rounded-full' />
