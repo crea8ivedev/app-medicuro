@@ -1,15 +1,5 @@
 import { useRef, useState } from 'react'
 import CommonBackBtn from '../components/CommonBackBtn'
-import dummyProfile from '../assets/images/logo.svg'
-import whitePen from '../assets/images/white-pen.svg'
-import leftArrow from '../assets/images/left-arrow.png'
-
-import profileIcon from '../assets/images/profile.png'
-import settingIcon from '../assets/images/settings-black.png'
-import helpIcon from '../assets/images/question.png'
-import privacyIcon from '../assets/images/privacy.png'
-import logoutIcon from '../assets/images/logout.png'
-import deleteIcon from '../assets/images/delete-black.png'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../store/auth'
 import { showToast } from '../utils/toast'
@@ -17,6 +7,7 @@ import axiosInstance from '../utils/axios'
 import { cn } from '../utils/cn'
 import {
   User,
+  UserCircle,
   Settings,
   HelpCircle,
   Lock,
@@ -43,7 +34,6 @@ function MyProfile() {
   const menuItems = [
     {
       label: 'Profile',
-      icon: profileIcon, // example icon name, e.g. from FontAwesome or your custom set
       action: 'navigate',
       route: '/profile',
       onclick: () => navigateToPage('/profile/update'),
@@ -51,7 +41,6 @@ function MyProfile() {
     },
     {
       label: 'Settings',
-      icon: settingIcon,
       action: 'navigate',
       route: '/settings',
       onclick: () => navigateToPage('/settings?profile=true'),
@@ -59,7 +48,6 @@ function MyProfile() {
     },
     {
       label: 'Help',
-      icon: helpIcon,
       action: 'navigate',
       route: '/help',
       onclick: () => navigateToPage('/help?profile=true'),
@@ -67,7 +55,6 @@ function MyProfile() {
     },
     {
       label: 'Privacy Policy',
-      icon: privacyIcon,
       action: 'navigate',
       route: '/privacy',
       onclick: () => navigateToPage('/privacy?profile=true'),
@@ -75,14 +62,12 @@ function MyProfile() {
     },
     {
       label: 'Logout',
-      icon: logoutIcon,
       action: 'logout',
       onclick: () => navigateToPage('/log-out'),
       Icon: LogOut,
     },
     {
       label: 'Delete Account',
-      icon: deleteIcon,
       action: 'deleteAccount',
       onclick: () => navigateToPage('/profile/account/delete'),
       Icon: Trash2,
@@ -120,8 +105,8 @@ function MyProfile() {
       if (response.data?.statusCode === 200) {
         showToast.success('Your profile picture has been updated successfully.')
         if (response.data?.profilePic) {
-          // Optionally update user state
           login({ user: { ...user, profilePic: response.data.profilePic } })
+          setProfilePic(null)
         }
       }
     } catch (error) {
@@ -141,16 +126,19 @@ function MyProfile() {
         <div className='bg-mint relative w-825 p-10 flex flex-col gap-7 py-24 rounded-xl'>
           <div className='common-right-design z-10 bottom-5 right-5'></div>
           <div className='relative max-w-max m-auto text-center'>
-            <img
-              className='m-auto w-105 h-105 rounded-circle object-contain'
-              src={profilePic ?? user?.profilePic ?? dummyProfile}
-              alt=''
-            />
+            {profilePic || user?.profilePic ? (
+              <img
+                className='m-auto w-105 h-105 rounded-circle object-cover'
+                src={profilePic ?? user?.profilePic}
+                alt=''
+              />
+            ) : (
+              <UserCircle className='m-auto w-105 h-105 text-gray-400' />
+            )}
             <div
               onClick={() => profilePicRef?.current?.click()}
               className=' bg-bluewave rounded-circle flex justify-center items-center w-30 h-30 absolute right-0 bottom-0 cursor-pointer p-2'
             >
-              {/* <img src={whitePen}  alt="profile-pic" className={cn(profilePicSubmitting && "opacity-70 cursor-not-allowed")} /> */}
               <Pencil
                 className={cn(
                   profilePicSubmitting && 'opacity-70 cursor-not-allowed',

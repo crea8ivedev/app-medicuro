@@ -61,7 +61,7 @@
   --spacing-825 : 825px;
   --spacing-850 : 850px;
 
-   
+
   /* FONT FAMILY */
   --font-league: 'League Spartan', sans-serif;
   --font-roboto-cond: 'Roboto Condensed', sans-serif;
@@ -81,7 +81,7 @@
 
 .bg-secondary {
   @apply bg-navy;
-} 
+}
 
 .common-bg{
   @apply bg-[url("../src/assets/images/common-bg.png")] bg-no-repeat absolute inset-0 bg-bottom
@@ -189,7 +189,7 @@ input::placeholder{
     flex-wrap: wrap !important;
   }
   .right-container{
-    margin: auto !important;
+    margin: auto;
   }
 }
 
@@ -202,7 +202,7 @@ input::placeholder{
     display: none;
   }
   .right-container{
-    margin: auto !important;
+    margin-top: 0;
   }
 }
 
@@ -263,8 +263,8 @@ input::placeholder{
   left: 50%;
   width: 40px;
   height: 40px;
-  border: 4px solid #f3f3f3;      
-  border-top-color: #0c91d2;      
+  border: 4px solid #f3f3f3;
+  border-top-color: #0c91d2;
   border-radius: 50%;
   transform: translate(-50%, -50%) rotate(0deg);
   transform-origin: 50% 50%;

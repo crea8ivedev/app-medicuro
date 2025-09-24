@@ -1,7 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
 import loginSideImg from '../assets/images/login-vector.png'
 import spinner from '../assets/images/spinner.gif'
-import plusBtn from '../assets/images/bookIcon.svg'
 import { NavLink } from 'react-router-dom'
 import NotificationItem from '../components/NotificationItem'
 import { cn } from '../utils/cn'
@@ -108,8 +107,8 @@ export default function Notifications() {
             <div className='text-white my-4'>Notifications</div>
           </div>
 
-          <div className='flex gap-5 flex-wrap lg:flex-nowrap '>
-            <div className='md:min-w-[480px] md:max-w-[480px] min-h-[500px] w-full max-h-max rounded-xl'>
+          <div className='flex gap-5 flex-wrap lg:flex-nowrap justify-center '>
+            <div className='md:max-w-[470px] 2xl:max-w-500 w-full max-h-max rounded-xl'>
               {notifications.length ? (
                 <Fragment>
                   <Swiper
@@ -176,20 +175,8 @@ export default function Notifications() {
               )}
             </div>
 
-            <div className='w-full'>
-              {/* <div className="flex w-full md:flex-nowrap flex-wrap-reverse  items-center justify-center xl:min-w-500  md:max-w-500 bg-white gap-5 rounded-xl px-4 py-4">
-                      <div className="flex flex-col items-start md:items-start justify-center ">
-                        <div className="text-bluewave font-semibold">Book Appointment</div>
-                        <div>Book your appointment with a licensed Medicuro doctor at your convenience</div>
-                      </div>
-                        <NavLink to="/book-appointment">
-                            <div className="flex  flex-col gap-2 justify-center items-center bg-teal-500 p-5 rounded-md hover:bg-white  border-2 border-teal">
-                              <img src={plusBtn} alt="" />
-                              <div className="text-sm whitespace-nowrap">Book Now</div>
-                            </div>
-                        </NavLink>
-                  </div> */}
-              <div className='flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4  ps-5 pe-5 lg:w-[480px] ms-auto'>
+            <div className='w-full grid place-content-center lg:place-content-start'>
+              <div className='lg:flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4  ps-5 pe-5 md:max-w-[470px] min-w-[470px] 2xl:max-w-500 ms-auto'>
                 <div className='flex flex-col gap-1'>
                   <div className='text-bluewave text-xl font-semibold'>
                     Book Appointment

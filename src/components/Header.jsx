@@ -4,6 +4,7 @@ import { useAuthStore } from '../store/auth'
 import { useEffect, useState } from 'react'
 import axiosInstance from '../utils/axios'
 import { useAppointmentStore } from '../store/appointments'
+import { Menu } from 'lucide-react'
 
 function Header({ setOpenMenu }) {
   const { user } = useAuthStore()
@@ -27,22 +28,22 @@ function Header({ setOpenMenu }) {
   }, [upcomingAppointments])
 
   return (
-    <div className='fixed w-full top-0 md:static md:h-93 md:ps-90 bg-white md:py-5 z-50 flex items-center'>
-      <div className='md:hidden w-full  flex justify-between items-center px-3 py-2'>
+    <div className='fixed w-full flex justify-start h-16 items-center top-0 md:static md:h-93 md:ps-90 bg-white md:py-5 z-50'>
+      <div className='md:hidden w-full flex justify-between items-center px-[10px]'>
         <div
-          className='text-5xl cursor-pointer'
+          className='cursor-pointer flex items-center justify-center'
           onClick={(e) => {
             e.stopPropagation()
             setOpenMenu(true)
           }}
         >
-          &#8801;
+          <Menu size={28} />
         </div>
         <NavLink to={'/profile'}>
           <img
             src={user?.profilePic ?? dummyProfile}
             alt='profile-image'
-            className='w-10 aspect-square rounded-circle'
+            className='max-w-10 object-cover aspect-square rounded-circle'
           />{' '}
         </NavLink>
       </div>
