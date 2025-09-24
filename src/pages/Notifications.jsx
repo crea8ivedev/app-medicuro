@@ -23,8 +23,22 @@ export default function Notifications() {
   const [currentNotificationsPage, setCurrentNotificationsPage] = useState(0)
 
   const [initIsRead, setInitIsRead] = useState(true)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const swiperRef = useRef(null)
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setPerPage(3)
+      } else {
+        setPerPage(4)
+      }
+    }
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   function arrayChunk(arr, size) {
     const chunks = []
@@ -34,9 +48,14 @@ export default function Notifications() {
     return chunks
   }
 
-  const handleDelete = () => {
-    showToast.success('The notification has been deleted successfully.')
-    getNotifications()
+  const handleDelete = async () => {
+    setIsDeleting(true)
+    try {
+      showToast.success('The notification has been deleted successfully.')
+      getNotifications()
+    } finally {
+      setIsDeleting(false)
+    }
   }
 
   // mark as read
@@ -87,16 +106,16 @@ export default function Notifications() {
   }
 
   return (
-    <div className='bg-ocean min-h-screen w-full justify-between relative pb-0'>
+    <div className='bg-ocean h-auto 2xl:h-[calc(100dvh-93px)]  w-full justify-between relative pb-0 md:overflow-hidden'>
       <div className='common-bg absolute left-0'></div>
-      <div className='px-4 py-5 text-white'>
+      <div className='text-white pt-5 pl-4'>
         <CommonBackBtn
           link='/dashboard'
           label='Back to Dashboard'
           varient='white'
         />
       </div>
-      <div className='container mx-auto  min-h-screen flex items-start md:pt-10 pt-2 justify-between relative custom-wrap md:px-10 px-3  '>
+      <div className='container mx-auto h-screen flex items-start md:pt-10 justify-between relative custom-wrap'>
         <img className='hidden md:block left-image' src={loginSideImg} alt='' />
 
         <div className='right-container max-w-full'>
@@ -116,7 +135,7 @@ export default function Notifications() {
                     onSlideChange={(swiper) =>
                       handleSlideChange(swiper.activeIndex)
                     }
-                    className='whitespace-nowrap overflow-x-auto hide-scrollbar  select-none'
+                    className='whitespace-nowrap lg:overflow-x-hidden overflow-x-auto hide-scrollbar  select-none'
                   >
                     {arrayChunk(notifications, perPage).map(
                       (chunk, chunkIndex) => (
@@ -136,6 +155,7 @@ export default function Notifications() {
                                 date={date}
                                 id={id}
                                 onDelete={handleDelete}
+                                isDeleting={isDeleting}
                               />
                             ))}
                           </div>
@@ -171,11 +191,12 @@ export default function Notifications() {
                   desc={noNotificationItem.desc}
                   date={noNotificationItem.date}
                   deletable={false}
+                  isDeleting={isDeleting}
                 />
               )}
             </div>
 
-            <div className='w-full grid place-content-center lg:place-content-start'>
+            <div className='w-full hidden lg:grid place-content-center lg:place-content-start'>
               <div className='lg:flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4  ps-5 pe-5 md:max-w-[470px] md:min-w-[470px] 2xl:max-w-500 ms-auto'>
                 <div className='flex flex-col gap-1'>
                   <div className='text-bluewave text-xl font-semibold'>

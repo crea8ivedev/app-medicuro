@@ -30,6 +30,7 @@ function CustomInput({
   isDisabled,
   isMcp,
   errorStyle,
+  uppercase,
   ...props
 }) {
   const [showPassword, setShowPassword] = useState(false)
@@ -41,13 +42,10 @@ function CustomInput({
     const { name, value } = e.target
     let processedValue = value
 
-    // Trim whitespace for text inputs
+    // Trim whitespace for text-like inputs (but not textarea)
     if (
-      type === 'text' ||
-      type === 'email' ||
-      type === 'textarea' ||
-      !type ||
-      type === 'password'
+      (type === 'text' || type === 'email' || type === 'password') &&
+      processedValue
     ) {
       processedValue = processedValue.trim()
     }
@@ -79,7 +77,7 @@ function CustomInput({
   }
 
   const handleKeyDown = (e) => {
-    if (type == 'number') {
+    if (type === 'number') {
       if (['e', 'E', '+', '-', '.'].includes(e.key)) {
         e.preventDefault() // block unwanted keys
       }
@@ -103,16 +101,20 @@ function CustomInput({
           <textarea
             onDrop={(e) => e.preventDefault()}
             cols={cols}
-            {...props}
-            {...field}
             rows={rows}
+            id={field.name}
+            placeholder={placeholder}
+            disabled={isDisabled}
             className={cn(
               'bg-white outline-0 p-2 border-2 rounded-sm border-teal-600 ',
               inputclasses,
             )}
+            {...props}
+            {...field}
+            value={field.value ?? ''} // ✅ ensure controlled value
             onChange={handleChange}
             onFocus={handleFocus}
-          ></textarea>
+          />
         ) : type === 'date' ? (
           <div className='relative w-full date-picker'>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -142,7 +144,7 @@ function CustomInput({
                 slotProps={{
                   textField: {
                     onClick: () => setOpen(true), // ✅ clicking input opens picker
-                    readOnly: true, // optional: prevent manual typing
+                    readOnly: true, // prevent manual typing
                   },
                 }}
                 openTo='day'
@@ -164,8 +166,8 @@ function CustomInput({
               onChange={(e) => handleChange(e)}
               {...props}
               {...field}
+              value={field.value ?? ''} // ✅ ensure controlled value
               onFocus={handleFocus}
-              value={field.value ?? ''}
               ref={inputRef}
               onDrop={(e) => e.preventDefault()}
               onKeyDown={handleKeyDown}
@@ -184,7 +186,7 @@ function CustomInput({
         <ErrorMessage
           name={field.name}
           component='div'
-          className={cn('text-xs text-navy  font-semibold ', errorStyle)}
+          className={cn('text-xs text-navy font-semibold', errorStyle)}
           aria-live='polite'
           aria-atomic='true'
         />

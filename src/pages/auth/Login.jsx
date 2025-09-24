@@ -177,7 +177,7 @@ export default function Login() {
               <button
                 type='submit'
                 className={cn(
-                  'btn-loader common-btn font-extralight font-outfit w-full md:w-auto relative z-10 ',
+                  'btn-loader relative common-btn font-extralight font-outfit w-full md:w-auto z-10 ',
                 )}
                 disabled={isLoading}
               >

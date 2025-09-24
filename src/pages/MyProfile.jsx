@@ -117,13 +117,13 @@ function MyProfile() {
   }
 
   return (
-    <div className=' bg-sky-foam min-h-screen pb-16 relative'>
+    <div className=' bg-sky-foam sm:h-auto 2xl:h-[calc(100dvh-93px)] pb-16 relative md:overflow-hidden'>
       <div className='common-bg absolute'></div>
       <div className='flex flex-col p-5'>
         <CommonBackBtn label='Back to Dashboard' link='/' />
       </div>
-      <div className='flex w-full justify-center items-center lg:pt-24'>
-        <div className='bg-mint relative w-825 p-10 flex flex-col gap-7 py-24 rounded-xl'>
+      <div className='flex w-full justify-center items-center lg:pt-0'>
+        <div className='bg-mint relative w-825 p-10 flex flex-col gap-7 py-10 rounded-xl'>
           <div className='common-right-design z-10 bottom-5 right-5'></div>
           <div className='relative max-w-max m-auto text-center'>
             {profilePic || user?.profilePic ? (
@@ -155,7 +155,7 @@ function MyProfile() {
               />
             </div>
           </div>
-          <div className='my-10'>
+          <div className='my-5'>
             {menuItems?.map(({ Icon, ...item }, index) => {
               return (
                 <div

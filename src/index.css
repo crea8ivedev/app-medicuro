@@ -236,55 +236,19 @@ input::placeholder{
 
 
 /* testingg */
-.btn-loader {
-  position: relative;
-  display: inline-block;
-  /* font-size: 16px; */
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.15s, background 0.15s;
-  text-align: center;
-
-}
-
-
-.btn-loader:disabled {
-  color: transparent;
-  cursor: not-allowed;
-  opacity: 0.9;
-}
-
-
 .btn-loader:disabled::after {
   content: "";
   position: absolute;
   top: 50%;
   left: 50%;
   width: 40px;
+  /* match gif size */
   height: 40px;
-  border: 4px solid #f3f3f3;
-  border-top-color: #0c91d2;
-  border-radius: 50%;
-  transform: translate(-50%, -50%) rotate(0deg);
-  transform-origin: 50% 50%;
-  transform-box: fill-box;
-  will-change: transform;
+  background: url("./src/assets/images/spinner.gif") no-repeat center center;
+  background-size: contain;
+  transform: translate(-50%, -50%);
   z-index: 2;
   pointer-events: none;
-  animation: btn-spin 1s linear infinite;
-}
-
-/* Keyframes keep translate so centering doesn't disappear during the animation */
-@keyframes btn-spin {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to   { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-/* Optional -webkit fallbacks for older browsers */
-@-webkit-keyframes btn-spin {
-  from { -webkit-transform: translate(-50%, -50%) rotate(0deg); }
-  to   { -webkit-transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .appointment-btns {

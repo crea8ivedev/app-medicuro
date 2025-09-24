@@ -26,7 +26,7 @@ function Help() {
   ]
 
   return (
-    <div className=' bg-sky-foam h-screen pb-16 relative '>
+    <div className=' bg-sky-foam h-[calc(100dvh-93px)] pb-16 relative md:overflow-hidden'>
       <div className='common-bg absolute left-0 right-0 '></div>
       <div className='flex flex-col p-5  '>
         <CommonBackBtn
@@ -35,7 +35,7 @@ function Help() {
         />
       </div>
       <div className='flex  w-full justify-center items-center md:mt-24'>
-        <div className='bg-mint relative w-825 p-10 flex flex-col gap-7 pb-36'>
+        <div className='bg-mint relative w-825 p-10 flex flex-col gap-7 pb-36 rounded-xl'>
           <div className='common-right-design  z-10 bottom-5 right-5'></div>
           <div className='my-10'>
             {menuItems?.map((item, index) => {

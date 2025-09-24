@@ -70,7 +70,7 @@ function UpdateProfile() {
       </div>
 
       <div className='flex  w-full justify-center items-center lg:mt-20'>
-        <div className='bg-mint relative w-825 p-10 flex flex-col gap-7 py-24'>
+        <div className='bg-mint relative w-825 p-10 flex flex-col gap-7 rounded-xl py-24'>
           <div className='common-right-design  z-10 bottom-5 right-5'></div>
           <div className='relative max-w-max m-auto text-center'>
             <img
@@ -268,7 +268,7 @@ const MyProfileInfo = ({ profilePic }) => {
 
       <div className='text-center mt-10'>
         <button
-          className='btn-loader common-btn'
+          className='btn-loader relative common-btn'
           disabled={isLoading}
           onClick={() => formik.handleSubmit()}
         >
