@@ -176,7 +176,7 @@ export default function Notifications() {
             </div>
 
             <div className='w-full grid place-content-center lg:place-content-start'>
-              <div className='lg:flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4  ps-5 pe-5 md:max-w-[470px] min-w-[470px] 2xl:max-w-500 ms-auto'>
+              <div className='lg:flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4  ps-5 pe-5 md:max-w-[470px] md:min-w-[470px] 2xl:max-w-500 ms-auto'>
                 <div className='flex flex-col gap-1'>
                   <div className='text-bluewave text-xl font-semibold'>
                     Book Appointment
