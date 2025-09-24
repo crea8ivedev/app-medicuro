@@ -173,7 +173,7 @@ function CustomInput({
             {password && (
               <div
                 onClick={() => setShowPassword((prev) => !prev)}
-                className='absolute right-2 top-1/2 -translate-y-50-per cursor-pointer'
+                className='absolute right-2 top-1/2  cursor-pointer -translate-y-50-per'
               >
                 {showPassword ? <Eye /> : <EyeOff />}
               </div>
