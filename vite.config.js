@@ -15,23 +15,23 @@ export default defineConfig(({ command, mode }) => {
         '/api': {
           target: env.VITE_API_BASE_URL,
           changeOrigin: true,
-          secure: env.VITE_NODE_ENV === 'development',
+          secure: env.VITE_NODE_ENV === 'production',
           ws: true,
         },
         '/google': {
           target: env.VITE_API_BASE_URL,
           changeOrigin: true,
-          secure: env.VITE_NODE_ENV === 'development',
+          secure: env.VITE_NODE_ENV === 'production',
         },
         '/facebook': {
           target: env.VITE_API_BASE_URL,
           changeOrigin: true,
-          secure: env.VITE_NODE_ENV === 'development',
+          secure: env.VITE_NODE_ENV === 'production',
         },
         '/auth': {
           target: env.VITE_API_BASE_URL,
           changeOrigin: true,
-          secure: env.VITE_NODE_ENV === 'development',
+          secure: env.VITE_NODE_ENV === 'production',
         },
       },
       https: {
