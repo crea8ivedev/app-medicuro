@@ -6,7 +6,7 @@ import { cn } from '../utils/cn'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import axiosInstance from '../utils/axios'
 import { useAppointmentStore } from '../store/appointments'
-import spinner from '../assets/images/spinner.gif'
+import spinner from '/spinner.gif'
 import { useSocket } from '../context/socketContext'
 import 'swiper/css'
 import NoAppointmentItem from '../components/NotificationItem'
@@ -28,12 +28,25 @@ export default function Dashboard() {
   const pastContainerRef = useRef(null)
 
   const [isLoading, setIsloading] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const [currentUpcomingAppointmentPage, setCurrentUpcomingAppointmentPage] =
     useState(0)
   const [currentPastAppointmentPage, setCurrentPastAppointmentPage] =
     useState(0)
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 400)
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  const pendingRequestsArrayLength = isMobile ? 3 : 5
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -122,7 +135,7 @@ export default function Dashboard() {
       <div className='container mx-auto md:py-24  flex items-center justify-between relative md:px-5'>
         <img className='left-image' src={loginSideImg} alt='left-image' />
         <div className='max-w-full m-auto'>
-          <div className='flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4  ps-5 pe-5 lg:w-[495px] ms-auto'>
+          <div className='flex flex-col md:flex-row bg-white gap-10 rounded-xl py-4  ps-5 pe-5  w-full 2xl:w-[495px] lg:w-lg ms-auto'>
             <div className='flex flex-col gap-1'>
               <div className='text-bluewave text-xl font-semibold'>
                 Book Appointment
@@ -298,32 +311,34 @@ export default function Dashboard() {
                   }
                   className='whitespace-nowrap overflow-x-hidden'
                 >
-                  {arrayChunk(pendingRequests, 5).map((chunk, chunkIndex) => (
-                    <SwiperSlide
-                      key={`pending-${chunkIndex}`}
-                      className='inline-block w-full px-1'
-                    >
-                      <div className='flex flex-col gap-4'>
-                        {chunk.map(
-                          ({ formData, createdAt, id, service }, index) => (
-                            <AppointmentItem
-                              key={`pending-${chunkIndex}-${index}`}
-                              buttons={[]}
-                              doctor={service?.name} // no doctor in pending API
-                              service={`${formData?.reason?.substring(0, 100)}...`}
-                              date={new Date(createdAt).toDateString()} // ✅ format date
-                              id={id}
-                            />
-                          ),
-                        )}
-                      </div>
-                    </SwiperSlide>
-                  ))}
+                  {arrayChunk(pendingRequests, pendingRequestsArrayLength).map(
+                    (chunk, chunkIndex) => (
+                      <SwiperSlide
+                        key={`pending-${chunkIndex}`}
+                        className='inline-block w-full px-1'
+                      >
+                        <div className='flex flex-col gap-4'>
+                          {chunk.map(
+                            ({ formData, createdAt, id, service }, index) => (
+                              <AppointmentItem
+                                key={`pending-${chunkIndex}-${index}`}
+                                buttons={[]}
+                                doctor={service?.name} // no doctor in pending API
+                                service={`${formData?.reason?.substring(0, 100)}...`}
+                                date={new Date(createdAt).toDateString()} // ✅ format date
+                                id={id}
+                              />
+                            ),
+                          )}
+                        </div>
+                      </SwiperSlide>
+                    ),
+                  )}
                 </Swiper>
 
                 <div className='flex justify-center gap-2 my-4'>
-                  {pendingRequests?.length > 2 &&
-                    arrayChunk(pendingRequests, 5).map((_, index) => (
+                  {pendingRequests?.length > pendingRequestsArrayLength &&
+                    arrayChunk(pendingRequests, pendingRequestsArrayLength).map((_, index) => (
                       <div
                         onClick={() => pastContainerRef.current?.slideTo(index)}
                         key={`pending-dot-${index}`}

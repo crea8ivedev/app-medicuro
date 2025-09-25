@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axiosInstance from '../utils/axios';
-import spinner from "../assets/images/spinner.gif";
+import spinner from "/spinner.gif";
 
 function Privacy({ withCheckboxAndButton, onButtonClick }) {
   const [terms, setTerms] = useState([]);

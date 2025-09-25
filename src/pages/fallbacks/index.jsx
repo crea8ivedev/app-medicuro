@@ -7,7 +7,7 @@ import HelpFallback from './HelpFallback'
 import AuthScreenFallback from './AuthScreenFallback'
 import LoginFallback from './LoginFallback'
 import SignupTermsFallback from './SignupTermsFallback'
-import Spinner from '../../assets/images/spinner.gif'
+import Spinner from '/spinner.gif'
 
 const FallbackSkeleton = ({ showHeader = true }) => {
   const location = useLocation()

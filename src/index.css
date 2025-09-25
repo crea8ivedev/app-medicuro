@@ -244,7 +244,7 @@ input::placeholder{
   width: 40px;
   /* match gif size */
   height: 40px;
-  background: url("./src/assets/images/spinner.gif") no-repeat center center;
+  background: url("/spinner.gif") no-repeat center center;
   background-size: contain;
   transform: translate(-50%, -50%);
   z-index: 2;

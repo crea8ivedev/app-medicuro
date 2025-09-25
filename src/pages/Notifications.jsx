@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from 'react'
 import loginSideImg from '../assets/images/login-vector.png'
-import spinner from '../assets/images/spinner.gif'
+import spinner from '/spinner.gif'
 import { NavLink } from 'react-router-dom'
 import NotificationItem from '../components/NotificationItem'
 import { cn } from '../utils/cn'
@@ -30,6 +30,8 @@ export default function Notifications() {
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
+        setPerPage(3)
+      } else if (window.innerWidth <= 400) {
         setPerPage(3)
       } else {
         setPerPage(4)
@@ -106,7 +108,7 @@ export default function Notifications() {
   }
 
   return (
-    <div className='bg-ocean h-auto 2xl:h-[calc(100dvh-93px)]  w-full justify-between relative pb-0 md:overflow-hidden'>
+    <div className='bg-ocean h-screen w-full justify-between relative overflow-hidden'>
       <div className='common-bg absolute left-0'></div>
       <div className='text-white pt-5 pl-4'>
         <CommonBackBtn
@@ -115,10 +117,10 @@ export default function Notifications() {
           varient='white'
         />
       </div>
-      <div className='container mx-auto h-screen flex items-start md:pt-10 justify-between relative custom-wrap'>
+      <div className='container mx-auto h-[calc(100vh-80px)] px-2 md:h-auto flex items-start md:pt-10 justify-between relative custom-wrap'>
         <img className='hidden md:block left-image' src={loginSideImg} alt='' />
 
-        <div className='right-container max-w-full'>
+        <div className='right-container max-w-full overflow-hidden md:overflow-visible'>
           <div className='flex gap-3 items-center mt-4'>
             <div className='text-black bg-sky-cyan font-semibold rounded-circle w-30 h-30 flex items-center justify-center'>
               {notificationCount}

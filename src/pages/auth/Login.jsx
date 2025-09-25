@@ -118,7 +118,7 @@ export default function Login() {
         <FormikProvider value={formik}>
           <form
             onSubmit={formik.handleSubmit}
-            className='bg-mint py-24 md:px-24 px-5 sm:px-10 outline-40 outline-white rounded-xl'
+            className='bg-mint py-12 md:px-24 px-5 sm:px-5 outline-40 outline-white rounded-xl'
           >
             <CommonBackBtn label='Log In' />
             <div className='mt-4 flex flex-col gap-1'>
@@ -145,7 +145,7 @@ export default function Login() {
                 type='password'
                 password
                 name='password'
-                placeholder='•••••••••••••'
+                placeholder='********'
                 label='Password'
                 component={CustomInput}
                 // focusHandler={errorRemovehandler}

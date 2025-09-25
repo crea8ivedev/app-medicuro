@@ -23,15 +23,15 @@ function PrivacyPage() {
   }
 
   return (
-    <div className='bg-sky-foam min-h-screen pb-16 relative'>
+    <div className='bg-sky-foam h-[calc(100dvh-60px)] md:h-auto 2xl:h-[calc(100dvh-93px)] pb-16 relative'>
       <div className='common-bg absolute left-0 right-0'></div>
       {user?.fullName && (
         <div className='flex flex-col p-5'>
           <CommonBackBtn label={label} link={link} />
         </div>
       )}
-      <div className='flex w-full justify-center items-center md:mt-24'>
-        <div className='bg-mint relative w-825 pt-10 pb-36 md:px-10 px-5 flex flex-col rounded-xl'>
+      <div className='flex w-full justify-center items-center md:mt-15'>
+        <div className='bg-mint relative md:w-[712px] 2xl:w-825 pt-10 pb-20 md:px-10 px-5 flex flex-col rounded-xl'>
           <div className='common-right-design z-10 bottom-5 right-5'></div>
           <Privacy />
         </div>

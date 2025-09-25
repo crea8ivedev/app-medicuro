@@ -4,7 +4,7 @@ import CommonBackBtn from '../components/CommonBackBtn'
 import { cn } from '../utils/cn'
 import axiosInstance from '../utils/axios'
 import { ChevronDown } from 'lucide-react'
-import spinner from '../assets/images/spinner.gif'
+import spinner from '/spinner.gif'
 
 function Faqs() {
   const [selectedIndex, setSelectedIndex] = useState(0)
@@ -31,7 +31,7 @@ function Faqs() {
   }, [])
 
   return (
-    <div className='bg-sky-foam min-h-screen pb-16 relative'>
+    <div className='bg-sky-foam h-[calc(100dvh-64px)] md:h-auto  2xl:h-[calc(100dvh-93px)] pb-16 relative'>
       <div className='common-bg absolute left-0 right-0'></div>
 
       <div className='flex flex-col p-5'>
@@ -42,7 +42,7 @@ function Faqs() {
       </div>
 
       <div className='flex w-full justify-center items-center'>
-        <div className='bg-mint relative w-825 pt-10 pb-36 px-5 md:px-10 flex flex-col md:mt-24 rounded-xl'>
+        <div className='bg-mint relative w-825 pt-5 pb-25 px-5 md:px-10 flex flex-col md:mt-15 rounded-xl'>
           <div className='common-right-design z-10 bottom-5 right-5'></div>
 
           {loading ? (

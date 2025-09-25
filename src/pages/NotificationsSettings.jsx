@@ -22,16 +22,19 @@ function NotificationsSettings() {
     setGeneralNotification(isChecked)
 
     try {
-      const response = await axiosInstance.post("/api/v1/auth/profile/notification/setting/update", {
-        generalNotification: isChecked,
-      })
+      const response = await axiosInstance.post(
+        '/api/v1/auth/profile/notification/setting/update',
+        {
+          generalNotification: isChecked,
+        },
+      )
 
       if (response.data?.statusCode === 200) {
         showToast.success(response.data?.message)
         changeNotificationSettings(isChecked)
       }
     } catch (err) {
-      showToast.error("Something went wrong")
+      showToast.error('Something went wrong')
       setGeneralNotification(!isChecked)
     } finally {
       setIsLoading(false)
@@ -40,13 +43,13 @@ function NotificationsSettings() {
 
   const menuItems = [
     {
-      label: "General Notification",
-      toggle: true
-    }
-  ];
+      label: 'General Notification',
+      toggle: true,
+    },
+  ]
 
   return (
-    <div className='bg-sky-foam h-screen pb-16 relative'>
+    <div className='bg-sky-foam h-[calc(100dvh-60px)] md:h-[calc(100dvh-93px)] pb-16 relative'>
       <div className='common-bg'></div>
 
       <div className='flex flex-col p-5'>
@@ -54,36 +57,32 @@ function NotificationsSettings() {
       </div>
 
       <div className='flex w-full justify-center items-center md:mt-24'>
-        <div className='bg-mint relative w-825 md:p-10 p-5 flex flex-col gap-7'>
+        <div className='bg-mint relative w-825 md:p-10 p-5 flex flex-col gap-7 rounded-xl'>
           <div className='common-right-design z-10 bottom-5 right-5'></div>
 
           <div className='my-10'>
-            {
-              menuItems?.map((item, index) => {
-                return (
-                  <div
-                    key={index}
-                    onClick={item.onclick && item.onclick}
-                    className='flex items-center justify-between max-w-md m-auto my-4 cursor-pointer gap-15 hover:scale-105 transition-all duration-75'
-                  >
-                    <div className='flex gap-5 items-center'>
-                      <div className='sm:text-xl font-semibold'>{item.label}</div>
-                    </div>
-                    <div>
-                      {
-                        item.toggle ? (
-                          <CustomToggleSwitch
-                            checked={generalNotification}
-                            onChange={handleChange}
-                            disabled={isLoading}
-                          />
-                        ) : null
-                      }
-                    </div>
+            {menuItems?.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  onClick={item.onclick && item.onclick}
+                  className='flex items-center justify-between max-w-md m-auto my-4 cursor-pointer gap-15 hover:scale-105 transition-all duration-75'
+                >
+                  <div className='flex gap-5 items-center'>
+                    <div className='sm:text-xl font-semibold'>{item.label}</div>
                   </div>
-                )
-              })
-            }
+                  <div>
+                    {item.toggle ? (
+                      <CustomToggleSwitch
+                        checked={generalNotification}
+                        onChange={handleChange}
+                        disabled={isLoading}
+                      />
+                    ) : null}
+                  </div>
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment, useRef } from 'react'
 import appointmentSideImage from '../../assets/images/book-appointment-vector.png'
-import spinner from '../../assets/images/spinner.gif'
+import spinner from '/spinner.gif'
 
 import CommonBackBtn from '../../components/CommonBackBtn'
 import BookAppointmentItem from './views/BookAppointmentItem'
