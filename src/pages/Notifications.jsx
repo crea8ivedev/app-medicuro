@@ -108,7 +108,7 @@ export default function Notifications() {
   }
 
   return (
-    <div className='bg-ocean h-screen w-full justify-between relative overflow-hidden'>
+    <div className='bg-ocean h-auto 2xl:h[calc(100dvh-93px)] w-full justify-between relative overflow-hidden'>
       <div className='common-bg absolute left-0'></div>
       <div className='text-white pt-5 pl-4'>
         <CommonBackBtn
