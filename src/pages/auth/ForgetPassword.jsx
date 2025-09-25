@@ -27,7 +27,7 @@ export default function ForgetPassword() {
       const response =  await axiosInstance.post('/api/v1/auth/forgot-password', values)
       if(response?.data?.statusCode == 200){
         resetForm()
-        showToast.success("Password reset link has been sent to your email")
+        showToast.success("A password reset link has been sent to your email.")
         navigate("/login")
       }
     } finally {

@@ -45,7 +45,7 @@ export default function SetPassword() {
       values.signature = signature;
       const response =  await axiosInstance.post('/api/v1/auth/reset-password', values)
       if(response?.data?.statusCode == 200){
-        showToast.success("Password changed successfully")
+        showToast.success("Your password has been changed successfully.")
         navigate("/dashboard",{ replace : true })
       }
     } finally{

@@ -6,10 +6,14 @@ import CustomInput from '../../components/CustomInput'
 import { FormikProvider, Field, useFormik } from 'formik'
 import * as Yup from 'yup'
 import Terms from '../Terms'
-import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useAuthStore } from '../../store/auth'
+import axiosInstance from '../../utils/axios'
+import { cn } from '../../utils/cn'
+import toast from 'react-hot-toast'
 
 export default function Signup() {
-  const [step, setStep] = useState(0)
+  const [step, setStep] = useState(1)
   const [signUpFormValues, setSignUpFormValues] = useState({
     fullName: '',
     password: '',
@@ -21,11 +25,9 @@ export default function Signup() {
     mcpExpiryDate: '',
   })
 
-  useEffect(() => {
-    if (window.location.hash === '#terms') {
-      setStep(1)
-    }
-  }, [])
+  const navigate = useNavigate()
+
+
 
   return (
     <div className='min-h-screen py-20 flex flex-col relative items-center z-100'>
@@ -38,12 +40,9 @@ export default function Signup() {
         <div className='bg-mint md:mt-24 md:pt-24 mx-4  px-5    sm:px-10  md:py-7 py-10 w-500 rounded-xl  outline-40 outline-white'>
           {step === 1 && (
             <CommonBackBtn
-              onClick={() => {
-                setStep(0)
-                history.replaceState(null, '', window.location.pathname)
-              }}
-              label='Sign Up'
+              label='Home'
               className='font-semibold'
+              onClick={() => navigate("/")}
             />
           )}
 
@@ -70,38 +69,80 @@ export default function Signup() {
 }
 
 const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
-  const signUpSchema = Yup.object().shape({
-    fullName: Yup.string()
-      .required('Full name is required')
-      .min(2, 'Full name must be at least 2 characters'),
+    const [isLoading, setIsLoading] = useState(false)
+  
+    const { login, user } = useAuthStore()
+  
+    const navigate = useNavigate()
+    const signUpSchema = Yup.object().shape({
+  fullName: Yup.string()
+    .required('Full name is required')
+    .matches(/^[A-Za-z\s]+$/, 'Full name must contain only letters'),
 
-    password: Yup.string().required('Password is required'),
-    // .min(6, 'Password must be at least 6 characters'),
+  password: Yup.string().required('Password is required'),
+  // .min(6, 'Password must be at least 6 characters'),
 
-    email: Yup.string()
-      .email('Invalid email format')
-      .required('Email is required'),
+  email: Yup.string()
+    .email('Invalid email format')
+    .required('Email is required'),
 
-    phone: Yup.string()
-      .required('Mobile number is required')
-      .matches(/^[0-9]+$/, 'Mobile number must contain only digits'),
-    // .matches(/^[0-9]{10,15}$/, 'Enter a valid phone number'),
+  phone: Yup.string()
+    .required('Mobile number is required')
+   .max(10,"Please enter a valid mobile number")
+    .min(10,"Please enter a valid mobile number")
+,
 
-    dob: Yup.date()
-      .required('Date of birth is required')
-      .max(new Date(), 'Date of birth cannot be in the future'),
+  dob: Yup.date()
+    .required('Date of birth is required')
+    .max(new Date(), 'Date of birth cannot be in the future'),
 
-    mcp: Yup.string().required('MCP number is required'),
-    // .matches(/^[0-9\s]{12}$/, 'MCP should be 12 digits'),
-    mcpValidationDate: Yup.date().required('MCP validation date is required'),
+  mcp: Yup.string()
+    .required('MCP number is required')
+    .matches(/^\d{12}$/, 'Enter 12 numbers without spaces'),
 
-    mcpExpiryDate: Yup.date()
-      .required('MCP expiry date is required')
-      .min(
-        Yup.ref('mcpValidationDate'),
-        'Expiry date must be after validation date',
-      ),
-  })
+  mcpValidationDate: Yup.date().required('MCP validation date is required'),
+
+  mcpExpiryDate: Yup.date()
+    .required('MCP expiry date is required')
+    .min(
+      Yup.ref('mcpValidationDate'),
+      'Expiry date must be after validation date'
+    ),
+});
+
+
+    const submitSignUpForm = async (values, helpers) => {
+  
+      try {
+        setIsLoading(true);
+         let notificationToken = "";
+  
+        try {
+          if (Notification.permission !== 'granted') {
+            const permission = await Notification.requestPermission();
+            if (permission === 'granted') {
+              notificationToken = await getFirebaseToken();
+            }
+          } else {
+            notificationToken = await getFirebaseToken();
+          }
+          
+        } catch (error) {
+        }
+  
+  
+        const response = await axiosInstance.post('/api/v1/auth/register', {
+          ...values,
+           ...(notificationToken ? {notificationTokens : notificationToken} : {}) ,
+        })
+        if (response?.status == 200) {
+          toast.success("We’ve sent a verification link to your email.")
+          navigate("/login")
+        }
+      } finally {
+        setIsLoading(false)
+      }
+    }
 
   const submitHandler = (values) => {
     setSignUpFormValues(values)
@@ -111,7 +152,7 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
 
   const formik = useFormik({
     initialValues: signUpFormValues,
-    onSubmit: (values, helpers) => submitHandler(values, helpers),
+    onSubmit: (values, helpers) => submitSignUpForm(values, helpers),
     validationSchema: signUpSchema,
   })
 
@@ -196,9 +237,10 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
         <div className='text-center'>
           <button
             type='submit'
-            className='common-btn my-4 cursor-pointer w-full md:w-auto'
+            className={cn('common-btn my-4 cursor-pointer w-full md:w-auto',isLoading ? "opacity-5 cursor-not-allowed" : "")}
+            disabled={isLoading}
           >
-            Next
+            Submit
           </button>
         </div>
       </form>

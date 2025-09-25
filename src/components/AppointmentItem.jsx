@@ -1,4 +1,4 @@
-import { cn } from '../utils/cn';
+import { cn } from '../utils/cn'
 
 export default function AppointmentItem({
   date,
@@ -10,7 +10,7 @@ export default function AppointmentItem({
   showDayTime,
   id,
   buttonClasses,
-  isLoading=false
+  isLoading = false,
 }) {
   const dateArray = date?.split(' ')
 
@@ -33,8 +33,12 @@ export default function AppointmentItem({
             </div>
           )}
           <div className=''>
-            <div className='text-ocean font-semibold whitespace-break-spaces'>{doctor}</div>
-            <div className='text-sm whitespace-break-spaces pe-1'>{service}</div>
+            <div className='text-ocean font-semibold whitespace-break-spaces'>
+              {doctor}
+            </div>
+            <div className='text-sm whitespace-break-spaces pe-1'>
+              {service}
+            </div>
           </div>
         </div>
 
@@ -43,7 +47,11 @@ export default function AppointmentItem({
             return (
               <button
                 disabled={isLoading}
-                className={cn('bg-white py-1 px-2 md:min-w-[62px] rounded-md text-xs  cursor-pointer',buttonClasses,isLoading ? "opacity-90 cursor-not-allowed" : "")}
+                className={cn(
+                  'btn-loader relative bg-white py-1 px-2 md:min-w-[62px] rounded-md text-xs  cursor-pointer border appointment-btns',
+                  buttonClasses,
+                  isLoading ? 'opacity-90 cursor-not-allowed' : '',
+                )}
                 onClick={() => item.action(id)}
                 key={index}
               >

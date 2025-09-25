@@ -6,101 +6,105 @@ import CustomInput from '../../components/CustomInput'
 
 import facebookLoginIcon from '../../assets/images/facebook.svg'
 import googleLoginIcon from '../../assets/images/google.svg'
-import fingerprintLoginIcon from '../../assets/images/fingerprint.svg'
 import { NavLink, useNavigate, useSearchParams } from 'react-router-dom'
 import { Field, FormikProvider, useFormik } from 'formik'
-import * as Yup from "yup"
+import * as Yup from 'yup'
 import axiosInstance from '../../utils/axios'
 import { useAuthStore } from '../../store/auth'
 import { getFirebaseToken } from '../../utils/firebaseConfig'
 import { showToast } from '../../utils/toast'
+import { cn } from '../../utils/cn'
 
 export default function Login() {
-
   const { login } = useAuthStore()
   const [isLoading, setIsLoading] = useState(false)
-  const [query,setSearchParams] = useSearchParams()
-  
+  const [query, setSearchParams] = useSearchParams()
+
   useEffect(() => {
-    if(query.get("restricted")){
-      showToast.error("Your account has been restricted. Please contact support.")
+    if (query.get('restricted')) {
+      showToast.error(
+        'Your account has been restricted. Please contact support.',
+      )
     }
-    query.delete("restricted");
-    setSearchParams(query, { replace: true });
-  },[query])
+    query.delete('restricted')
+    setSearchParams(query, { replace: true })
+  }, [query])
 
   const navigate = useNavigate()
 
   const socialItems = [
-    { icon: googleLoginIcon, link: `/auth/login/google`, alt: "google-icon" },
-    { icon: facebookLoginIcon, link: '/auth/login/facebook', alt: "facebook icon" },
-    // { icon: fingerprintLoginIcon, link: '',alt:"fingerprint icon" },
+    { icon: googleLoginIcon, link: `/auth/login/google`, alt: 'google-icon' },
+    {
+      icon: facebookLoginIcon,
+      link: '/auth/login/facebook',
+      alt: 'facebook icon',
+    },
   ]
 
   const loginSchema = Yup.object().shape({
     emailOrPhone: Yup.string()
       .required('Please enter email or mobile number')
-      .test('is-email-or-mobile', 'Please enter a valid email or mobile number', function (value) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const mobileRegex = /^[6-9]\d{9}$/;
+      .test(
+        'is-email-or-mobile',
+        'Please enter a valid email or mobile number',
+        function (value) {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+          const mobileRegex = /^[6-9]\d{9}$/
 
-        if (!value) return false;
-        return emailRegex.test(value) || mobileRegex.test(value);
-      }),
-    password: Yup.string().required("Please enter your password")
+          if (!value) return false
+          return emailRegex.test(value) || mobileRegex.test(value)
+        },
+      ),
+    password: Yup.string().required('Please enter your password'),
   })
 
   const handleSubmit = async (values, formikHelpers) => {
-    const { resetForm } = formikHelpers;
+    const { resetForm } = formikHelpers
+    setIsLoading(true)
+
     try {
-      setIsLoading(true);
-      let notificationToken;
+      let notificationToken
 
       try {
         if (Notification.permission !== 'granted') {
-          const permission = await Notification.requestPermission();
+          const permission = await Notification.requestPermission()
           if (permission === 'granted') {
-            notificationToken = await getFirebaseToken();
+            notificationToken = await getFirebaseToken()
           }
         } else {
-          notificationToken = await getFirebaseToken();
+          notificationToken = await getFirebaseToken()
         }
-        
-      } catch (error) {
-      }
+      } catch (error) {}
 
       const response = await axiosInstance.post('/api/v1/auth/login', {
         ...values,
         ...(notificationToken && { notificationToken }),
-      });
+      })
       if (response?.data?.statusCode === 200) {
-        resetForm();
-        const user = response.data?.user;
-        const token = "dummyToken";
-        await new Promise((res) => setTimeout(res, 1000));
-        login({user});
-        navigate("/dashboard");
+        resetForm()
+        const user = response.data?.user
+        await new Promise((res) => setTimeout(res, 1000))
+        login({ user })
+        navigate('/dashboard')
       } else {
       }
-
     } catch (error) {
     } finally {
-      setIsLoading(false);
+      setIsLoading(false)
     }
-  };
+  }
 
   const formik = useFormik({
     onSubmit: (value, formikHelpers) => handleSubmit(value, formikHelpers),
     validationSchema: loginSchema,
     initialValues: {
-      emailOrPhone: "",
-      password: ""
-    }
+      emailOrPhone: '',
+      password: '',
+    },
   })
 
-
   const handleForgetPassword = () => {
-    navigate("/auth/forget-password")
+    navigate('/auth/forget-password')
   }
 
   return (
@@ -111,8 +115,11 @@ export default function Login() {
           <img src={loginSideImg} alt='img' />
         </div>
 
-        <FormikProvider value={formik} >
-          <form onSubmit={formik.handleSubmit} className='bg-mint py-24 md:px-24 px-5 sm:px-10 outline-40 outline-white rounded-xl'>
+        <FormikProvider value={formik}>
+          <form
+            onSubmit={formik.handleSubmit}
+            className='bg-mint py-24 md:px-24 px-5 sm:px-10 outline-40 outline-white rounded-xl'
+          >
             <CommonBackBtn label='Log In' />
             <div className='mt-4 flex flex-col gap-1'>
               <div className='text-navy font-semibold text-2xl font-league capitalize'>
@@ -127,7 +134,7 @@ export default function Login() {
               <Field
                 type='text'
                 name='emailOrPhone'
-                label="Email or Mobile Number"
+                label='Email or Mobile Number'
                 placeholder='example@example.com'
                 component={CustomInput}
                 // focusHandler={errorRemovehandler}
@@ -139,7 +146,7 @@ export default function Login() {
                 password
                 name='password'
                 placeholder='•••••••••••••'
-                label="Password"
+                label='Password'
                 component={CustomInput}
                 // focusHandler={errorRemovehandler}
                 className='forn-field'
@@ -159,12 +166,23 @@ export default function Login() {
                 /> */}
             </div>
 
-            <div className='text-end text-navy font-bold text-xs mt-2 cursor-pointer hover:underline' onClick={handleForgetPassword}>
+            <div
+              className='text-end text-navy font-bold text-xs mt-2 cursor-pointer hover:underline'
+              onClick={handleForgetPassword}
+            >
               Forget Password
             </div>
 
             <div className='flex flex-col items-center gap-4 mt-7'>
-              <button type='submit' className="common-btn font-extralight font-outfit w-full md:w-auto relative z-10" disabled={isLoading}>Log In</button>
+              <button
+                type='submit'
+                className={cn(
+                  'btn-loader relative common-btn font-extralight font-outfit w-full md:w-auto z-10 ',
+                )}
+                disabled={isLoading}
+              >
+                Log In
+              </button>
               <div className='text-sm'>or log in with</div>
 
               <div className='flex gap-2'>

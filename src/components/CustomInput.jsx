@@ -9,6 +9,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { DatePicker } from '@mui/x-date-pickers/DatePicker'
+import { Eye, EyeOff } from 'lucide-react'
 
 export function MyCalendarIcon() {
   return <img src={calenderIcon} alt='calendar' className='w-5 h-5' />
@@ -29,6 +30,7 @@ function CustomInput({
   isDisabled,
   isMcp,
   errorStyle,
+  uppercase,
   ...props
 }) {
   const [showPassword, setShowPassword] = useState(false)
@@ -40,8 +42,16 @@ function CustomInput({
     const { name, value } = e.target
     let processedValue = value
 
+    // Trim whitespace for text-like inputs (but not textarea)
+    if (
+      (type === 'text' || type === 'email' || type === 'password') &&
+      processedValue
+    ) {
+      processedValue = processedValue.trim()
+    }
+
     if (uppercase) {
-      processedValue = value.toUpperCase()
+      processedValue = processedValue.toUpperCase()
     }
 
     if (name === 'phone') {
@@ -66,6 +76,14 @@ function CustomInput({
     setFieldValue(name, processedValue)
   }
 
+  const handleKeyDown = (e) => {
+    if (type === 'number') {
+      if (['e', 'E', '+', '-', '.'].includes(e.key)) {
+        e.preventDefault() // block unwanted keys
+      }
+    }
+  }
+
   const handleFocus = () => {
     setFieldTouched(field.name, true, false)
   }
@@ -75,10 +93,7 @@ function CustomInput({
 
   return (
     <div className='flex flex-col gap-2'>
-      <label
-        htmlFor={field.name}
-        className={cn('font-bold', labelclasses)}
-      >
+      <label htmlFor={field.name} className={cn('font-bold', labelclasses)}>
         {label}
       </label>
       <div className='relative'>
@@ -86,27 +101,32 @@ function CustomInput({
           <textarea
             onDrop={(e) => e.preventDefault()}
             cols={cols}
-            {...props}
-            {...field}
             rows={rows}
+            id={field.name}
+            placeholder={placeholder}
+            disabled={isDisabled}
             className={cn(
               'bg-white outline-0 p-2 border-2 rounded-sm border-teal-600 ',
               inputclasses,
             )}
-          ></textarea>
+            {...props}
+            {...field}
+            value={field.value ?? ''} // ✅ ensure controlled value
+            onChange={handleChange}
+            onFocus={handleFocus}
+          />
         ) : type === 'date' ? (
           <div className='relative w-full date-picker'>
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
-              format='yyyy-MM-dd'
+                format='yyyy-MM-dd'
                 label={label}
-                value={field.value ? new Date(field.value)  : tempValue}
+                value={field.value ? new Date(field.value) : tempValue}
                 onChange={(val) => {
-                  if(val){
+                  if (val) {
                     const isoString = val.toISOString()
                     setFieldValue(field.name, isoString)
                     setTempValue(null)
-
                   }
                 }}
                 onBlur={() => setFieldTouched(field.name, true)}
@@ -121,47 +141,52 @@ function CustomInput({
                 open={open}
                 onClick={() => setOpen(true)}
                 slots={{ openPickerIcon: MyCalendarIcon }}
+                slotProps={{
+                  textField: {
+                    onClick: () => setOpen(true), // ✅ clicking input opens picker
+                    readOnly: true, // prevent manual typing
+                  },
+                }}
                 openTo='day'
+                {...(props.futureDate ? { minDate: new Date() } : {})}
               />
             </LocalizationProvider>
           </div>
         ) : (
-          <input
-            className={cn(
-              'bg-white border border-teal-600 w-full p-4 outline-0',
-              inputclasses,
-            )}
-            type={inputType}
-            id={field.name}
-            placeholder={placeholder}
-            disabled={isDisabled}
-            onChange={(e) => handleChange(e)}
-            {...props}
-            {...field}
-            onFocus={handleFocus}
-            value={field.value ?? ''}
-            ref={inputRef}
-            onDrop={(e) => e.preventDefault()}
-          />
-        )}
-
-        {password && (
-          <div
-            onClick={() => setShowPassword((prev) => !prev)}
-            className='absolute right-2 top-1/2 -translate-y-50-per cursor-pointer'
-          >
-            <img
-              className='max-w-20 max-h-20'
-              src={showPassword ? hidePassword : viewPassword}
-              alt=''
+          <div className='relative'>
+            <input
+              className={cn(
+                'bg-white border border-teal-600 w-full p-4 outline-0',
+                inputclasses,
+              )}
+              type={inputType}
+              id={field.name}
+              placeholder={placeholder}
+              disabled={isDisabled}
+              onChange={(e) => handleChange(e)}
+              {...props}
+              {...field}
+              value={field.value ?? ''} // ✅ ensure controlled value
+              onFocus={handleFocus}
+              ref={inputRef}
+              onDrop={(e) => e.preventDefault()}
+              onKeyDown={handleKeyDown}
             />
+            {password && (
+              <div
+                onClick={() => setShowPassword((prev) => !prev)}
+                className='absolute right-2 top-1/2 -translate-y-50-per cursor-pointer'
+              >
+                {showPassword ? <Eye /> : <EyeOff />}
+              </div>
+            )}
           </div>
         )}
 
         <ErrorMessage
           name={field.name}
           component='div'
-          className={cn('text-xs text-navy  font-semibold ', errorStyle)}
+          className={cn('text-xs text-navy font-semibold', errorStyle)}
           aria-live='polite'
           aria-atomic='true'
         />

@@ -19,6 +19,8 @@
   --color-sky: #00adff;
   --color-sky-cyan : #66F6FF;
   --color-navy: #265b72;
+  --color-light-navy: #4f7a8d;
+
   --color-ice: #aee7ff;
   --color-bluewave: #0c91d2;
   --color-teal: #41bfb3;
@@ -59,7 +61,7 @@
   --spacing-825 : 825px;
   --spacing-850 : 850px;
 
-   
+
   /* FONT FAMILY */
   --font-league: 'League Spartan', sans-serif;
   --font-roboto-cond: 'Roboto Condensed', sans-serif;
@@ -79,7 +81,7 @@
 
 .bg-secondary {
   @apply bg-navy;
-} 
+}
 
 .common-bg{
   @apply bg-[url("../src/assets/images/common-bg.png")] bg-no-repeat absolute inset-0 bg-bottom
@@ -179,6 +181,18 @@ input::placeholder{
   100% { transform:  rotate(360deg); }
 }
 
+@media (max-width:1700px) {
+    .left-image{
+    display: none;
+  }
+  .custom-wrap{
+    flex-wrap: wrap !important;
+  }
+  .right-container{
+    margin: auto;
+  }
+}
+
 @media (max-width:1600px){
   .custom-wrap{
     flex-wrap: wrap !important;
@@ -188,7 +202,7 @@ input::placeholder{
     display: none;
   }
   .right-container{
-    margin: auto !important;
+    margin-top: 0;
   }
 }
 
@@ -218,4 +232,31 @@ input::placeholder{
     display: none;
   }
 
+}
+
+
+/* testingg */
+.btn-loader:disabled::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  /* match gif size */
+  height: 40px;
+  background: url("./src/assets/images/spinner.gif") no-repeat center center;
+  background-size: contain;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.appointment-btns {
+    border: 1px solid white !important;
+
+}
+
+.appointment-btns:hover {
+    border: 1px solid white !important;
+    background-color: transparent;
 }

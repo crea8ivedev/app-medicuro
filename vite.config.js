@@ -32,10 +32,11 @@ export default defineConfig(({ command, mode }) => {
       changeOrigin: true,
       secure: env.VITE_NODE_ENV === "production",
     }
-  }
+  },
+  allowedHosts : ["ee5ee308d518.ngrok-free.app"]
 },
   preview : {
-    allowedHosts : ["medicuro-app.encircledev.com","http://192.168.1.125:5173"]
+    allowedHosts : ["medicuro-app.encircledev.com","http://192.168.1.125:5173","5b0ff6f69b36.ngrok-free.app"]
   }
 }
 })

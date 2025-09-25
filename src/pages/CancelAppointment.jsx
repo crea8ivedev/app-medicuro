@@ -1,17 +1,17 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import AppointmentItem from '../components/AppointmentItem';
-// book-appointment-vector.png
 import sideImage from "../assets/images/book-appointment-vector.png"
 import { useAppointmentStore } from '../store/appointments';
 import { useEffect, useState } from 'react';
 import axiosInstance from '../utils/axios';
 import { showToast } from '../utils/toast';
 
-function RebookAppointment() {
+function CancelAppointment() {
    const { id } = useParams();
    const navigate = useNavigate();
    
   const {getAppointmentById } = useAppointmentStore()
+  const [cancelLoading , setCancelLoading] = useState(false)
 
   const [appointment,setAppointment] = useState()
 
@@ -22,13 +22,16 @@ function RebookAppointment() {
 
 const cancelAppoinment = async  (appointmentId) => {
    try {
+    setCancelLoading(true)
     const response = await axiosInstance.post("/api/v1/appointments/cancel",{appointmentId})
     if(response.data?.statusCode == 200){
-      showToast.success("Appoinment canceled successfully")
+      showToast.success("The appointment has been canceled successfully.")
       navigate("/dashboard")
     }
    } catch (error) {
       showToast.error("Something went wrong")
+   } finally { 
+      setCancelLoading(false)
    }
 }
 
@@ -61,6 +64,7 @@ const cancelAppoinment = async  (appointmentId) => {
                                 showDayTime={true}
                                 id={appointment?.id}
                                 buttonClasses={"text-black font-bold py-3"}
+                                isLoading={cancelLoading}
                               />}
                   </div>
                   
@@ -75,4 +79,4 @@ const cancelAppoinment = async  (appointmentId) => {
   )
 }
 
-export default RebookAppointment
+export default CancelAppointment

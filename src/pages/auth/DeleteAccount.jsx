@@ -7,25 +7,25 @@ import { useAuthStore } from '../../store/auth'
 import { showToast } from '../../utils/toast'
 
 export default function DeleteAccount() {
-
-  const [isLoading,setIsLoading] = useState(false)
-  const { logout } = useAuthStore();
-  const navigate = useNavigate();
-  const [sendData,setsendData] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const { logout } = useAuthStore()
+  const navigate = useNavigate()
+  const [sendData, setsendData] = useState(false)
 
   const handleChange = (e) => {
     setsendData(e.checked)
   }
-  
+
   const deleteACcount = async () => {
     try {
-      setIsLoading(true)
-      const response = await axiosInstance.post("/api/v1/auth/profile/delete",{sendData})
-        if(response.data?.statusCode == 200){
-            logout()
-            showToast.success("Your account has been successfully deleted.")
-            navigate("/login")
-        }
+      const response = await axiosInstance.post('/api/v1/auth/profile/delete', {
+        sendData,
+      })
+      if (response.data?.statusCode == 200) {
+        logout()
+        showToast.success('The account has been successfully deleted.')
+        navigate('/login')
+      }
     } finally {
       setIsLoading(false)
     }
@@ -39,11 +39,15 @@ export default function DeleteAccount() {
           {' '}
           MEDICURO
         </h1>
-        <h6 className='capitalize text-sm leading-1'>NL’s Trusted Virtual Clinic</h6>
+        <h6 className='capitalize text-sm leading-1'>
+          NL’s Trusted Virtual Clinic
+        </h6>
       </div>
 
       <div className='max-w-sm'>
-          Deleting your account will permanently remove all personal information, medical history, and appointment records. This action is final and cannot be reversed. Please proceed with caution.
+        Deleting your account will permanently remove all personal information,
+        medical history, and appointment records. This action is final and
+        cannot be reversed. Please proceed with caution.
       </div>
       <div className='flex flex-col gap-4'>
         <Link
@@ -55,7 +59,10 @@ export default function DeleteAccount() {
         <button
           to='signup'
           disabled={isLoading}
-          className={cn("py-2.5 px-10  text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit hover:bg-bluewave hover:text-white",isLoading && "opacity-70 cursor-not-allowed")}
+          className={cn(
+            'btn-loader relative py-2.5 px-10  text-center text-base rounded-md bg-aqua text-ocean cursor-pointer font-outfit hover:bg-bluewave hover:text-white',
+            isLoading && 'opacity-70 cursor-not-allowed',
+          )}
           onClick={deleteACcount}
         >
           Delete
@@ -63,8 +70,16 @@ export default function DeleteAccount() {
       </div>
 
       <div className='flex gap-4'>
-        <div><input type="checkbox" onChange={(e) => handleChange(e.target)} className='scale-150 outline-none' /></div>
-        <div className='text-sm text-start'>Send me a copy of my data and usage history</div>
+        <div>
+          <input
+            type='checkbox'
+            onChange={(e) => handleChange(e.target)}
+            className='scale-150 outline-none'
+          />
+        </div>
+        <div className='text-sm text-start'>
+          Send me a copy of my data and usage history
+        </div>
       </div>
     </div>
   )
