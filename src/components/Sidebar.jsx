@@ -210,7 +210,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
   }
 
   return (
-    <div className='fixed h-screen top-0 left-0 transition-all duration-500 z-60'>
+    <div className='fixed h-[100dvh] top-0 left-0 transition-all duration-500 z-60'>
       <div
         onClick={(e) => {
           e.stopPropagation()
@@ -285,7 +285,7 @@ function Sidebar({ openMenu, setOpenMenu }) {
 
         <div
           className={cn(
-            'bg-navy  w-full md:w-auto transition-all duration-500 h-screen fixed left-0 top-0 -z-10 md:ps-75  md:pt-0 ',
+            'bg-navy  w-full md:w-auto transition-all duration-500 h-[100dvh] fixed left-0 top-0 -z-10 md:ps-75  md:pt-0 ',
             openMenu ? 'left-0' : '-left-full',
           )}
           onClick={(e) => e.stopPropagation()}

@@ -37,7 +37,7 @@ export default function Dashboard() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 400)
+    const handleResize = () => setIsMobile(window.innerWidth < 500)
 
     window.addEventListener('resize', handleResize)
 
@@ -338,18 +338,22 @@ export default function Dashboard() {
 
                 <div className='flex justify-center gap-2 my-4'>
                   {pendingRequests?.length > pendingRequestsArrayLength &&
-                    arrayChunk(pendingRequests, pendingRequestsArrayLength).map((_, index) => (
-                      <div
-                        onClick={() => pastContainerRef.current?.slideTo(index)}
-                        key={`pending-dot-${index}`}
-                        className={cn(
-                          'h-15 w-15 cursor-pointer rounded-circle',
-                          currentPastAppointmentPage === index
-                            ? 'bg-sky-cyan'
-                            : 'bg-white',
-                        )}
-                      />
-                    ))}
+                    arrayChunk(pendingRequests, pendingRequestsArrayLength).map(
+                      (_, index) => (
+                        <div
+                          onClick={() =>
+                            pastContainerRef.current?.slideTo(index)
+                          }
+                          key={`pending-dot-${index}`}
+                          className={cn(
+                            'h-15 w-15 cursor-pointer rounded-circle',
+                            currentPastAppointmentPage === index
+                              ? 'bg-sky-cyan'
+                              : 'bg-white',
+                          )}
+                        />
+                      ),
+                    )}
                 </div>
               </Fragment>
             ) : isLoading ? (
