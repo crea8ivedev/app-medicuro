@@ -108,7 +108,7 @@ export default function Notifications() {
   }
 
   return (
-    <div className='bg-ocean h-auto 2xl:h[calc(100dvh-93px)] w-full justify-between relative overflow-hidden'>
+    <div className='bg-ocean h-[calc(100dvh-64px)] md:h-auto 2xl:h-[calc(100dvh-93px)] w-full justify-between relative overflow-hidden'>
       <div className='common-bg absolute left-0'></div>
       <div className='text-white pt-5 pl-4'>
         <CommonBackBtn
@@ -117,7 +117,7 @@ export default function Notifications() {
           varient='white'
         />
       </div>
-      <div className='container mx-auto h-[calc(100vh-80px)] px-2 md:h-auto flex items-start md:pt-10 justify-between relative custom-wrap'>
+      <div className='container mx-auto px-2 md:h-auto 2xl:h-[calc(100dvh-93px)] flex items-start md:pt-10 justify-between relative custom-wrap'>
         <img className='hidden md:block left-image' src={loginSideImg} alt='' />
 
         <div className='right-container max-w-full overflow-hidden md:overflow-visible'>
@@ -211,7 +211,6 @@ export default function Notifications() {
                 </div>
                 <NavLink to='/book-appointment'>
                   <div className='flex flex-col gap-1 justify-center items-center bg-teal border-2 border-teal p-4 rounded-xl hover:bg-white hover:border-2 border-bg-teal'>
-                    {/* <img className='w-10' src={plusBtn} alt='' /> */}
                     <CirclePlus size={40} className='w-10' />
                     <div className='text-sm whitespace-nowrap'>Book Now</div>
                   </div>
