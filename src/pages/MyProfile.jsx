@@ -117,7 +117,7 @@ function MyProfile() {
   }
 
   return (
-    <div className=' bg-sky-foam h-[calc(100dvh-56px)] md:h-auto 2xl:h-[calc(100dvh-93px)] pb-16 relative md:overflow-hidden'>
+    <div className='bg-sky-foam min-h-[calc(100dvh-56px)] 2xl:min-h-[calc(100dvh-93px)] 2xl:max-h-[calc(100dvh-93px)] md:pb-10 relative md:overflow-hidden'>
       <div className='common-bg absolute'></div>
       <div className='flex flex-col p-5'>
         <CommonBackBtn label='Back to Dashboard' link='/' />
@@ -137,7 +137,7 @@ function MyProfile() {
             )}
             <div
               onClick={() => profilePicRef?.current?.click()}
-              className=' bg-bluewave rounded-circle flex justify-center items-center w-30 h-30 absolute right-0 bottom-0 cursor-pointer p-2'
+              className='bg-bluewave rounded-circle flex justify-center items-center w-30 h-30 absolute right-0 bottom-0 cursor-pointer p-2'
             >
               <Pencil
                 className={cn(
@@ -156,28 +156,25 @@ function MyProfile() {
             </div>
           </div>
           <div className='my-5'>
-            {menuItems?.map(({ Icon, ...item }, index) => {
-              return (
-                <div
-                  key={index}
-                  onClick={item.onclick && item.onclick}
-                  className='flex group items-center justify-between max-w-xs m-auto my-4  cursor-pointer hover:scale-105 transition-all duration-75'
-                >
-                  <div className='flex gap-5 items-center'>
-                    <div className='bg-teal h-40 w-40 flex   items-center justify-center rounded-circle'>
-                      {/* <img src={item.icon} alt="" /> */}
-                      <Icon />
-                    </div>
-                    <div className='text-xl font-semibold'>{item.label}</div>
+            {menuItems?.map(({ Icon, ...item }, index) => (
+              <div
+                key={index}
+                onClick={item.onclick && item.onclick}
+                className='flex group items-center justify-between max-w-xs m-auto my-4 cursor-pointer hover:scale-105 transition-all duration-75'
+              >
+                <div className='flex gap-5 items-center'>
+                  <div className='bg-teal h-40 w-40 flex items-center justify-center rounded-circle'>
+                    <Icon />
                   </div>
-                  {item.route && (
-                    <div className='text-xl font-bold'>
-                      <ChevronUp className='rotate-90' />
-                    </div>
-                  )}
+                  <div className='text-xl font-semibold'>{item.label}</div>
                 </div>
-              )
-            })}
+                {item.route && (
+                  <div className='text-xl font-bold'>
+                    <ChevronUp className='rotate-90' />
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>

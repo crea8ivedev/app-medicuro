@@ -76,7 +76,7 @@ function PasswordReset() {
   })
 
   return (
-    <div className='bg-sky-foam h-[calc(100dvh-60px)] md:h-auto 2xl:h-[calc(100dvh-93px)] pb-16 relative'>
+    <div className='bg-sky-foam min-h-[calc(100dvh-60px)] 2xl:min-h-[calc(100dvh-93px)] pb-16 relative'>
       <div className='common-bg absolute left-0 right-0'></div>
 
       <div className='flex flex-col p-5'>
