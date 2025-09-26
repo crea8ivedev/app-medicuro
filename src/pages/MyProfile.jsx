@@ -117,7 +117,7 @@ function MyProfile() {
   }
 
   return (
-    <div className='bg-sky-foam min-h-[calc(100dvh-56px)] 2xl:min-h-[calc(100dvh-93px)] 2xl:max-h-[calc(100dvh-93px)] md:pb-10 relative md:overflow-hidden'>
+    <div className='bg-sky-foam min-h-[calc(100dvh-56px)] 2xl:min-h-[calc(100dvh-93px)] 2xl:max-h-[cah-93px)] lc(100dvmd:pb-10 relative md:overflow-hidden'>
       <div className='common-bg absolute'></div>
       <div className='flex flex-col p-5'>
         <CommonBackBtn label='Back to Dashboard' link='/' />

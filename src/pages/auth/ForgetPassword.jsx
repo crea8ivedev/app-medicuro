@@ -46,7 +46,7 @@ export default function ForgetPassword() {
   })
 
   return (
-    <div className='relative z-10 min-h-screen flex py-5  justify-between items-center'>
+    <div className='relative z-10 min-h-[100dvh] md:min-h-screen md:max-h-auto flex py-5  justify-between items-center'>
       <div className='plus-bg-banner'></div>
       <Container className='flex flex-wrap flex-container justify-between'>
         <div className='flex left-img-container justify-between items-center'>

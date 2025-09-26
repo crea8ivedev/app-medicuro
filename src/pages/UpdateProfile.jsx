@@ -62,7 +62,7 @@ function UpdateProfile() {
   }
 
   return (
-    <div className=' bg-sky-foam min-h-screen pb-16 relative'>
+    <div className='bg-sky-foam min-h-[calc(100dvh-56px)] max-h-[calc(100dvh-64px)] md:max-h-auto 2xl:min-h-[calc(100dvh-93px)] 2xl:max-h-[cah-93px)] pb-16 relative'>
       <div className='common-bg absolute  '></div>
 
       <div className='flex flex-col p-5  '>
@@ -70,7 +70,7 @@ function UpdateProfile() {
       </div>
 
       <div className='flex  w-full justify-center items-center lg:mt-20'>
-        <div className='bg-mint relative w-825 p-10 flex flex-col gap-7 rounded-xl py-24'>
+        <div className='bg-mint relative w-825 p-10 flex flex-col gap-7 rounded-xl py-10'>
           <div className='common-right-design  z-10 bottom-5 right-5'></div>
           <div className='relative max-w-max m-auto text-center'>
             <img

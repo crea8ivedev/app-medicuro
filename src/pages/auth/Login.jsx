@@ -108,17 +108,17 @@ export default function Login() {
   }
 
   return (
-    <div className='relative min-h-screen z-10 flex py-5  justify-around items-center'>
+    <div className='relative  min-h-[100dvh] md:min-h-screen md:max-h-auto z-10 flex py-5 justify-around items-center'>
       <div className='plus-bg-banner'></div>
       <Container className='flex flex-wrap flex-container justify-between'>
-        <div className='flex left-img-container justify-between items-center'>
+        <div className='hidden md:flex left-img-container justify-between items-center'>
           <img src={loginSideImg} alt='img' />
         </div>
 
         <FormikProvider value={formik}>
           <form
             onSubmit={formik.handleSubmit}
-            className='bg-mint py-12 md:px-24 px-5 sm:px-5 outline-40 outline-white rounded-xl'
+            className='bg-mint py-5 md:py-12 md:px-24 px-5 sm:px-5 outline-40 outline-white rounded-xl'
           >
             <CommonBackBtn label='Log In' />
             <div className='mt-4 flex flex-col gap-1'>

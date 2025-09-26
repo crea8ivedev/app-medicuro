@@ -72,7 +72,7 @@ function ViewAppointment() {
 
       <div className='container mx-auto min-h-[calc(100dvh-64px)] md:min-h-auto 2xl:min-h-[calc(100dvh-93px)] flex items-center justify-around relative'>
         <img className='left-image' src={sideImage} alt='left-image' />
-        <div className='bg-teal max-w-550 min-w-[90%] sm:min-w-550 max-h-max mt-4 md:py-10 py-2 md:px-10 px-5 rounded-xl'>
+        <div className='bg-teal max-w-550 min-w-[90%] sm:min-w-550 max-h-max mt-4 md:px-10 px-5 rounded-xl'>
           <div className='text-white mt-4 mb-5 text-xl'>{type} Appointment</div>
           {appointment ? (
             <AppointmentItem
