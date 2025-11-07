@@ -52,9 +52,9 @@ function CustomInput({
       processedValue = processedValue.trim()
     }
 
-    if (uppercase) {
-      processedValue = processedValue.toUpperCase()
-    }
+    // if (uppercase) {
+    //   processedValue = processedValue.toUpperCase()
+    // }
 
     if (name === 'phone') {
       processedValue = processedValue.replace(/\D/g, '')

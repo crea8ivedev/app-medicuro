@@ -120,7 +120,7 @@ export default function Login() {
             onSubmit={formik.handleSubmit}
             className='bg-mint py-24 md:px-24 px-5 sm:px-10 outline-40 outline-white rounded-xl'
           >
-            <CommonBackBtn label='Log In' />
+            <CommonBackBtn label='Log In' className="font-semibold"/>
             <div className='mt-4 flex flex-col gap-1'>
               <div className='text-navy font-semibold text-2xl font-league capitalize'>
                 Welcome to medicuro
