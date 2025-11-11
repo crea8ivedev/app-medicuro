@@ -16,7 +16,7 @@ export function MyCalendarIcon() {
 }
 
 function CustomInput({
-  field,
+  
   form: { touched, errors, setFieldValue, setFieldTouched },
   type = 'text',
   label = '',
@@ -30,6 +30,7 @@ function CustomInput({
   isDisabled,
   isMcp,
   errorStyle,
+  field,
   ...props
 }) {
   const [showPassword, setShowPassword] = useState(false)
@@ -105,6 +106,7 @@ function CustomInput({
             cols={cols}
             {...props}
             {...field}
+            value={field.value ?? ''}
             rows={rows}
             className={cn(
               'bg-white outline-0 p-2 border-2 rounded-sm border-teal-600 ',

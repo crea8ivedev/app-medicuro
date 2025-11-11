@@ -92,7 +92,7 @@ export default function Notifications() {
       <div className='px-4 py-5 text-white'>
         <CommonBackBtn
           link='/dashboard'
-          label='Back to Dashboard'
+          label='Back to Home'
           varient='white'
         />
       </div>

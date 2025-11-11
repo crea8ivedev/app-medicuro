@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom'
 import { showToast } from '../../utils/toast'
 import { useSocket } from '../../context/socketContext'
 import ServiceListFallback from '../fallbacks/ServiceListFallback'
+import CommonTabs from '../../components/CommonTabs'
 
 // main testing
 
@@ -18,11 +19,14 @@ function BookAppointmentIndexPage() {
 
   const navigate = useNavigate()
 
+  const [allBookingItems, setAllBookingItems] = useState([])
   const [bookingItems, setBookingItems] = useState([])
   const [selectedItemId, setSelectedItemId] = useState(null)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
   const [isLoading, setIsLoading] = useState()
+
+
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -36,7 +40,8 @@ function BookAppointmentIndexPage() {
         services = services?.map((e) => {
           return { ...e, isSelected: false }
         })
-        setBookingItems(services)
+        setAllBookingItems(services)
+
       } finally {
         setIsLoading(false)
       }
@@ -54,6 +59,11 @@ function BookAppointmentIndexPage() {
       socket && socket.off('services-updated', fetchAgain)
     }
   }, [socket])
+
+
+  useEffect(() => {
+    handleTabChange("mcp")
+  }, [allBookingItems])
 
   const handleSelectItem = (id) => {
     const temp = bookingItems.map((item) => {
@@ -86,6 +96,11 @@ function BookAppointmentIndexPage() {
     setBookingItems(temp)
   }
 
+  const handleTabChange = (value) => {
+    const temp = value == "mcp" ? allBookingItems.filter(e => !e.isFeesApply) : allBookingItems.filter(e => e.isFeesApply)
+    setBookingItems(temp)
+  }
+
   return (
     <div className='bg-ice min-h-screen  w-full justify-between relative'>
       <div className='common-bg'></div>
@@ -100,7 +115,7 @@ function BookAppointmentIndexPage() {
           <div onClick={() => navigate('/dashboard')}>
             <CommonBackBtn
               className=' mb-5 px-2'
-              label='Back to Dashboard'
+              label='Back to Home'
               link='/dashboard'
             />
           </div>
@@ -133,7 +148,7 @@ function BookAppointmentIndexPage() {
                     ?.isFeesApply ? (
                     <div className='text-white absolute  md:bottom-[unset]  md:top-0 md:bottom right-0  md:-right-[100px]  gap-1 flex font-bold  items-center text-sm'>
                       {' '}
-                      <div className='text-xl'>&#43;</div>
+                      <div className='text-xl'>*</div>
                       <div>fees apply</div>
                     </div>
                   ) : (
@@ -147,10 +162,10 @@ function BookAppointmentIndexPage() {
             ) : (
               <div className='text-white  px-5'>
                 <div className='text-xl mb-3 '>Select Service</div>
-                <div className='text-sm'>
+                {/* <div className='text-sm'>
                   Due to increased demand, it may not be possible for our <br />{' '}
                   scheduling team to respond to all requests within 24 hours.
-                </div>
+                </div> */}
               </div>
             )}
 
@@ -161,12 +176,32 @@ function BookAppointmentIndexPage() {
                 <div className='flex flex-col gap-4 mt-10  mb-10 px-5 '>
                   <div className='text-white flex font-bold gap-2 items-center'>
                     {' '}
-                    <div className='text-xl'>&#43;</div> <div>fees apply</div>
+                    <div className='flex-col md:flex-row md:flex justify-between w-full items-center'>
+                      <div>
+                        <div className='flex items-center gap-2'>
+                          <div className='text-xl mt-[6px]'>&#x2A;</div> <div>fees apply</div>
+                        </div>
+
+                        <div className='flex items-center gap-2'>
+                          <div className='text-xl -mt-[2px]'>&#43;</div> <div>fees may  apply</div>
+                        </div>
+
+                      </div>
+                      <div>
+                        <CommonTabs
+                          onChange={handleTabChange}
+                          tabs={[
+                            { label: "MCP covered", value: "mcp", },
+                            { label: "Private pay", value: "private", },
+                          ]}
+                        />
+                      </div>
+                    </div>
                   </div>
 
                   <div className='grid max-h-[425px]  overflow-auto hide-scrollbar sm:grid-cols-2 lg:grid-cols-4 gap-2 pe-4 md:pe-0'>
                     {bookingItems.map(
-                      ({ name, isFeesApply, isSelected, id }, index) => {
+                      ({ name, isFeesApply, isSelected, id, isInactive }, index) => {
                         return (
                           <BookAppointmentItem
                             id={id}
@@ -175,6 +210,7 @@ function BookAppointmentIndexPage() {
                             name={name}
                             key={index}
                             isFeesApply={isFeesApply}
+                            isInactive={isInactive}
                           />
                         )
                       },

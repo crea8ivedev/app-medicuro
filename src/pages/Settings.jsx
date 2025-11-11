@@ -43,7 +43,7 @@ function Settings() {
 
       <div className='flex flex-col p-5  '>
         <CommonBackBtn
-          label={profile ? 'My Profile' : 'Back to Dashboard'}
+          label={profile ? 'My Profile' : 'Back to Home'}
           link={profile ? '/profile' : '/'}
         />
       </div>

@@ -15,7 +15,7 @@ function ServiceListFallback() {
         {/* Fees apply placeholder */}
         <div className='flex items-center gap-2'>
           <div className='text-white flex font-bold gap-2 items-center'>
-            <div className='text-xl'>&#43;</div> <div>fees apply</div>
+            <div className='text-xl'>*</div> <div>fees apply</div>
           </div>
         </div>
 

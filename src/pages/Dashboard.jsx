@@ -26,11 +26,14 @@ export default function Dashboard() {
 
   const upcomingContainerRef = useRef(null)
   const pastContainerRef = useRef(null)
+  const pendingContainerRef = useRef(null)
 
   const [isLoading, setIsloading] = useState(false)
   const [currentUpcomingAppointmentPage, setCurrentUpcomingAppointmentPage] =
     useState(0)
   const [currentPastAppointmentPage, setCurrentPastAppointmentPage] =
+    useState(0)
+     const [currentPendingAppointmentPage, setCurrentPendingAppointmentPage] =
     useState(0)
 
   const navigate = useNavigate()
@@ -292,9 +295,9 @@ export default function Dashboard() {
             {pendingRequests.length ? (
               <Fragment>
                 <Swiper
-                  onSwiper={(swiper) => (pastContainerRef.current = swiper)}
+                  onSwiper={(swiper) => (pendingContainerRef.current = swiper)}
                   onSlideChange={(swiper) =>
-                    setCurrentPastAppointmentPage(swiper.activeIndex)
+                    setCurrentPendingAppointmentPage(swiper.activeIndex)
                   }
                   className='whitespace-nowrap overflow-x-hidden'
                 >
@@ -325,11 +328,11 @@ export default function Dashboard() {
                   {pendingRequests?.length > 2 &&
                     arrayChunk(pendingRequests, 5).map((_, index) => (
                       <div
-                        onClick={() => pastContainerRef.current?.slideTo(index)}
+                        onClick={() => pendingContainerRef.current?.slideTo(index)}
                         key={`pending-dot-${index}`}
                         className={cn(
                           'h-15 w-15 cursor-pointer rounded-circle',
-                          currentPastAppointmentPage === index
+                          currentPendingAppointmentPage === index
                             ? 'bg-sky-cyan'
                             : 'bg-white',
                         )}

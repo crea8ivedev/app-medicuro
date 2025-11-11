@@ -120,7 +120,7 @@ function MyProfile() {
     <div className=' bg-sky-foam min-h-screen pb-16 relative'>
       <div className='common-bg absolute'></div>
       <div className='flex flex-col p-5'>
-        <CommonBackBtn label='Back to Dashboard' link='/' />
+        <CommonBackBtn label='Back to Home' link='/' />
       </div>
       <div className='flex w-full justify-center items-center lg:pt-24'>
         <div className='bg-mint relative w-825 p-10 flex flex-col gap-7 py-24 rounded-xl'>

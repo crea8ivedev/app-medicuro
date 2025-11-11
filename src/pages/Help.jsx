@@ -10,7 +10,7 @@ function Help() {
   const profile = searchParams.get('profile')
   const menuItems = [
     {
-      label: 'FAQ’s',
+      label: 'FAQs',
       icon: faqIcon,
       action: 'navigate',
       route: profile ? '/faqs?profile=true' : '/faqs',
@@ -30,7 +30,7 @@ function Help() {
       <div className='common-bg absolute left-0 right-0 '></div>
       <div className='flex flex-col p-5  '>
         <CommonBackBtn
-          label={profile ? 'My Profile' : 'Back to Dashboard'}
+          label={profile ? 'My Profile' : 'Back to Home'}
           link={profile ? '/profile' : '/'}
         />
       </div>

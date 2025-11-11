@@ -122,7 +122,7 @@ function ViewlAppointment() {
               
               <div className='md:text-end text-center'>
                 <NavLink  to={"/dashboard"}>
-                  <button className='bg-bluewave text-white px-10 py-4 rounded-md cursor-pointer my-5 hover:opacity-90 hover:bg-white hover:text-bluewave border-2 border-bluewave '>Back to Dashboard</button>
+                  <button className='bg-bluewave text-white px-10 py-4 rounded-md cursor-pointer my-5 hover:opacity-90 hover:bg-white hover:text-bluewave border-2 border-bluewave '>Back to Home</button>
                 </NavLink>
               </div>
              
