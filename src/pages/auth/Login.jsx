@@ -107,7 +107,7 @@ export default function Login() {
     navigate('/auth/forget-password')
   }
 
-  console.log("Hello Medicuro")
+  console.warn("Hello Medicuro")
 
   return (
     <div className='relative z-10 min-h-screen flex py-5  justify-around items-center'>
