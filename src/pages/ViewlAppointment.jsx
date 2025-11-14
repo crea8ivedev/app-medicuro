@@ -108,7 +108,7 @@ function ViewlAppointment() {
                                 return <a href={item} target='_blank' key={index} ><img className='w-[50px] cursor-pointer' src={item}  /> </a> 
                               } )
                             }
-                          </div> :  <div>{value}</div>
+                          </div> :  <div>{value.replaceAll('_', ' ')}</div>
                         }
                         
                     </div>
