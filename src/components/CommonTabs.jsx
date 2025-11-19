@@ -1,7 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const CommonTabs = ({ tabs = [], onChange }) => {
-  const [active, setActive] = useState(tabs[0]?.value);
+const CommonTabs = ({ tabs = [], value, onChange }) => {
+  const [active, setActive] = useState(value ?? tabs[0]?.value);
+
+   useEffect(() => {
+    if (value !== undefined) {
+      setActive(value);
+    }
+  }, [value]);
 
   const handleTabClick = (value) => {
     setActive(value);

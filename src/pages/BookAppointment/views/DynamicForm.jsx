@@ -9,9 +9,13 @@ import * as Yup from "yup"
 import { cn } from "../../../utils/cn"
 import { useAuthStore } from "../../../store/auth"
 import PhotosUploader from "./PhotosUploader"
+import ConfirmDialog from "../../../components/ConfirmDialog";
+
 
 function DynamicForm({item,serviceId,callback}) {
     const [isLoading,setIsLoading] = useState(false)
+    const [openConfirm, setOpenConfirm] = useState(false);
+
     const { user } = useAuthStore();
 
     const fields = item?.form?.fields
@@ -103,7 +107,8 @@ function DynamicForm({item,serviceId,callback}) {
                     <div className='md:text-end text-center mt-5'>
                       <button
                         disabled={isLoading}
-                        onClick={formik.handleSubmit}
+                        // onClick={formik.handleSubmit}
+                        onClick={() => setOpenConfirm(true)}
                         className={cn('common-btn btn-loader', isLoading && " cursor-not-allowed")}
                       >
                         Send Request
@@ -113,6 +118,16 @@ function DynamicForm({item,serviceId,callback}) {
                 </FormikProvider>
           
         }
+      <ConfirmDialog
+        open={openConfirm}
+        title="Confirm Appointment Request"
+        message="Are you sure you want to submit this appointment request?"
+        onCancel={() => setOpenConfirm(false)}
+        onConfirm={() => {
+          setOpenConfirm(false);
+          formik.handleSubmit(); 
+        }}
+      />
     </div>
   )
 }

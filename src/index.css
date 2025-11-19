@@ -296,3 +296,12 @@ input::placeholder{
     border: 1px solid white !important;
     background-color: transparent;
 }
+
+.placeholder-style::placeholder {
+  color: #bfbfbf !important;
+  transition: color 0.2s ease;
+}
+
+.placeholder-style:focus::placeholder {
+  color: transparent !important;
+}

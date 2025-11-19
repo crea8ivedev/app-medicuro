@@ -96,9 +96,24 @@ function CustomInput({
 
   return (
     <div className='flex flex-col gap-2'>
-      <label htmlFor={field.name} className={cn('font-bold', labelclasses)}>
+      <label htmlFor={field.name} className={cn('font-bold flex items-center gap-2', labelclasses)}>
+         {type === "checkbox" && (
+          <input
+            type="checkbox"
+            id={field.name}
+            checked={!!field.value}
+            disabled={isDisabled}
+            onChange={(e) => {
+              const { checked } = e.target
+              setFieldValue(field.name, checked)
+              setFieldTouched(field.name, true)
+            }}
+            className="w-4 h-4 cursor-pointer"
+          />
+        )}
         {label}
       </label>
+      {type !== "checkbox" && (
       <div className='relative'>
         {type === 'textarea' ? (
           <textarea
@@ -111,6 +126,7 @@ function CustomInput({
             className={cn(
               'bg-white outline-0 p-2 border-2 rounded-sm border-teal-600 ',
               inputclasses,
+              props.className,
             )}
             onChange={handleChange}
             onFocus={handleFocus}
@@ -140,11 +156,14 @@ function CustomInput({
                 }}
                 open={open}
                 onClick={() => setOpen(true)}
+                disabled={isDisabled}
                 slots={{ openPickerIcon: MyCalendarIcon }}
                 slotProps={{
                   textField: {
                     onClick: () => setOpen(true), // ✅ clicking input opens picker
                     readOnly: true, // optional: prevent manual typing
+                    disabled: isDisabled,
+
                   },
                 }}
                 openTo='day'
@@ -158,6 +177,8 @@ function CustomInput({
               className={cn(
                 'bg-white border border-teal-600 w-full p-4 outline-0',
                 inputclasses,
+                props.className,
+                isDisabled ? 'bg-gray-200 cursor-not-allowed' : ''
               )}
               type={inputType}
               id={field.name}
@@ -191,6 +212,7 @@ function CustomInput({
           aria-atomic='true'
         />
       </div>
+      )}
     </div>
   )
 }

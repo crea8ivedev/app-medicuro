@@ -140,7 +140,7 @@ export default function Login() {
                 placeholder='example@example.com'
                 component={CustomInput}
                 // focusHandler={errorRemovehandler}
-                className='forn-field'
+                className='forn-field placeholder-style'
               />
 
               <Field
@@ -151,7 +151,7 @@ export default function Login() {
                 label='Password'
                 component={CustomInput}
                 // focusHandler={errorRemovehandler}
-                className='forn-field'
+                className='forn-field placeholder-style'
               />
               {/* <CustomInput
                   name="email"

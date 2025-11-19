@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Container from '../../components/Container'
 import signupSideImg from '../../assets/images/signup-vector.png'
 import CommonBackBtn from '../../components/CommonBackBtn'
@@ -96,18 +96,30 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
     .required('Date of birth is required')
     .max(new Date(), 'Date of birth cannot be in the future'),
 
-  mcp: Yup.string()
-    .required('MCP number is required')
-    .matches(/^\d{12}$/, 'Enter 12 numbers without spaces'),
+    isMCP: Yup.boolean(),
+    mcp: Yup.string().when("isMCP", {
+      is: false,
+      then: (schema) =>
+        schema
+          .required("MCP number is required")
+          .matches(/^\d{12}$/, "Enter 12 numbers without spaces"),
+      otherwise: (schema) => schema,
+    }),
 
-  mcpValidationDate: Yup.date().required('MCP validation date is required'),
+    mcpValidationDate: Yup.date().when("isMCP", {
+      is: false,
+      then: (schema) => schema.required("MCP validation date is required"),
+      otherwise: (schema) => schema,
+    }),
 
-  mcpExpiryDate: Yup.date()
-    .required('MCP expiry date is required')
-    .min(
-      Yup.ref('mcpValidationDate'),
-      'Expiry date must be after validation date'
-    ),
+    mcpExpiryDate: Yup.date().when(["isMCP", "mcpValidationDate"], {
+      is: (isMCP, mcpValidationDate) => !isMCP && !!mcpValidationDate,
+      then: (schema) =>
+        schema
+          .required("MCP expiry date is required")
+          .min(Yup.ref("mcpValidationDate"), "Expiry date must be after validation date"),
+      otherwise: (schema) => schema,
+    }),
 });
 
 
@@ -151,10 +163,18 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
   }
 
   const formik = useFormik({
-    initialValues: signUpFormValues,
+    initialValues: { ...signUpFormValues, isMCP: false },
     onSubmit: (values, helpers) => submitSignUpForm(values, helpers),
     validationSchema: signUpSchema,
   })
+
+  useEffect(() => {
+    if (formik.values.isMCP) {
+      formik.setFieldValue('mcp', '');
+      formik.setFieldValue('mcpValidationDate', '');
+      formik.setFieldValue('mcpExpiryDate', '');
+    }
+  }, [formik.values.isMCP]);
 
   return (
     <FormikProvider value={formik}>
@@ -205,7 +225,14 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
           className='forn-field'
         />
 
-        <div className='mt-3'>
+        <Field
+          name="isMCP"
+          type="checkbox"
+          label="No MCP"
+          component={CustomInput}
+        />
+
+        {/* <div className='mt-2'> */}
           <Field
             type='number'
             name='mcp'
@@ -213,8 +240,9 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
             placeholder='000 000 000 000'
             component={CustomInput}
             className='forn-field'
+            isDisabled={formik.values.isMCP}
           />
-        </div>
+        {/* </div> */}
 
         <Field
           type='date'
@@ -223,6 +251,7 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
           placeholder='dd / mm / yyyy'
           component={CustomInput}
           className='forn-field'
+          isDisabled={formik.values.isMCP}
         />
 
         <Field
@@ -232,6 +261,7 @@ const ProfileForm = ({ setStep, signUpFormValues, setSignUpFormValues }) => {
           placeholder='dd / mm / yyyy'
           component={CustomInput}
           className='forn-field'
+          isDisabled={formik.values.isMCP}
         />
 
         <div className='text-center'>

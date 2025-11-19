@@ -117,11 +117,17 @@ const MyProfileInfo = ({ profilePic }) => {
       email: user.email || '',
       phone: user.phone || '',
       dob: user.dob ? user.dob.split('T')[0] : '',
+      isMCP: user.isMCP ? user.isMCP : false,
       mcp: user.mcp ? user.mcp.split('T')[0] : '',
       mcpValidationDate: user.mcpValidationDate
         ? user.mcpValidationDate.split('T')[0]
         : '',
       mcpExpiryDate: user.mcpExpiryDate ? user.mcpExpiryDate.split('T')[0] : '',
+      homeAddress: user.homeAddress || '',
+      pharmacyName: user.pharmacyName || '',
+      pharmacyAddress: user.pharmacyAddress || '',
+      pharmacyPhone: user.pharmacyPhone || '',
+      pharmacyFax: user.pharmacyFax || '',
     })
   }, [user])
 
@@ -149,6 +155,11 @@ const MyProfileInfo = ({ profilePic }) => {
       type: 'date',
     },
     {
+      label: 'No MCP',
+      name: 'isMCP',
+      type: 'checkbox',
+    },
+    {
       label: 'MCP',
       name: 'mcp',
       type: 'number',
@@ -164,6 +175,32 @@ const MyProfileInfo = ({ profilePic }) => {
       name: 'mcpExpiryDate',
       type: 'date',
       placeholder: 'dd / mm / yyyy',
+    },
+    {
+      label: 'Home Address',
+      name: 'homeAddress',
+      type: 'textarea',
+    },
+    {
+      label: 'Pharmacy Name',
+      name: 'pharmacyName',
+      type: 'text',
+    },
+    {
+      label: 'Pharmacy Address',
+      name: 'pharmacyAddress',
+      type: 'textarea',
+    },
+    {
+      label: 'Pharmacy Phone',
+      name: 'pharmacyPhone',
+      type: 'number',
+      placeholder: '1709 XXX XXXX',
+    },
+    {
+      label: 'Pharmacy Fax',
+      name: 'pharmacyFax',
+      type: 'number',
     },
   ]
 
@@ -183,18 +220,31 @@ const MyProfileInfo = ({ profilePic }) => {
       .required('Date of birth is required')
       .max(new Date(), 'Date of birth cannot be in the future'),
 
-    mcp: Yup.string()
-      .required('MCP number is required')
-      .matches(/^\d{12}$/, 'Please enter 12 numbers without spaces'),
+      isMCP: Yup.boolean(),
+      mcp: Yup.string().when("isMCP", {
+        is: false,
+        then: (schema) =>
+          schema
+            .required("MCP number is required")
+            .matches(/^\d{12}$/, "Enter 12 numbers without spaces"),
+        otherwise: (schema) => schema,
+      }),
+  
+      mcpValidationDate: Yup.date().when("isMCP", {
+        is: false,
+        then: (schema) => schema.required("MCP validation date is required"),
+        otherwise: (schema) => schema,
+      }),
+  
+      mcpExpiryDate: Yup.date().when(["isMCP", "mcpValidationDate"], {
+        is: (isMCP, mcpValidationDate) => !isMCP && !!mcpValidationDate,
+        then: (schema) =>
+          schema
+            .required("MCP expiry date is required")
+            .min(Yup.ref("mcpValidationDate"), "Expiry date must be after validation date"),
+        otherwise: (schema) => schema,
+      }),
 
-    mcpValidationDate: Yup.date().required('MCP validation date is required'),
-
-    mcpExpiryDate: Yup.date()
-      .required('MCP expiry date is required')
-      .min(
-        Yup.ref('mcpValidationDate'),
-        'Expiry date must be after validation date',
-      ),
   })
 
   const updateProfile = async (values) => {
@@ -233,13 +283,27 @@ const MyProfileInfo = ({ profilePic }) => {
       phone: '',
       email: '',
       dob: '',
+      isMCP: false,
       mcp: '',
       mcpValidationDate: '',
       mcpExpiryDate: '',
+      homeAddress:'',
+      pharmacyName:'',
+      pharmacyAddress:'',
+      pharmacyPhone:'', 
+      pharmacyFax:'',
     },
     validationSchema: validationSchema,
     onSubmit: (values) => updateProfile(values),
   })
+
+  useEffect(() => {
+    if (formik.values.isMCP) {
+      formik.setFieldValue("mcp", "")
+      formik.setFieldValue("mcpValidationDate", "")
+      formik.setFieldValue("mcpExpiryDate", "")
+    }
+  }, [formik.values.isMCP])
 
   return (
     <div>
@@ -258,6 +322,11 @@ const MyProfileInfo = ({ profilePic }) => {
                     type={item.type}
                     isMcp={item?.isMcp}
                     readOnly={item?.readOnly}
+                    isDisabled={
+                      ["mcp", "mcpValidationDate", "mcpExpiryDate"].includes(item.name)
+                        ? formik.values.isMCP
+                        : false
+                    }
                   />
                 </div>
               )

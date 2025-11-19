@@ -25,6 +25,7 @@ function BookAppointmentIndexPage() {
   const [isSubmitted, setIsSubmitted] = useState(false)
 
   const [isLoading, setIsLoading] = useState()
+  const [selectedTab, setSelectedTab] = useState("mcp");
 
 
 
@@ -62,7 +63,7 @@ function BookAppointmentIndexPage() {
 
 
   useEffect(() => {
-    handleTabChange("mcp")
+    handleTabChange(selectedTab)
   }, [allBookingItems])
 
   const handleSelectItem = (id) => {
@@ -97,9 +98,11 @@ function BookAppointmentIndexPage() {
   }
 
   const handleTabChange = (value) => {
+     setSelectedTab(value); 
     const temp = value == "mcp" ? allBookingItems.filter(e => !e.isFeesApply) : allBookingItems.filter(e => e.isFeesApply)
     setBookingItems(temp)
   }
+
 
   return (
     <div className='bg-ice min-h-screen  w-full justify-between relative'>
@@ -189,6 +192,7 @@ function BookAppointmentIndexPage() {
                       </div>
                       <div>
                         <CommonTabs
+                          value={selectedTab} 
                           onChange={handleTabChange}
                           tabs={[
                             { label: "MCP covered", value: "mcp", },
